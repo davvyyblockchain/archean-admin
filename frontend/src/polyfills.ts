@@ -13,7 +13,8 @@
  *
  * Learn more in https://angular.io/guide/browser-support
  */
-
+ (window as any).global = window;
+ (window as any).global.Buffer = (window as any).global.Buffer || require('buffer').Buffer;
 /***************************************************************************************************
  * BROWSER POLYFILLS
  */
@@ -58,6 +59,7 @@
  * Zone JS is required by default for Angular itself.
  */
 import 'zone.js';  // Included with Angular CLI.
+
 
 
 /***************************************************************************************************

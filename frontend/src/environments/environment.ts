@@ -3,7 +3,26 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+
+  URL:'',
+
+  testNetBSC: 'https://data-seed-prebsc-1-s1.binance.org:8545',
+  mainnetBSC: 'https://bsc-dataseed1.binance.org:443',
+
+
+  main: 'Mainnet',
+  rops: 'Ropsten',
+  rinkeby: 'Rinkeby',
+  Goerli: 'Goerli',
+  Kovan: 'Kovan',
+  // Binance Smart Chain Main Network 
+  bscMainnet: 'bsc-mainnet',
+  // Binance Smart Chain Test Network 
+  bscTestnet: 'bsc-testnet',
+
+  divideValue: 1000000000000000000,
+
 };
 
 /*
