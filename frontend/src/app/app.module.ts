@@ -32,13 +32,13 @@ import { ScriptLoaderService } from './script-loader.service';
     FooterComponent,
   ],
   imports: [
+    FormsModule,
+    ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     NgxSpinnerModule,
     HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule,
     ToastrModule.forRoot({
       timeOut: 5000,
       positionClass: 'toast-top-right',

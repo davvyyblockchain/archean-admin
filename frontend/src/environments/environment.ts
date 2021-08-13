@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
 
-  URL:'',
+  URL: 'http://localhost:3000/api/v1',
 
   testNetBSC: 'https://data-seed-prebsc-1-s1.binance.org:8545',
   mainnetBSC: 'https://bsc-dataseed1.binance.org:443',

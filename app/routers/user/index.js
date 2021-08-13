@@ -4,6 +4,8 @@ const userMiddleware = require('./lib/middleware');
 
 router.get('/profile', userMiddleware.verifyToken, userController.profile);
 router.put('/updateProfile', userMiddleware.verifyToken, userController.updateProfile);
+
+
 router.post('/addCollaborator', userMiddleware.verifyToken, userController.addCollaborator);
 router.post('/collaboratorList', userMiddleware.verifyToken, userController.collaboratorList);
 router.get('/getCollaboratorList', userMiddleware.verifyToken, userController.getCollaboratorList);

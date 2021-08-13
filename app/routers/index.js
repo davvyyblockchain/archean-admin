@@ -17,6 +17,20 @@ function Router() {
         methods: ['GET', 'POST'],
         allowedHeaders: ['Content-Type', 'Authorization'],
     };
+
+
+     this.app.use(cors());
+
+ this.app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "*");
+    next();
+  });
+
+ this.app.use(bodyParser.json());
+ this.app.use(bodyParser.urlencoded({ extended: true }));
+//  this.app.use(fileUpload());
+
 }
 
 Router.prototype.initialize = function () {

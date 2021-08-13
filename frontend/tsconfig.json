@@ -23,6 +23,7 @@
     "typeRoots": [
       "node_modules/@types"
     ],
+    
     "paths" : {
       "crypto": ["./node_modules/crypto-browserify"],
       "stream": ["./node_modules/stream-browserify"],

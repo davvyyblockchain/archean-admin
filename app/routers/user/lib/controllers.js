@@ -48,6 +48,7 @@ let oMulterObj = {
 
 controllers.profile = (req, res) => {
     try {
+        console.log('------------------------1')
         if (!req.userId) {
             return res.reply(messages.unauthorized());
         }
@@ -124,7 +125,8 @@ controllers.updateProfile = async (req, res, next) => {
                         sLastname: req.body.sLastname
                     },
                     sWebsite: req.body.sWebsite,
-                    sBio: req.body.sBio
+                    sBio: req.body.sBio,
+                    sEmail: req.body.sEmail,
                 }
                 if (req.file != undefined) {
                     const aAllowedMimes = ['image/jpeg', 'image/jpg', 'image/png'];
