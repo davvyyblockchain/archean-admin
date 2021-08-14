@@ -19,6 +19,20 @@ export class CreateNFTComponent implements OnInit {
   collectionList: any = [];
   categoriesList: any = [];
   collaboratorList: any = [];
+  form: any = 'NFT';
+
+  createNFTForm: any;
+  submitted3: Boolean = false;
+  file: any;
+
+  createCollectionForm: any;
+  submitted1: Boolean = false;
+  nftFile: any;
+
+
+  createCollaboratorForm: any;
+  submitted2: Boolean = false;
+
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -29,6 +43,9 @@ export class CreateNFTComponent implements OnInit {
     private toaster: ToastrService,
     private apiService: ApiService,
   ) { }
+  clickSetForm(type: any) {
+    this.form = type;
+  }
 
   async ngOnInit() {
     let scripts = [];
@@ -46,17 +63,22 @@ export class CreateNFTComponent implements OnInit {
     this._script.loadScripts("app-create-nft", scripts).then(function () {
 
     })
-console.log('---------------create-nft-------------',localStorage.getItem('Authorization') )
+    console.log('---------------create-nft-------------', localStorage.getItem('Authorization'))
     if (localStorage.getItem('Authorization') && localStorage.getItem('Authorization') != null) {
       console.log('---------------create 1-------------')
+      this.buildCreateCollectionForm();
+      this.buildCreateCollaboratorForm();
+      this.buildCreateNFTForm();
+
 
       await this.getProfile();
       await this.getCollectionList();
       await this.getCategories();
       await this.getColoboraterList();
 
+    } else {
+      this.router.navigate([''])
     }
-
 
     // nft/collectionlist   API first
     // user/categories
@@ -79,20 +101,52 @@ console.log('---------------create-nft-------------',localStorage.getItem('Autho
 
 
     //       nftFile: (binary)
-    // sName: MNNN
-    // sCollection: 
-    // eType: Audio
-    // nQuantity: 10
+
     // sCollaborator: 0x5138d8D462DC20b371b5df7588099e46d8c177A3
     // nCollaboratorPercentage: 100
     // sSetRoyaltyPercentage: 0.1
-    // sNftdescription: cdsgvxfcbgsdfg
-    // eAuctionType: Auction
-    // nBasePrice: 0.1
 
   }
 
 
+  buildCreateCollectionForm() {
+
+    this.createCollectionForm = this._formBuilder.group({
+      sName: ['', [Validators.required]],
+      sDescription: ['', [Validators.required]],
+    });
+  }
+
+  buildCreateCollaboratorForm() {
+
+    this.createCollaboratorForm = this._formBuilder.group({
+      sFullname: ['', [Validators.required]],
+      sAddress: ['', [Validators.required, Validators.pattern('^0x[a-fA-F0-9]{40}$')]],
+    });
+  }
+
+
+  buildCreateNFTForm() {
+
+    this.createNFTForm = this._formBuilder.group({
+      sName: ['', [Validators.required]],
+      sCollection: ['', [Validators.required]],
+      eType: ['Image', [Validators.required]],
+      nQuantity: ['', [Validators.required]],
+      sNftdescription: ['', [Validators.required]],
+      // 'Auction', 'Fixed Sale', 'Unlockable'
+      eAuctionType: ['', [Validators.required]],
+      nBasePrice: ['', [Validators.required]],
+      // TODO multiple
+      sCollaborator: ['', [Validators.required, Validators.pattern('^0x[a-fA-F0-9]{40}$')]],
+      nCollaboratorPercentage: ['', []],
+      sSetRoyaltyPercentage: ['', []],
+
+    });
+  }
+  // 
+  // : any;
+  // submitted2: Boolean = false;
   getProfile() {
     this.apiService.getprofile().subscribe((res: any) => {
       if (res && res['data']) {
@@ -138,5 +192,107 @@ console.log('---------------create-nft-------------',localStorage.getItem('Autho
     });
   }
 
+  onSelectDocumentNFT(event: any) {
+    if (event.target.files && event.target.files[0]) {
+      if (event.target.files[0].name.match(/\.(jpeg|jpg|png|mp3)$/)) {
+        this.file = event.target.files[0];
+      }
+    }
+  }
+  onSelectDocumentCollection(event: any) {
+    if (event.target.files && event.target.files[0]) {
+      if (event.target.files[0].name.match(/\.(jpeg|jpg|png|mp3)$/)) {
+        this.nftFile = event.target.files[0];
+      }
+    }
+  }
+
+  onClickSubmitCollection() {
+    if (this.nftFile && this.nftFile != undefined) {
+
+      this.spinner.show();
+      this.submitted1 = true;
+      if (this.createCollectionForm.invalid) {
+        this.spinner.hide();
+        return;
+      } else {
+
+        let res = this.createCollectionForm.value;
+        console.log('-------------res', res)
+        var fd = new FormData();
+
+        fd.append('sName', res.sName);
+        fd.append('sDescription', res.sDescription);
+        fd.append('nftFile', this.nftFile);
+
+
+        this.apiService.createCollection(fd).subscribe((updateData: any) => {
+          this.spinner.hide();
+
+          if (updateData && updateData['data']) {
+            console.log('---------updateData---------', updateData);
+            this.toaster.success(updateData['message'])
+            this.onClickRefresh();
+          } else {
+
+          }
+
+        }, (err: any) => {
+          this.spinner.hide();
+          if (err && err['message']) {
+
+          }
+        });
+      }
+    } else {
+      this.toaster.warning('Please select image.')
+    }
+
+
+  }
+
+
+
+  onClickSubmitCollaborator() {
+
+    this.spinner.show();
+    this.submitted2 = true;
+    if (this.createCollaboratorForm.invalid) {
+      this.spinner.hide();
+      return;
+    } else {
+
+      let res = this.createCollaboratorForm.value;
+      console.log('-------------res', res)
+      var fd = {
+        'sFullname': res.sFullname,
+        'sAddress': res.sAddress,
+      }
+
+      this.apiService.createCollaborator(fd).subscribe((updateData: any) => {
+        this.spinner.hide();
+
+        if (updateData && updateData['data']) {
+          console.log('---------updateData---------', updateData);
+          this.toaster.success(updateData['message'])
+          this.onClickRefresh();
+        } else {
+
+        }
+
+      }, (err: any) => {
+        this.spinner.hide();
+        if (err && err['message']) {
+          console.log('----------------errr',)
+          err = err['error'];
+          this.toaster.error(err['message'])
+
+        }
+      });
+    }
+  }
+  onClickRefresh() {
+    window.location.reload();
+  }
 
 }

@@ -3,7 +3,7 @@ const middleware = {};
 
 middleware.verifyToken = (req, res, next) => {
     try {
-        if (!req.session["_id"]) return res.reply(messages.unauthorized());
+        // if (!req.session["_id"]) return res.reply(messages.unauthorized());
         var token = req.headers.authorization;
         if (!token) {
             return res.reply(messages.unauthorized());

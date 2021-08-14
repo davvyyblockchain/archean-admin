@@ -6,6 +6,18 @@ import { ToastrService } from 'ngx-toastr';
 import { ApiService } from '../api.service';
 import { ScriptLoaderService } from '../script-loader.service';
 
+// {_id: "61129d701bf84242a9127486", sTransactionStatus: 1, sName: "Artist NFT",…}
+// eType: "Image"
+// nBasePrice: {$numberDecimal: "0.5"}
+// nQuantity: 10
+// nTokenID: 22
+// oCurrentOwner: "610feeee1bf84242a9127425"
+// oUser: [{_id: "610feeee1bf84242a9127425", sUserName: "devXHHH", sRole: "user",…}]
+// sHash: "QmWv7u6CHKKea17DDZfaBfPLkMep5vg4qxFntKLCTfj5y7"
+// sName: "Artist NFT"
+// sTransactionStatus: 1
+// _id: "61129d701bf84242a9127486"
+
 @Component({
   selector: 'app-my-profile',
   templateUrl: './my-profile.component.html',
@@ -64,6 +76,9 @@ export class MyProfileComponent implements OnInit {
         console.log('-----err--------', err)
 
       });
+
+    }else{
+      this.router.navigate([''])
 
     }
   }

@@ -283,6 +283,13 @@ export class ApiService {
     return this.http.get(this.URL + '/user/getCollaboratorList', { headers:{'Authorization':this.getHeaders()} } );
   }
 
+  createCollection(data:any) {
+    return this.http.post(this.URL + '/nft/createCollection',data, { headers:{'Authorization':this.getHeaders()} });
+  }
+  createCollaborator(data:any) {
+    return this.http.post(this.URL + '/user/addCollaborator',data, { headers:{'Authorization':this.getHeaders()} });
+  }
+
   onClickRefresh() {
     window.location.reload();
   }
