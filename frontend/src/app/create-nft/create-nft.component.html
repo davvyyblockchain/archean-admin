@@ -216,8 +216,10 @@
                                     [ngClass]="{ 'is-invalid': submitted3 && createNFTForm.controls.eType.errors }"
                                     formControlName="eType">
                                     <option value="">Select Category</option>
-                                    <option *ngFor="let obj of collectionList;" value="1">5%</option>
+                                    <!-- <option *ngFor="let obj of collectionList;" value="1">5%</option> -->
                                     <option value="Image">Image</option>
+                                    <option value="Audio">Audio</option>
+
                                 </select>
                                 <div class="nft-err" *ngIf="submitted3 && createNFTForm.controls.eType.errors">
                                     <span *ngIf="createNFTForm.controls.eType.errors?.required">This field is

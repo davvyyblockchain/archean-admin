@@ -354,7 +354,8 @@ controllers.mynftlist = async (req, res) => {
                 'nQuantity': 1,
                 'nTokenID': 1,
                 'oCurrentOwner': 1,
-                "sTransactionStatus": 1
+                "sTransactionStatus": 1,
+                eAuctionType:1,
             }
         }, {
             '$lookup': {
@@ -363,7 +364,7 @@ controllers.mynftlist = async (req, res) => {
                 'foreignField': '_id',
                 'as': 'oUser'
             }
-        }, {
+        },{$unwind:'$oUser'}, {
             '$facet': {
                 'nfts': [{
                     "$skip": +nOffset
@@ -572,7 +573,8 @@ controllers.nftListing = async (req, res) => {
                 'eType': 1,
                 'nBasePrice': 1,
                 'sHash': 1,
-                'oCurrentOwner': 1
+                'oCurrentOwner': 1,
+                'eAuctionType':1,
             }
         }, {
             '$lookup': {
@@ -581,7 +583,7 @@ controllers.nftListing = async (req, res) => {
                 'foreignField': '_id',
                 'as': 'oUser'
             }
-        }, {
+        },{$unwind:'$oUser'}, {
             '$facet': {
                 'nfts': [{
                     "$skip": +nOffset

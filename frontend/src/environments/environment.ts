@@ -7,7 +7,7 @@ export const environment = {
 
   URL: 'http://localhost:3000/api/v1',
   // URL: 'http://157.230.32.177:3000/api/v1',
-  // URL: 'https://api.decryptnft.io/api/v1',
+  // URL: 'https://decryptnft.io/api/v1',
 
   testNetBSC: 'https://data-seed-prebsc-1-s1.binance.org:8545',
   mainnetBSC: 'https://bsc-dataseed1.binance.org:443',

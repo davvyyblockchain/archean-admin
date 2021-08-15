@@ -48,7 +48,6 @@ let oMulterObj = {
 
 controllers.profile = (req, res) => {
     try {
-        console.log('------------------------1')
         if (!req.userId) {
             return res.reply(messages.unauthorized());
         }

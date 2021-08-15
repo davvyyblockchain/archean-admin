@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import * as e from 'cors';
-import { error } from 'jquery';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
@@ -74,7 +72,7 @@ export class CreateNFTComponent implements OnInit {
       this.buildCreateNFTForm();
 
 
-      
+
       await this.getProfile();
       await this.getCollectionList();
       await this.getCategories();
@@ -84,7 +82,7 @@ export class CreateNFTComponent implements OnInit {
       this.router.navigate([''])
     }
 
- }
+  }
 
 
   buildCreateCollectionForm() {
@@ -116,7 +114,7 @@ export class CreateNFTComponent implements OnInit {
       eAuctionType: ['Auction', [Validators.required]],
       nBasePrice: ['', [Validators.required]],
       // TODO multiple
-      sCollaborator: ['', [Validators.required]],
+      sCollaborator: ['', []],
       nCollaboratorPercentage: ['', []],
       sSetRoyaltyPercentage: ['', []],
 
@@ -133,38 +131,85 @@ export class CreateNFTComponent implements OnInit {
 
   }
   getProfile() {
-    this.apiService.getprofile().subscribe(async(res: any) => {
+    this.apiService.getprofile().subscribe(async (res: any) => {
       if (res && res['data']) {
-        this.profileData =await res['data'];
+        this.profileData = await res['data'];
         this.profileData.sProfilePicUrl = this.profileData.sProfilePicUrl == undefined ? 'assets/img/avatars/avatar5.jpg' : 'https://ipfs.io/ipfs/' + this.profileData.sProfilePicUrl;
         this.profileData.sFirstname = this.profileData && this.profileData.oName && this.profileData.oName.sFirstname ? this.profileData.oName.sFirstname : '';
         this.profileData.sLastname = this.profileData && this.profileData.oName && this.profileData.oName.sLastname ? this.profileData.oName.sLastname : '';
 
 
-        // window.contract = await this.apiService.exportInstance(environment.NFTaddress, environment.NFTabi);
-        // console.log('------------------------4',window.contract);
 
-        // if (window.contract && window.contract != undefined) {
-         
-        //   console.log('------------------------5',);
+        var NFTinstance = await this.apiService.exportInstance(environment.NFTaddress, environment.NFTabi);
+        console.log('------------------------4', NFTinstance);
 
-        //   let nAdminCommissionPercentage = await window.contract.methods.getAdminCommissionPercentage().call({ from: this.profileData.sWalletAddress }).then((data:any)=>{
-        //     console.log("nAdminCommissionPercentage: " , data);
-        //     return data;
-        //     console.log('------------------------6',)
-        //   });
-        //   console.log("nAdminCommissionPercentage: " , nAdminCommissionPercentage);
-        //   console.log('------------------------6',);
+        if (NFTinstance && NFTinstance != undefined) {
 
-        //   const that = this;
+          console.log('------------------------5',);
+
+          // let nAdminCommissionPercentage = await NFTinstance.methods.getAdminCommissionPercentage().call({ from: this.profileData.sWalletAddress });
+          // console.log("nAdminCommissionPercentage: " + nAdminCommissionPercentage);
+          // console.log('------------------------6',);
+          // // mintToken(bool,string,string,uint256,uint8,address[],uint8[])
+          // let nEstimatedGasLimit = await NFTinstance.methods.mintToken(true, 'QmT1omejnb9vnAzpyZbVec7tNmM4GfbZZXpoKv4VVU6iGW', 'MARIO NFT', 10, 5, [
+          //   "0x79647CC2A785B63c2A7A5D324b2D15c0CA17115D",
+          //   "0x5138d8D462DC20b371b5df7588099e46d8c177A3"
+          // ], [
+          //   '3',
+          //   '97'
+          // ]).estimateGas({
+          //   from: '0x5138d8D462DC20b371b5df7588099e46d8c177A3',
+          //   value: 1
+          // });
+          // console.log("nEstimatedGasLimit: " + nEstimatedGasLimit);
+
+          // let nGasPrice = parseInt(await window.web3.eth.getGasPrice());
+          // console.log("nGasPrice: " + nGasPrice);
+
+          // let nTotalTransactionCost = nGasPrice * nEstimatedGasLimit;
+          // console.log("nTotalTransactionCost: " + nTotalTransactionCost);
+
+          // let nAdminCommission = (nTotalTransactionCost * nAdminCommissionPercentage) / 100;
+          // console.log("nAdminCommission: " + nAdminCommission);
+          // console.log();
 
 
-        //   console.log();
-        // } else {
-        //   this.spinner.hide();
-        //   this.toaster.error("There is something issue with NFT address.");
+          // const that = this;
 
-        // }
+          // await NFTinstance.methods.mintToken(true, 'QmT1omejnb9vnAzpyZbVec7tNmM4GfbZZXpoKv4VVU6iGW', 'MARIO NFT', 10, 5, [
+          //   "0x79647CC2A785B63c2A7A5D324b2D15c0CA17115D",
+          //   "0x5138d8D462DC20b371b5df7588099e46d8c177A3"
+          // ], [
+          //   3,97
+
+          // ])
+          //   .send({
+          //     from: this.profileData.sWalletAddress
+          //   })
+          //   .on('transactionHash', async (hash: any) => {
+          //     this.spinner.hide();
+          //     console.log(hash);
+
+          //   })
+          //   .catch(function (error: any) {
+          //     that.spinner.hide();
+          //     console.log(error);
+          //     if (error.code == 32603) {
+          //       that.toaster.error("You're connected to wrong network!");
+          //     }
+          //     if (error.code == 4001) {
+          //       that.toaster.error("You Denied Transaction Signature");
+          //     }
+          //   });
+
+
+          console.log();
+        } else {
+          this.spinner.hide();
+          this.toaster.error("There is something issue with NFT address.");
+
+        }
+
 
 
       }
@@ -336,7 +381,7 @@ export class CreateNFTComponent implements OnInit {
           fd.append('nCollaboratorPercentage', '0');
         }
 
-        fd.append('sSetRoyaltyPercentage', res.sSetRroyalityPercentage ? res.sSetRroyalityPercentage : 0);
+        fd.append('sSetRoyaltyPercentage', res.sSetRoyaltyPercentage ? res.sSetRoyaltyPercentage : 0);
         fd.append('sNftdescription', res.sNftdescription);
         fd.append('eAuctionType', res.eAuctionType);
 
@@ -353,7 +398,7 @@ export class CreateNFTComponent implements OnInit {
             let returnData = await data['data'];
             this.spinner.show();
             var NFTinstance = await this.apiService.exportInstance(environment.NFTaddress, environment.NFTabi);
-            console.log('------------------------4',NFTinstance);
+            console.log('------------------------4', NFTinstance);
 
             if (NFTinstance && NFTinstance != undefined) {
               this.spinner.hide();
@@ -363,11 +408,30 @@ export class CreateNFTComponent implements OnInit {
               console.log("nAdminCommissionPercentage: " + nAdminCommissionPercentage);
               console.log('------------------------6',);
 
+              let nEstimatedGasLimit = await NFTinstance.methods.mintToken(parseInt(returnData.nQuantity) > 1 ? true : false, returnData.sHash, returnData.sName, parseInt(returnData.nQuantity), returnData.sSetRroyalityPercentage, returnData.sCollaborator, returnData.nCollaboratorPercentage).estimateGas({
+                from: this.profileData.sWalletAddress,
+                value: 1
+              });
+              console.log("nEstimatedGasLimit: " + nEstimatedGasLimit);
+
+              let nGasPrice = parseInt(await window.web3.eth.getGasPrice());
+              console.log("nGasPrice: " + nGasPrice);
+
+              let nTotalTransactionCost = nGasPrice * nEstimatedGasLimit;
+              console.log("nTotalTransactionCost: " + nTotalTransactionCost);
+
+              let nAdminCommission = (nTotalTransactionCost * nAdminCommissionPercentage) / 100;
+              console.log("nAdminCommission: " + nAdminCommission);
+              console.log();
+
+
               const that = this;
               this.spinner.show();
               await NFTinstance.methods.mintToken(parseInt(res.nQuantity) > 1 ? true : false, returnData.sHash, res.sName, parseInt(res.nQuantity), returnData.sSetRroyalityPercentage, returnData.sCollaborator, returnData.nCollaboratorPercentage)
                 .send({
-                  from: this.profileData.sWalletAddress
+                  from: this.profileData.sWalletAddress,
+                  value: nAdminCommission,
+                  gas: nEstimatedGasLimit
                 })
                 .on('transactionHash', async (hash: any) => {
                   this.spinner.hide();

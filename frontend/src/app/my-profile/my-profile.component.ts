@@ -29,7 +29,20 @@ export class MyProfileComponent implements OnInit {
 
   submitted1: Boolean = false;
   file: any;
-  profileData:any;
+  profileData: any;
+  searchData: any = {
+    length: 100,
+    start: 0,
+    eType: ['All'],
+    sTextsearch: '',
+    sCollection: '',
+    sSellingType: '',
+    sSortingType: 'Recently Added'
+
+  };
+  listData: any = [];
+  filterData: any = [];
+
   constructor(
     private _formBuilder: FormBuilder,
     private _script: ScriptLoaderService,
@@ -40,7 +53,7 @@ export class MyProfileComponent implements OnInit {
     private apiService: ApiService,
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.buildCreateForm1();
     let scripts = [];
     scripts = [
@@ -63,13 +76,13 @@ export class MyProfileComponent implements OnInit {
 
         if (res && res['data']) {
           this.profileData = res['data'];
-          this.profileData.sProfilePicUrl = this.profileData.sProfilePicUrl== undefined ? 'assets/img/avatars/avatar5.jpg' : 'https://ipfs.io/ipfs/' + this.profileData.sProfilePicUrl;
+          this.profileData.sProfilePicUrl = this.profileData.sProfilePicUrl == undefined ? 'assets/img/avatars/avatar5.jpg' : 'https://ipfs.io/ipfs/' + this.profileData.sProfilePicUrl;
 
 
-          this.profileData.sFirstname = this.profileData && this.profileData.oName &&  this.profileData.oName.sFirstname ? this.profileData.oName.sFirstname : '';
-          this.profileData.sLastname = this.profileData && this.profileData.oName &&  this.profileData.oName.sLastname ? this.profileData.oName.sLastname : '';
+          this.profileData.sFirstname = this.profileData && this.profileData.oName && this.profileData.oName.sFirstname ? this.profileData.oName.sFirstname : '';
+          this.profileData.sLastname = this.profileData && this.profileData.oName && this.profileData.oName.sLastname ? this.profileData.oName.sLastname : '';
 
-          this.editProfileform.patchValue( this.profileData);
+          this.editProfileform.patchValue(this.profileData);
         }
 
       }, (err: any) => {
@@ -77,10 +90,46 @@ export class MyProfileComponent implements OnInit {
 
       });
 
-    }else{
+      await this.myNFTList(this.searchData);
+
+    } else {
       this.router.navigate([''])
 
     }
+  }
+
+  async myNFTList(obj: any) {
+
+    await this.apiService.nftMYListing(obj).subscribe((res: any) => {
+
+      if (res && res['data'] && res['data']) {
+        this.listData = res['data'];
+        this.filterData = this.listData
+
+        if (this.listData['data'].length) {
+          this.listData = this.listData['data'];
+        } else {
+          this.listData = [];
+        }
+        console.log('-----this.listData--------', this.listData)
+
+      }
+
+    }, (err: any) => {
+      console.log('-----err--------', err)
+
+    });
+  }
+
+  async onClickSearch(type:any){
+    this.searchData['sSellingType'] = type;
+    // }
+    await this.myNFTList(this.searchData);
+  }
+  async onClickLoadMore() {
+    this.searchData['length'] = this.searchData['length'] + 100;
+
+    await this.myNFTList(this.searchData);
   }
 
   buildCreateForm1() {
@@ -120,7 +169,7 @@ export class MyProfileComponent implements OnInit {
     } else {
 
       let res = this.editProfileform.value;
-      console.log('-------------res',res)
+      console.log('-------------res', res)
       var fd = new FormData();
 
       fd.append('sFirstname', res.sFirstname);

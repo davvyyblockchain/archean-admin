@@ -73,13 +73,10 @@ controllers.login = (req, res) => {
             if (err) return res.reply(messages.error());
             if (!user) return res.reply(messages.not_found('User'));
 
-            console.log('---------------1-----------')
 
             if (user && user.sRole == 'user') {
-                console.log('---------------2-----------')
 
                 var token = signJWT(user);
-                console.log('---------------3-----------',token)
 
                 req.session["_id"] = user._id;
                 req.session["sWalletAddress"] = user.sWalletAddress;

@@ -308,7 +308,25 @@ export class ApiService {
     return this.http.post(this.URL + '/nft/setTransactionHash', data, { headers: { 'Authorization': this.getHeaders() } });
   }
 
+  nftListing(data: any) {
+    return this.http.post(this.URL + '/nft/nftListing', data, { headers: { 'Authorization': this.getHeaders() } });
+  }
+  viewnft(id: any) {
+    return this.http.get(this.URL + '/nft/viewnft/'+id, { headers: { 'Authorization': this.getHeaders() } });
+  }
+  bidHistory(id: any,data:any) {
+    return this.http.post(this.URL + '/bid/history/'+id,data, { headers: { 'Authorization': this.getHeaders() } });
+  }
 
+  
+  landingPage() {
+    return this.http.get(this.URL + '/nft/landing', { headers: { 'Authorization': this.getHeaders() } });
+  }
+  nftMYListing(data: any) {
+    return this.http.post(this.URL + '/nft/mynftlist', data, { headers: { 'Authorization': this.getHeaders() } });
+  }
+
+  // nft/
   onClickRefresh() {
     window.location.reload();
   }

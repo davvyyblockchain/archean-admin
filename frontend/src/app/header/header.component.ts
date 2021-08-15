@@ -29,17 +29,21 @@ export class HeaderComponent implements OnInit {
 
   async ngOnInit() {
     this.spinner.show();
+    const  that = this;
     this.showObj.wallet_address = await this.apiService.export();
-
     if (this.showObj.wallet_address && this.showObj.wallet_address != '') {
+      console.log('--------------0')
+      that.spinner.hide();
+
       this.showObj.network_name = await this.apiService.getNetworkName();
       this.showObj.show = 'signup';
 
-      let call = this.apiService.checkuseraddress(this.showObj.wallet_address).subscribe((data) => {
-        this.spinner.hide();
-
+      let call = await this.apiService.checkuseraddress(this.showObj.wallet_address).subscribe((data) => {
+        that.spinner.hide();
+        console.log('--------------1')
         if (data) {
-
+ 
+          that.spinner.hide();
           this.showObj.show = 'signin';
 
           if (localStorage.getItem('Authorization') && localStorage.getItem('Authorization') != null) {
@@ -47,7 +51,8 @@ export class HeaderComponent implements OnInit {
           }
         }
       }, (err) => {
-        this.spinner.hide();
+        that.spinner.hide();
+        console.log('--------------2')
 
         if (err['error'] && err['error']['message'] == 'User not found') {
           this.showObj.show = 'signup';
@@ -56,7 +61,7 @@ export class HeaderComponent implements OnInit {
         }
       })
     } else {
-      this.spinner.hide();
+      that.spinner.hide();
     }
   }
 

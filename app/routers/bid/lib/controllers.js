@@ -245,12 +245,10 @@ controllers.getBidHistoryOfItem = async (req, res, next) => {
             '$sort': {
                 '_id': -1
             }
-        }, {
+        }, { $unwind: '$oBidder' }, {
             '$facet': {
                 'bids': [{
-                    "$skip": +nOffset
-                }, {
-                    "$limit": +nLimit
+                    "$skip": +0
                 }],
                 'totalCount': [{
                     '$count': 'count'
@@ -381,10 +379,10 @@ controllers.toggleBidStatus = async (req, res, next) => {
             }
         }
         Bid.findByIdAndUpdate(req.body.sObjectId, {
-                eBidStatus: req.body.eBidStatus,
-                sTransactionStatus: 0,
-                sTransactionHash: req.body.sTransactionHash
-            },
+            eBidStatus: req.body.eBidStatus,
+            sTransactionStatus: 0,
+            sTransactionHash: req.body.sTransactionHash
+        },
             (err, bid) => {
                 if (err) {
                     log.red(err);
