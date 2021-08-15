@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import * as e from 'cors';
+import { error } from 'jquery';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from 'src/environments/environment';
 import { ApiService } from '../api.service';
 import { ScriptLoaderService } from '../script-loader.service';
-
+declare let window: any;
 
 @Component({
   selector: 'app-create-nft',
@@ -71,6 +74,7 @@ export class CreateNFTComponent implements OnInit {
       this.buildCreateNFTForm();
 
 
+      
       await this.getProfile();
       await this.getCollectionList();
       await this.getCategories();
@@ -80,33 +84,7 @@ export class CreateNFTComponent implements OnInit {
       this.router.navigate([''])
     }
 
-    // nft/collectionlist   API first
-    // user/categories
-    // /user/getCollaboratorList\
-    // http://165.22.244.82:3000/api/v1/user/profile
-
-    // fd.append('nftFile', files[0]);
-
-    // fd.append('sName', sName);
-    // fd.append('sCollection', sCollection);
-    // fd.append('eType', eType); category
-    // fd.append('nQuantity', nQuantity);
-    // fd.append('sCollaborator', aCollaboratorAddresses);
-    // fd.append('nCollaboratorPercentage', aCollaboratorPercentages);
-    // fd.append('sSetRoyaltyPercentage', sSetRroyalityPercentage);
-    // fd.append('sNftdescription', sNftdescription);
-    // fd.append('eAuctionType', eAuctionType);
-    // fd.append('nBasePrice', nBasePrice);
-
-
-
-    //       nftFile: (binary)
-
-    // sCollaborator: 0x5138d8D462DC20b371b5df7588099e46d8c177A3
-    // nCollaboratorPercentage: 100
-    // sSetRoyaltyPercentage: 0.1
-
-  }
+ }
 
 
   buildCreateCollectionForm() {
@@ -135,25 +113,60 @@ export class CreateNFTComponent implements OnInit {
       nQuantity: ['', [Validators.required]],
       sNftdescription: ['', [Validators.required]],
       // 'Auction', 'Fixed Sale', 'Unlockable'
-      eAuctionType: ['', [Validators.required]],
+      eAuctionType: ['Auction', [Validators.required]],
       nBasePrice: ['', [Validators.required]],
       // TODO multiple
-      sCollaborator: ['', [Validators.required, Validators.pattern('^0x[a-fA-F0-9]{40}$')]],
+      sCollaborator: ['', [Validators.required]],
       nCollaboratorPercentage: ['', []],
       sSetRoyaltyPercentage: ['', []],
 
     });
   }
-  // 
-  // : any;
-  // submitted2: Boolean = false;
+  onClickRadio(type: any) {
+    if (type == 'Auction' || 'Fixed Sale') {
+      this.createNFTForm.controls['nBasePrice'].clearValidators();
+      this.createNFTForm.controls['nBasePrice'].updateValueAndValidity();
+    } else {
+      this.createNFTForm.controls['nBasePrice'].setValidators([Validators.required]);
+      this.createNFTForm.controls['nBasePrice'].updateValueAndValidity();
+    }
+
+  }
   getProfile() {
-    this.apiService.getprofile().subscribe((res: any) => {
+    this.apiService.getprofile().subscribe(async(res: any) => {
       if (res && res['data']) {
-        this.profileData = res['data'];
+        this.profileData =await res['data'];
         this.profileData.sProfilePicUrl = this.profileData.sProfilePicUrl == undefined ? 'assets/img/avatars/avatar5.jpg' : 'https://ipfs.io/ipfs/' + this.profileData.sProfilePicUrl;
         this.profileData.sFirstname = this.profileData && this.profileData.oName && this.profileData.oName.sFirstname ? this.profileData.oName.sFirstname : '';
         this.profileData.sLastname = this.profileData && this.profileData.oName && this.profileData.oName.sLastname ? this.profileData.oName.sLastname : '';
+
+
+        // window.contract = await this.apiService.exportInstance(environment.NFTaddress, environment.NFTabi);
+        // console.log('------------------------4',window.contract);
+
+        // if (window.contract && window.contract != undefined) {
+         
+        //   console.log('------------------------5',);
+
+        //   let nAdminCommissionPercentage = await window.contract.methods.getAdminCommissionPercentage().call({ from: this.profileData.sWalletAddress }).then((data:any)=>{
+        //     console.log("nAdminCommissionPercentage: " , data);
+        //     return data;
+        //     console.log('------------------------6',)
+        //   });
+        //   console.log("nAdminCommissionPercentage: " , nAdminCommissionPercentage);
+        //   console.log('------------------------6',);
+
+        //   const that = this;
+
+
+        //   console.log();
+        // } else {
+        //   this.spinner.hide();
+        //   this.toaster.error("There is something issue with NFT address.");
+
+        // }
+
+
       }
     }, (err: any) => {
       console.log('-----err--------', err)
@@ -250,9 +263,6 @@ export class CreateNFTComponent implements OnInit {
 
 
   }
-
-
-
   onClickSubmitCollaborator() {
 
     this.spinner.show();
@@ -291,6 +301,130 @@ export class CreateNFTComponent implements OnInit {
       });
     }
   }
+
+  async onClickSubmitNFT() {
+    if (this.file && this.file != undefined) {
+
+      this.spinner.show();
+      this.submitted3 = true;
+      if (this.createNFTForm.invalid) {
+        this.spinner.hide();
+        return;
+      } else {
+
+        let res = this.createNFTForm.value;
+        console.log('-------------res', res)
+
+        // // 'Auction', 'Fixed Sale', 'Unlockable'
+        // // TODO multiple
+
+        var fd = new FormData();
+        fd.append('nftFile', this.file);
+        fd.append('sName', res.sName);
+        fd.append('sCollection', res.sCollection);
+        fd.append('eType', res.eType);
+        fd.append('nQuantity', res.nQuantity);
+        // 
+        if (res.sCollaborator && res.sCollaborator != undefined && res.sCollaborator != null) {
+          fd.append('sCollaborator', res.sCollaborator + ',' + this.profileData.sWalletAddress);
+        } else {
+          fd.append('sCollaborator', this.profileData.sWalletAddress);
+        }
+        if (res.nCollaboratorPercentage && res.nCollaboratorPercentage != undefined && res.nCollaboratorPercentage != null) {
+          fd.append('nCollaboratorPercentage', res.nCollaboratorPercentage + ',' + (100 - parseFloat(res.nCollaboratorPercentage)));
+        } else {
+          fd.append('nCollaboratorPercentage', '0');
+        }
+
+        fd.append('sSetRoyaltyPercentage', res.sSetRroyalityPercentage ? res.sSetRroyalityPercentage : 0);
+        fd.append('sNftdescription', res.sNftdescription);
+        fd.append('eAuctionType', res.eAuctionType);
+
+        if (res.eAuctionType == 'Auction' || res.eAuctionType == 'Fixed Sale') {
+          fd.append('nBasePrice', res.nBasePrice ? res.nBasePrice : 0);
+        }
+        console.log('------------------------1')
+        // 
+        await this.apiService.createNFT(fd).subscribe(async (data: any) => {
+          this.spinner.hide();
+          console.log('------------------------2', data)
+          if (data && data['data']) {
+            console.log('------------------------3',);
+            let returnData = await data['data'];
+            this.spinner.show();
+            var NFTinstance = await this.apiService.exportInstance(environment.NFTaddress, environment.NFTabi);
+            console.log('------------------------4',NFTinstance);
+
+            if (NFTinstance && NFTinstance != undefined) {
+              this.spinner.hide();
+              console.log('------------------------5',);
+
+              let nAdminCommissionPercentage = await NFTinstance.methods.getAdminCommissionPercentage().call({ from: this.profileData.sWalletAddress });
+              console.log("nAdminCommissionPercentage: " + nAdminCommissionPercentage);
+              console.log('------------------------6',);
+
+              const that = this;
+              this.spinner.show();
+              await NFTinstance.methods.mintToken(parseInt(res.nQuantity) > 1 ? true : false, returnData.sHash, res.sName, parseInt(res.nQuantity), returnData.sSetRroyalityPercentage, returnData.sCollaborator, returnData.nCollaboratorPercentage)
+                .send({
+                  from: this.profileData.sWalletAddress
+                })
+                .on('transactionHash', async (hash: any) => {
+                  this.spinner.hide();
+                  console.log(hash);
+                  let oDataToPass = {
+                    nNFTId: returnData._id,
+                    sTransactionHash: hash
+                  };
+
+                  console.log(oDataToPass);
+                  this.spinner.show();
+                  await this.apiService.setTransactionHash(oDataToPass).subscribe(async (transData: any) => {
+                    this.spinner.hide();
+                    if (transData && transData['data']) {
+                      this.toaster.success('NFT created successfully');
+                      this.onClickRefresh();
+                    } else {
+                      this.toaster.success(transData['message']);
+                    }
+                  })
+
+                })
+                .catch(function (error: any) {
+                  that.spinner.hide();
+                  console.log(error);
+                  if (error.code == 32603) {
+                    that.toaster.error("You're connected to wrong network!");
+                  }
+                  if (error.code == 4001) {
+                    that.toaster.error("You Denied Transaction Signature");
+                  }
+                });
+
+
+              console.log();
+            } else {
+              this.spinner.hide();
+              this.toaster.error("There is something issue with NFT address.");
+
+            }
+          } else {
+            this.spinner.hide();
+            console.log('------------------------4')
+          }
+        }, (error) => {
+          this.spinner.hide();
+          console.log('------------------------5', error)
+        });
+
+      }
+    } else {
+      this.toaster.warning('Please select image.')
+    }
+
+  }
+
+
   onClickRefresh() {
     window.location.reload();
   }

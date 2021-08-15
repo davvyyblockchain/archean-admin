@@ -14,7 +14,7 @@ function Router() {
     this.httpServer = http.createServer(this.app);
     this.corsOptions = {
         origin: ['*'],
-        methods: ['GET', 'POST'],
+        methods: ['GET', 'POST','PUT'],
         allowedHeaders: ['Content-Type', 'Authorization'],
     };
 

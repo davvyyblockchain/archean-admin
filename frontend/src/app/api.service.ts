@@ -31,7 +31,7 @@ export class ApiService {
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private toaster: ToastrService, private router: Router,) {
     if (window.ethereum) {
-   
+
       window.web3 = new Web3(window.ethereum);
       this.web3 = new Web3(window.web3.currentProvider);
 
@@ -104,7 +104,7 @@ export class ApiService {
         obj.network_name = environment.bscMainnet;
       }
       this.setBehaviorView({ ...this.getBehaviorView(), ...obj });
-      return  obj.network_name;
+      return obj.network_name;
     }
   }
 
@@ -127,7 +127,16 @@ export class ApiService {
 
   // --dn
   async exportInstance(SCAddress: any, ABI: any) {
-    return await new window.web3.eth.Contract(ABI, SCAddress);
+    console.log('---------------s---------4', SCAddress);
+    console.log('--------------s----------4', ABI);
+
+    let a = await new window.web3.eth.Contract(ABI, SCAddress);
+    console.log('------------s------------4', a);
+    if (a) {
+      return a;
+    } else {
+      return {};
+    }
   }
 
   // --dn
@@ -181,7 +190,7 @@ export class ApiService {
 
   // 
   getHeaders() {
-    let t:any = localStorage.getItem('Authorization');
+    let t: any = localStorage.getItem('Authorization');
     return t;
   }
   checkuseraddress(address: any) {
@@ -189,11 +198,11 @@ export class ApiService {
   }
 
   getprofile() {
-    return this.http.get(this.URL + '/user/profile', { headers:{'Authorization':this.getHeaders()} } );
+    return this.http.get(this.URL + '/user/profile', { headers: { 'Authorization': this.getHeaders() } });
   }
 
-  updateProfile(data:any) {
-    return this.http.put(this.URL + '/user/updateProfile',data, { headers:{'Authorization':this.getHeaders()} });
+  updateProfile(data: any) {
+    return this.http.put(this.URL + '/user/updateProfile', data, { headers: { 'Authorization': this.getHeaders() } });
   }
 
 
@@ -269,26 +278,36 @@ export class ApiService {
     }
     // return this.http.post(this.URL + '/auth/checkuseraddress', {sWalletAddress:address});
   }
-  
+
 
   getCollectionList() {
-    return this.http.get(this.URL + '/nft/collectionlist', { headers:{'Authorization':this.getHeaders()} } );
+    return this.http.get(this.URL + '/nft/collectionlist', { headers: { 'Authorization': this.getHeaders() } });
   }
 
   getCategories() {
-    return this.http.get(this.URL + '/user/categories', { headers:{'Authorization':this.getHeaders()} } );
+    return this.http.get(this.URL + '/user/categories', { headers: { 'Authorization': this.getHeaders() } });
   }
 
   getColoboraterList() {
-    return this.http.get(this.URL + '/user/getCollaboratorList', { headers:{'Authorization':this.getHeaders()} } );
+    return this.http.get(this.URL + '/user/getCollaboratorList', { headers: { 'Authorization': this.getHeaders() } });
   }
 
-  createCollection(data:any) {
-    return this.http.post(this.URL + '/nft/createCollection',data, { headers:{'Authorization':this.getHeaders()} });
+  createCollection(data: any) {
+    return this.http.post(this.URL + '/nft/createCollection', data, { headers: { 'Authorization': this.getHeaders() } });
   }
-  createCollaborator(data:any) {
-    return this.http.post(this.URL + '/user/addCollaborator',data, { headers:{'Authorization':this.getHeaders()} });
+  createCollaborator(data: any) {
+    return this.http.post(this.URL + '/user/addCollaborator', data, { headers: { 'Authorization': this.getHeaders() } });
   }
+
+
+  createNFT(data: any) {
+    return this.http.post(this.URL + '/nft/create', data, { headers: { 'Authorization': this.getHeaders() } });
+  }
+
+  setTransactionHash(data: any) {
+    return this.http.post(this.URL + '/nft/setTransactionHash', data, { headers: { 'Authorization': this.getHeaders() } });
+  }
+
 
   onClickRefresh() {
     window.location.reload();

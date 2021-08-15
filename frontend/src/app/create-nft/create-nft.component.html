@@ -86,7 +86,7 @@
 
                 <!-- create form COLLABORATOR-->
 
-                <form action="#" class="sign__form sign__form--create" *ngIf="form == 'COLLABORATOR' "
+                <form class="sign__form sign__form--create" *ngIf="form == 'COLLABORATOR' "
                     name="createCollaboratorForm" [formGroup]="createCollaboratorForm">
                     <div class="row">
 
@@ -101,10 +101,11 @@
                                 <input type="text" class="sign__input"
                                     [ngClass]="{ 'is-invalid': submitted2 && createCollaboratorForm.controls.sFullname.errors }"
                                     formControlName="sFullname" placeholder="e. g. 'Crypto Heart'">
-                                <div class="nft-err" *ngIf="submitted2 && createCollaboratorForm.controls.sFullname.errors">
-                                    <span *ngIf="createCollaboratorForm.controls.sFullname.errors?.required">This field is
+                                <div class="nft-err"
+                                    *ngIf="submitted2 && createCollaboratorForm.controls.sFullname.errors">
+                                    <span *ngIf="createCollaboratorForm.controls.sFullname.errors?.required">This field
+                                        is
                                         required.</span>
-
                                 </div>
                             </div>
                         </div>
@@ -115,9 +116,12 @@
                                 </label>
                                 <input type="text" class="sign__input"
                                     [ngClass]="{ 'is-invalid': submitted2 && createCollaboratorForm.controls.sAddress.errors }"
-                                    formControlName="sAddress" placeholder="e. g. '0x5138d8D462DC20b371b5df7588099e46d8c177A3'">
-                                <div class="nft-err" *ngIf="submitted2 && createCollaboratorForm.controls.sAddress.errors">
-                                    <span *ngIf="createCollaboratorForm.controls.sAddress.errors?.required">This field is
+                                    formControlName="sAddress"
+                                    placeholder="e. g. '0x5138d8D462DC20b371b5df7588099e46d8c177A3'">
+                                <div class="nft-err"
+                                    *ngIf="submitted2 && createCollaboratorForm.controls.sAddress.errors">
+                                    <span *ngIf="createCollaboratorForm.controls.sAddress.errors?.required">This field
+                                        is
                                         required.</span>
 
                                 </div>
@@ -138,8 +142,8 @@
 
                 <!-- create form COLLECTIBLE-->
 
-                <form action="#" class="sign__form sign__form--create" *ngIf="form == 'COLLECTIBLE' "
-                    name="createCollectionForm" [formGroup]="createCollectionForm">
+                <form class="sign__form sign__form--create" *ngIf="form == 'COLLECTIBLE' " name="createCollectionForm"
+                    [formGroup]="createCollectionForm">
                     <div class="row">
 
                         <div class="col-12">
@@ -199,35 +203,48 @@
 
                 <!-- end form COLLECTIBLE-->
 
-
                 <!-- create form NFT-->
-                <form action="#" class="sign__form sign__form--create" *ngIf="form == 'NFT' ">
+                <form name="createNFTForm" [formGroup]="createNFTForm" class="sign__form sign__form--create"
+                    *ngIf="form == 'NFT' ">
                     <div class="row">
+                        <!--  set Category -->
 
                         <div class="col-12 col-md-6">
                             <div class="sign__group">
                                 <label class="sign__label" for="royalties">Set Category</label>
-                                <select id="royalties" name="royalties" class="sign__select">
+                                <select id="royalties" name="royalties" class="sign__select"
+                                    [ngClass]="{ 'is-invalid': submitted3 && createNFTForm.controls.eType.errors }"
+                                    formControlName="eType">
                                     <option value="">Select Category</option>
-
-                                    <option  *ngFor="let obj of collectionList;" value="1">5%</option>
+                                    <option *ngFor="let obj of collectionList;" value="1">5%</option>
                                     <option value="Image">Image</option>
-
                                 </select>
+                                <div class="nft-err" *ngIf="submitted3 && createNFTForm.controls.eType.errors">
+                                    <span *ngIf="createNFTForm.controls.eType.errors?.required">This field is
+                                        required.</span>
+                                </div>
+
+
                             </div>
                         </div>
+                        <!--  set Collection -->
                         <div class="col-12 col-md-6">
                             <div class="sign__group">
                                 <label class="sign__label" for="royalties">Set Collection</label>
-                                <select id="royalties" name="royalties" class="sign__select">
+                                <select id="royalties" name="royalties" class="sign__select"
+                                    [ngClass]="{ 'is-invalid': submitted3 && createNFTForm.controls.sCollection.errors }"
+                                    formControlName="sCollection">
                                     <option value="">Select Collection</option>
-
-                                    <option *ngFor="let obj of collectionList;" value="{{obj.sName ? obj.sName : ''}}">{{obj.sName ? obj.sName : ''}}</option>
-
+                                    <option *ngFor="let obj of collectionList;" value="{{obj.sName ? obj.sName : ''}}">
+                                        {{obj.sName ? obj.sName : ''}}</option>
                                 </select>
+                                <div class="nft-err" *ngIf="submitted3 && createNFTForm.controls.sCollection.errors">
+                                    <span *ngIf="createNFTForm.controls.sCollection.errors?.required">This field is
+                                        required.</span>
+                                </div>
                             </div>
                         </div>
-
+                        <!--  Upload  File -->
 
                         <div class="col-12">
                             <h4 class="sign__title">Upload file</h4>
@@ -236,81 +253,135 @@
                         <div class="col-12">
                             <div class="sign__file">
                                 <label id="file1" for="sign__file-upload">e. g. Image</label>
-                                <input data-name="#file1" id="sign__file-upload" name="file" class="sign__file-upload"
-                                    type="file" accept="video/mp4,video/x-m4v,video/*,.png,.jpg,.jpeg">
+                                <input data-name="#file1" (change)="onSelectDocumentNFT($event)" id="sign__file-upload"
+                                    name="file" class="sign__file-upload" type="file"
+                                    accept="video/mp4,video/x-m4v,video/*,.png,.jpg,.jpeg">
                             </div>
                         </div>
 
                         <div class="col-12 col-md-6">
                             <div class="sign__group">
-                                <label class="sign__label" for="itemname">NFT Title/ Name *</label>
-                                <input id="itemname" type="text" name="itemname" class="sign__input"
-                                    placeholder="e. g. 'Crypto Heart'">
+                                <label class="sign__label">NFT Title/ Name *</label>
+                                <input type="text" class="sign__input" placeholder="e. g. 'Crypto Heart'"
+                                    [ngClass]="{ 'is-invalid': submitted3 && createNFTForm.controls.sName.errors }"
+                                    formControlName="sName">
+                                <div class="nft-err" *ngIf="submitted3 && createNFTForm.controls.sName.errors">
+                                    <span *ngIf="createNFTForm.controls.sName.errors?.required">This field is
+                                        required.</span>
+                                </div>
                             </div>
                         </div>
                         <div class="col-12 col-md-6">
                             <div class="sign__group">
-                                <label class="sign__label" for="itemname">NFT Quantity</label>
-                                <input id="itemname" type="number" name="itemname" class="sign__input"
-                                    placeholder="e. g. 1 , 2 ,5">
+                                <label class="sign__label">NFT Quantity</label>
+                                <input type="number" class="sign__input" placeholder="e. g. 1 , 2 ,5"
+                                    [ngClass]="{ 'is-invalid': submitted3 && createNFTForm.controls.nQuantity.errors }"
+                                    formControlName="nQuantity">
+                                <div class="nft-err" *ngIf="submitted3 && createNFTForm.controls.nQuantity.errors">
+                                    <span *ngIf="createNFTForm.controls.nQuantity.errors?.required">This field is
+                                        required.</span>
+                                </div>
                             </div>
                         </div>
 
                         <div class="col-12">
                             <div class="sign__group">
-                                <label class="sign__label" for="description">NFT Description</label>
-                                <textarea id="description" name="description" class="sign__textarea"
+                                <label class="sign__label">NFT Description</label>
+                                <textarea class="sign__textarea"
+                                    [ngClass]="{ 'is-invalid': submitted3 && createNFTForm.controls.sNftdescription.errors }"
+                                    formControlName="sNftdescription"
                                     placeholder="e. g. 'After purchasing you will able to recived...'"></textarea>
+                                <div class="nft-err"
+                                    *ngIf="submitted3 && createNFTForm.controls.sNftdescription.errors">
+                                    <span *ngIf="createNFTForm.controls.sNftdescription.errors?.required">This field is
+                                        required.</span>
+                                </div>
                             </div>
                         </div>
 
                         <div class="col-12 col-md-4">
                             <div class="sign__group">
-                                <label class="sign__label" for="royalties">Royalties</label>
-                                <select id="royalties" name="royalties" class="sign__select">
-                                    <option value="1">5%</option>
-                                    <option value="2">10%</option>
-                                    <option value="3">20%</option>
+                                <label class="sign__label">Select Collaborator</label>
+                                <select class="sign__select"
+                                    [ngClass]="{ 'is-invalid': submitted3 && createNFTForm.controls.sCollaborator.errors }"
+                                    formControlName="sCollaborator">
+                                    <option value="">Select Collaborator</option>
+                                    <option *ngFor="let obj of collaboratorList;" value="{{obj.sAddress ? obj.sAddress : ''}}">
+                                        {{obj.sFullname ? obj.sFullname : ''}}</option>
                                 </select>
                             </div>
                         </div>
 
                         <div class="col-12 col-md-4">
                             <div class="sign__group">
-                                <label class="sign__label" for="size">Size</label>
-                                <input id="size" type="text" name="size" class="sign__input" placeholder="e. g. Size">
+                                <label class="sign__label">Collaborator %</label>
+                                <input type="text" class="sign__input" placeholder="e. g. Size"
+                                    [ngClass]="{ 'is-invalid': submitted3 && createNFTForm.controls.nCollaboratorPercentage.errors }"
+                                    formControlName="nCollaboratorPercentage">
                             </div>
                         </div>
 
                         <div class="col-12 col-md-4">
                             <div class="sign__group">
-                                <label class="sign__label" for="propertie">Propertie</label>
+                                <label class="sign__label" for="propertie">Royalty Percentage</label>
                                 <input id="propertie" type="text" name="propertie" class="sign__input"
-                                    placeholder="Subject">
+                                    [ngClass]="{ 'is-invalid': submitted3 && createNFTForm.controls.sSetRoyaltyPercentage.errors }"
+                                    formControlName="sSetRoyaltyPercentage" placeholder="Enter Percentage">
                             </div>
                         </div>
 
-                        <div class="col-12">
+                        <div class="col-12 col-md-4">
                             <div class="sign__group sign__group--row">
-                                <ul class="sign__radio sign__radio--single">
-                                    <li>
-                                        <input id="type1" type="radio" name="type" checked="">
+                                <ul class="sign__radio sign__radio--single" >
+                                    <li (click)="onClickRadio('Fixed Sale')">
+                                        <input id="type1" type="radio" value="Fixed Sale"
+                                            [ngClass]="{ 'is-invalid': submitted3 && createNFTForm.controls.eAuctionType.errors }"
+                                            formControlName="eAuctionType">
                                         <label for="type1">Put on sale</label>
                                     </li>
-                                    <li>
-                                        <input id="type2" type="radio" name="type">
-                                        <label for="type2">Instant sale price</label>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="sign__group sign__group--row">
+                                <ul class="sign__radio sign__radio--single">
+                                    <li (click)="onClickRadio('Auction')">
+                                        <input id="type2" type="radio" value="Auction"
+                                            [ngClass]="{ 'is-invalid': submitted3 && createNFTForm.controls.eAuctionType.errors }"
+                                            formControlName="eAuctionType">
+                                        <label for="type2">Instant Auction</label>
                                     </li>
-                                    <li>
-                                        <input id="type3" type="radio" name="type">
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="sign__group sign__group--row">
+                                <ul class="sign__radio sign__radio--single">
+                                    <li (click)="onClickRadio('Unlockable')">
+                                        <input id="type3" type="radio" value="Unlockable"
+                                            [ngClass]="{ 'is-invalid': submitted3 && createNFTForm.controls.eAuctionType.errors }"
+                                            formControlName="eAuctionType">
                                         <label for="type3">Unlock one purchased</label>
                                     </li>
                                 </ul>
                             </div>
                         </div>
 
+                        <div class="col-12" *ngIf="createNFTForm.value.eAuctionType == 'Fixed Sale' ||  createNFTForm.value.eAuctionType == 'Auction'">
+                            <div class="sign__group">
+                                <label class="sign__label" for="propertie">Base Price</label>
+                                <input id="propertie" type="text" name="propertie" class="sign__input"
+                                    [ngClass]="{ 'is-invalid': submitted3 && createNFTForm.controls.nBasePrice.errors }"
+                                    formControlName="nBasePrice" placeholder="Enter Base Price">
+                                <div class="nft-err" *ngIf="submitted3 && createNFTForm.controls.nBasePrice.errors">
+                                    <span *ngIf="createNFTForm.controls.nBasePrice.errors?.required">This field is
+                                        required.</span>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="col-12 col-xl-3">
-                            <button type="button" class="sign__btn">Create NFT</button>
+                            <button type="button" class="sign__btn" (click)="onClickSubmitNFT()"> Create NFT</button>
                         </div>
                     </div>
                 </form>
