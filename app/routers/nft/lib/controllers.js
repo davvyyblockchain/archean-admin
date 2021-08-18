@@ -720,7 +720,7 @@ controllers.landing = async (req, res) => {
                         'foreignField': '_id',
                         'as': 'aCurrentOwner'
                     }
-                }],
+                },{$unwind:'$aCurrentOwner'}],
                 'mostViewed': [{
                     '$match': {
                         'sTransactionStatus': 1,
@@ -741,7 +741,7 @@ controllers.landing = async (req, res) => {
                         'foreignField': '_id',
                         'as': 'aCurrentOwner'
                     }
-                }],
+                },{$unwind:'$aCurrentOwner'}],
                 'onSale': [{
                     '$match': {
                         'sTransactionStatus': {
@@ -764,7 +764,7 @@ controllers.landing = async (req, res) => {
                         'foreignField': '_id',
                         'as': 'aCurrentOwner'
                     }
-                }],
+                },{$unwind:'$aCurrentOwner'}],
                 'onAuction': [{
                     '$match': {
                         'sTransactionStatus': {
@@ -787,11 +787,11 @@ controllers.landing = async (req, res) => {
                         'foreignField': '_id',
                         'as': 'aCurrentOwner'
                     }
-                }]
+                },{$unwind:'$aCurrentOwner'}]
             }
         }]);
 
-        return res.reply(messages.success(), data);
+        return res.reply(messages.success(), data[0]);
     } catch (error) {
         console.log(error);
         return res.reply(messages.server_error());
