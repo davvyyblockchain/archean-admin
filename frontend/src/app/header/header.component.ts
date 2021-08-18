@@ -10,7 +10,7 @@ import { ApiService } from '../api.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-
+  type: any = 'hide'
   showObj: any = {
     wallet_address: '',
     show: 'metamask',
@@ -28,10 +28,13 @@ export class HeaderComponent implements OnInit {
   }
 
   async ngOnInit() {
+  
+    this.type = 'hide';
     this.spinner.show();
-    const  that = this;
+    const that = this;
     this.showObj.wallet_address = await this.apiService.export();
-    if (this.showObj.wallet_address && this.showObj.wallet_address != '') {
+    console.log('------this.showObj.wallet_address ------', this.showObj.wallet_address)
+    if (this.showObj.wallet_address && this.showObj.wallet_address != '' && this.showObj.wallet_address != []) {
       console.log('--------------0')
       that.spinner.hide();
 
@@ -42,7 +45,7 @@ export class HeaderComponent implements OnInit {
         that.spinner.hide();
         console.log('--------------1')
         if (data) {
- 
+
           that.spinner.hide();
           this.showObj.show = 'signin';
 
@@ -67,12 +70,12 @@ export class HeaderComponent implements OnInit {
 
   connectToMetaMask() {
     this.spinner.show();
-
     this.apiService.connect().then((data: any) => {
       this.spinner.hide();
-
-      this.toaster.success('User Connected Successfully');
-      this.onClickRefresh();
+      if (data && data != 'error') {
+        this.toaster.success('User Connected Successfully');
+        this.onClickRefresh();
+      }
 
     }).catch((er: any) => {
       this.spinner.hide();
@@ -81,6 +84,10 @@ export class HeaderComponent implements OnInit {
         this.toaster.error(er.message);
       }
     })
+  }
+
+  clickOP(type: any) {
+    this.type = type == 'show' ? 'hide' : 'show';
   }
 
   async signinMetaMask() {
@@ -100,4 +107,11 @@ export class HeaderComponent implements OnInit {
   onClickRefresh() {
     window.location.reload();
   }
+  
+  onsignout(){
+    if (localStorage.removeItem('Authorization') != null) {
+    }
+    this.onClickRefresh()
+  }
+
 }

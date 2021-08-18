@@ -71,7 +71,6 @@ export class ApiService {
     }
     // Non-dapp browsers...
     else {
-      window.web3 = new Web3(environment.mainnetBSC);
       console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
     }
 
@@ -108,21 +107,24 @@ export class ApiService {
     }
   }
 
-  connect() {
-    // if (window.ethereum) {
-    // commented for future use
-    return new Promise((resolve, reject) => {
+  async connect() {
+    if (window.ethereum) {
+      // commented for future use
+      return new Promise((resolve, reject) => {
 
-      let temp = window.ethereum.enable();
-      // web3.eth.accounts.create();
-      if (temp) {
-        resolve(temp)
-      } else {
-        reject('err');
-      }
+        let temp = window.ethereum.enable();
+        // web3.eth.accounts.create();
+        if (temp) {
+          resolve(temp)
+        } else {
+          reject(temp);
+        }
 
-    })
-    // }
+      })
+    } else {
+      this.toaster.error('No account found! Make sure the Ethereum client is configured properly. ')
+      return 'error'
+    }
   }
 
   // --dn
@@ -142,28 +144,32 @@ export class ApiService {
   // --dn
   async export() {
 
-    let a = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      if (window.ethereum) {
+        return new Promise(async (resolve, reject) => {
+          let accounts: any = await window.ethereum.request({ method: 'eth_requestAccounts' }).then((data:any)=>{
+              if(data && data.length){
+                return data;
+              }
+          }).catch((err: any)=>{
+            if(err && err.code  == 4001){
+              this.toaster.error(err['message'])
+            }
+          });
 
-    if (window.ethereum) {
-      return new Promise(async (resolve, reject) => {
+          if (accounts && accounts.length) {
+            window.web3.eth.defaultAccount = accounts[0];
+            let obj: any = {};
+            obj.wallet_address = accounts[0];
+            this.setBehaviorView({ ...this.getBehaviorView(), ...obj });
 
-        let accounts: any = await window.ethereum.request({ method: 'eth_requestAccounts' });
-
-        if (accounts && accounts.length) {
-          window.web3.eth.defaultAccount = accounts[0];
-          let obj: any = {};
-          obj.wallet_address = accounts[0];
-          this.setBehaviorView({ ...this.getBehaviorView(), ...obj });
-
-          resolve(accounts[0])
-        } else {
-          resolve([]);
-        }
-      })
-    } else {
-      this.toaster.error('No account found! Make sure the Ethereum client is configured properly. ')
-    }
-
+            resolve(accounts[0])
+          } else {
+            resolve([]);
+          }
+        })
+      } else {
+        this.toaster.error('No account found! Make sure the Ethereum client is configured properly. ')
+      }
   }
 
   getBalance(contractInstance: any, userWalletAccount: any) {
@@ -312,21 +318,23 @@ export class ApiService {
     return this.http.post(this.URL + '/nft/nftListing', data, { headers: { 'Authorization': this.getHeaders() } });
   }
   viewnft(id: any) {
-    return this.http.get(this.URL + '/nft/viewnft/'+id, { headers: { 'Authorization': this.getHeaders() } });
+    return this.http.get(this.URL + '/nft/viewnft/' + id, { headers: { 'Authorization': this.getHeaders() } });
   }
-  bidHistory(id: any,data:any) {
-    return this.http.post(this.URL + '/bid/history/'+id,data, { headers: { 'Authorization': this.getHeaders() } });
+  bidHistory(id: any, data: any) {
+    return this.http.post(this.URL + '/bid/history/' + id, data, { headers: { 'Authorization': this.getHeaders() } });
   }
 
-  
+
   landingPage() {
-    return this.http.get(this.URL + '/nft/landing', { headers: { 'Authorization': this.getHeaders() } });
+    return this.http.get(this.URL + '/nft/landing');
   }
   nftMYListing(data: any) {
     return this.http.post(this.URL + '/nft/mynftlist', data, { headers: { 'Authorization': this.getHeaders() } });
   }
+  bidCreate(data: any) {
+    return this.http.post(this.URL + '/bid/create', data, { headers: { 'Authorization': this.getHeaders() } });
+  }
 
-  // nft/
   onClickRefresh() {
     window.location.reload();
   }

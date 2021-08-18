@@ -58,36 +58,41 @@
                 <div class="asset__info">
                     <div class="asset__desc">
                         <h2>Descriptions</h2>
-                        <p>{{NFTData.sNftdescription && NFTData.sNftdescription != undefined ? NFTData.sNftdescription :'-' }}</p>
+                        <p>{{NFTData.sNftdescription && NFTData.sNftdescription != undefined ? NFTData.sNftdescription
+                            :'-' }}</p>
                     </div>
 
                     <ul class="asset__authors">
                         <li>
                             <span>Creator</span>
                             <div class="asset__author asset__author--verified">
-                                <img src="{{NFTData && NFTData.oCurrentOwner && NFTData.oCurrentOwner != undefined ? 'https://ipfs.io/ipfs/'+ NFTData.oCurrentOwner.sProfilePicUrl :'assets/img/avatars/avatar5.jpg' }}" alt="">
-                                <a href="javascript:;">{{NFTData.oCurrentOwner &&NFTData.oCurrentOwner.oName && NFTData.oCurrentOwner.oName.sFirstname &&
+                                <img src="{{NFTData && NFTData.oCurrentOwner && NFTData.oCurrentOwner != undefined ? 'https://ipfs.io/ipfs/'+ NFTData.oCurrentOwner.sProfilePicUrl :'assets/img/avatars/avatar5.jpg' }}"
+                                    alt="">
+                                <a href="javascript:;">{{NFTData.oCurrentOwner &&NFTData.oCurrentOwner.oName &&
+                                    NFTData.oCurrentOwner.oName.sFirstname &&
                                     NFTData.oCurrentOwner.oName.sFirstname!= undefined ?
                                     NFTData.oCurrentOwner.oName.sFirstname:'-' }}
-                                
-                                    {{NFTData.oCurrentOwner &&NFTData.oCurrentOwner.oName && NFTData.oCurrentOwner.oName.sLastname &&
-                                        NFTData.oCurrentOwner.oName.sLastname!= undefined ?
-                                        NFTData.oCurrentOwner.oName.sLastname:'-' }}
-                                    </a>
+
+                                    {{NFTData.oCurrentOwner &&NFTData.oCurrentOwner.oName &&
+                                    NFTData.oCurrentOwner.oName.sLastname &&
+                                    NFTData.oCurrentOwner.oName.sLastname!= undefined ?
+                                    NFTData.oCurrentOwner.oName.sLastname:'-' }}
+                                </a>
                             </div>
                         </li>
                         <li>
                             <span>Collection</span>
                             <div class="asset__author ">
                                 <img src="assets/img/avatars/avatar9.jpg" alt="">
-                                <a href="javascript:;">{{NFTData.sCollection && NFTData.sCollection != undefined ? NFTData.sCollection :'-' }}</a>
+                                <a href="javascript:;">{{NFTData.sCollection && NFTData.sCollection != undefined ?
+                                    NFTData.sCollection :'-' }}</a>
                             </div>
                         </li>
                     </ul>
 
                     <!-- tabs -->
                     <ul class="nav nav-tabs asset__tabs" role="tablist">
-  
+
                         <li class="nav-item  active">
                             <a class="nav-link active" data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-2"
                                 aria-selected="false">Bids</a>
@@ -104,22 +109,26 @@
 
                         <div class="tab-pane fade show active" id="tab-2" role="tabpanel">
                             <ng-container *ngIf="historyData && historyData.length">
-                                <div class="asset__actions"  *ngFor="let obj of historyData;">
+                                <div class="asset__actions" *ngFor="let obj of historyData;">
                                     <div class="asset__action asset__action--verified">
                                         <img src="assets/img/avatars/avatar10.jpg" alt="">
-                                        <p>Bid placed for <b>{{obj && obj.nBidPrice && obj.nBidPrice ? obj.nBidPrice['$numberDecimal'] :0}} BNB</b> by <br> <a
-                                                href="javascript:;">{{obj &&obj.oBidder && obj.oBidder.oName && obj.oBidder.oName.sFirstname ? obj.oBidder.oName.sFirstname :0}} {{obj.oBidder && obj.oBidder.oName && obj.oBidder.oName.sLastname ? obj.oBidder.oName.sLastname :0}}</a></p>
+                                        <p>Bid placed for <b>{{obj && obj.nBidPrice && obj.nBidPrice ?
+                                                obj.nBidPrice['$numberDecimal'] :0}} BNB</b> by <br> <a
+                                                href="javascript:;">{{obj &&obj.oBidder && obj.oBidder.oName &&
+                                                obj.oBidder.oName.sFirstname ? obj.oBidder.oName.sFirstname :0}}
+                                                {{obj.oBidder && obj.oBidder.oName && obj.oBidder.oName.sLastname ?
+                                                obj.oBidder.oName.sLastname :0}}</a></p>
                                     </div>
-    
+
                                 </div>
                             </ng-container>
                             <ng-container *ngIf="historyData && !historyData.length">
-                                <div class="asset__actions" >
+                                <div class="asset__actions">
                                     <div class="asset__action ">
                                         <!-- <img src="assets/img/avatars/avatar10.jpg" alt=""> -->
                                         <p>No Bid Found.</p>
                                     </div>
-    
+
                                 </div>
                             </ng-container>
                         </div>
@@ -153,7 +162,8 @@
 
                         <div class="asset__price">
                             <span>Minimum bid</span>
-                            <span>{{NFTData.nBasePrice && NFTData.nBasePrice != undefined ? NFTData.nBasePrice['$numberDecimal'] :'-' }} BNB</span>
+                            <span>{{NFTData.nBasePrice && NFTData.nBasePrice != undefined ?
+                                NFTData.nBasePrice['$numberDecimal'] :'-' }} BNB</span>
                         </div>
                     </div>
 
@@ -382,3 +392,38 @@
 </main>
 
 <app-footer></app-footer>
+<div id="modal-bid" class="zoom-anim-dialog mfp-hide modal modal--form">
+    <button class="modal__close" type="button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path
+                d="M13.41,12l4.3-4.29a1,1,0,1,0-1.42-1.42L12,10.59,7.71,6.29A1,1,0,0,0,6.29,7.71L10.59,12l-4.3,4.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0L12,13.41l4.29,4.3a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42Z" />
+        </svg></button>
+
+    <h4 class="sign__title">Place a bid</h4>
+    <form name="bidForm" [formGroup]="bidForm">
+        <div class="sign__group sign__group--row">
+            <label class="sign__label" for="placebid">Quantity</label>
+            <input id="placebid" type="text" class="sign__input"
+                [ngClass]="{ 'is-invalid': submitted1 && bidForm.controls.nQuantity.errors }"
+                formControlName="nQuantity">
+            <div class="nft-err" *ngIf="submitted1 && bidForm.controls.nQuantity.errors">
+                <span *ngIf="bidForm.controls.nQuantity.errors?.required">This field is
+                    required.</span>
+            </div>
+
+        </div>
+
+        <div class="sign__group sign__group--row">
+            <label class="sign__label" for="placebid">Price</label>
+            <input id="placebid" type="text" class="sign__input"
+                [ngClass]="{ 'is-invalid': submitted1 && bidForm.controls.nBidPrice.errors }"
+                formControlName="nBidPrice">
+            <div class="nft-err" *ngIf="submitted1 && bidForm.controls.nBidPrice.errors">
+                <span *ngIf="bidForm.controls.nBidPrice.errors?.required">This field is
+                    required.</span>
+            </div>
+        </div>
+        <span class="sign__text sign__text--small">This Bid can Finalize by Owner.</span>
+
+        <button class="sign__btn" type="button" (click)="onClickSubmitBID()"> Take a bid</button>
+    </form>
+</div>

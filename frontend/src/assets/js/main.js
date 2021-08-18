@@ -4,19 +4,19 @@ $(document).ready(function () {
 	/*==============================
 	Menu
 	==============================*/
-	$('.header__btn').on('click', function() {
+	$('.header__btn').on('click', function () {
 		$(this).toggleClass('header__btn--active');
 		$('.header__menu').toggleClass('header__menu--active');
 	});
 
-	$('.header__search .close, .header__action--search button').on('click', function() {
+	$('.header__search .close, .header__action--search button').on('click', function () {
 		$('.header__search').toggleClass('header__search--active');
 	});
 
 	/*==============================
 	Multi level dropdowns
 	==============================*/
-	$('ul.dropdown-menu [data-toggle="dropdown"]').on('click', function(event) {
+	$('ul.dropdown-menu [data-toggle="dropdown"]').on('click', function (event) {
 		event.preventDefault();
 		event.stopPropagation();
 
@@ -40,16 +40,16 @@ $(document).ready(function () {
 		autoHeight: true,
 		items: 1,
 		responsive: {
-			0 : {
+			0: {
 				margin: 20,
 			},
-			576 : {
+			576: {
 				margin: 20,
 			},
-			768 : {
+			768: {
 				margin: 30,
 			},
-			1200 : {
+			1200: {
 				margin: 30,
 				mouseDrag: false,
 			},
@@ -69,22 +69,22 @@ $(document).ready(function () {
 		margin: 20,
 		autoHeight: true,
 		responsive: {
-			0 : {
+			0: {
 				items: 2,
 			},
-			576 : {
+			576: {
 				items: 2,
 			},
-			768 : {
+			768: {
 				items: 3,
 				margin: 30,
 			},
-			992 : {
-				items: 4,
+			992: {
+				items: 3,
 				margin: 30,
 			},
-			1200 : {
-				items: 5,
+			1200: {
+				items: 3,
 				margin: 30,
 				mouseDrag: false,
 				dots: false,
@@ -102,24 +102,25 @@ $(document).ready(function () {
 		autoplayTimeout: 5000,
 		smartSpeed: 600,
 		margin: 20,
+		merge:true,
 		autoHeight: true,
 		responsive: {
-			0 : {
+			0: {
 				items: 1,
 			},
-			576 : {
+			576: {
 				items: 2,
 			},
-			768 : {
+			768: {
 				items: 3,
 				margin: 30,
 			},
-			992 : {
-				items: 4,
+			992: {
+				items: 3,
 				margin: 30,
 			},
-			1200 : {
-				items: 4,
+			1200: {
+				items: 3,
 				margin: 30,
 				mouseDrag: false,
 				dots: false,
@@ -139,28 +140,29 @@ $(document).ready(function () {
 		margin: 20,
 		autoHeight: true,
 		responsive: {
-			0 : {
+			0: {
 				items: 1,
 			},
-			576 : {
+			576: {
 				items: 2,
 			},
-			768 : {
+			768: {
 				items: 3,
 				margin: 30,
 			},
-			992 : {
-				items: 4,
+			992: {
+				items: 3,
 				margin: 30,
 			},
-			1200 : {
-				items: 4,
+			1200: {
+				items: 3,
 				margin: 30,
 				mouseDrag: false,
 				dots: false,
 			},
 		}
 	});
+
 
 	$('.main__carousel--authors').owlCarousel({
 		mouseDrag: true,
@@ -174,21 +176,21 @@ $(document).ready(function () {
 		margin: 20,
 		autoHeight: true,
 		responsive: {
-			0 : {
+			0: {
 				items: 1,
 			},
-			576 : {
+			576: {
 				items: 2,
 			},
-			768 : {
+			768: {
 				items: 3,
 				margin: 30,
 			},
-			992 : {
+			992: {
 				items: 4,
 				margin: 30,
 			},
-			1200 : {
+			1200: {
 				items: 4,
 				margin: 30,
 				mouseDrag: false,
@@ -214,11 +216,11 @@ $(document).ready(function () {
 	/*==============================
 	Navigation
 	==============================*/
-	$('.main__nav--prev').on('click', function() {
+	$('.main__nav--prev').on('click', function () {
 		var carouselId = $(this).attr('data-nav');
 		$(carouselId).trigger('prev.owl.carousel');
 	});
-	$('.main__nav--next').on('click', function() {
+	$('.main__nav--next').on('click', function () {
 		var carouselId = $(this).attr('data-nav');
 		$(carouselId).trigger('next.owl.carousel');
 	});
@@ -236,27 +238,27 @@ $(document).ready(function () {
 		autoplayHoverPause: true,
 		smartSpeed: 600,
 		margin: 20,
-		responsive : {
-			0 : {
+		responsive: {
+			0: {
 				items: 2,
 			},
-			576 : {
+			576: {
 				items: 3,
 				margin: 20,
 			},
-			768 : {
+			768: {
 				items: 4,
 				margin: 30,
 			},
-			992 : {
+			992: {
 				items: 4,
 				margin: 30,
 			},
-			1200 : {
+			1200: {
 				items: 6,
 				margin: 30,
 			},
-			1900 : {
+			1900: {
 				items: 8,
 				margin: 30,
 			},
@@ -317,7 +319,7 @@ $(document).ready(function () {
 	/*==============================
 	Copy
 	==============================*/
-	$('.author__code button').on('click', function() {
+	$('.author__code button').on('click', function () {
 		var copyText = document.getElementById('author-code');
 		copyText.select(); /* Select the text field */
 		copyText.setSelectionRange(0, 99999); /* For mobile devices */
@@ -325,7 +327,7 @@ $(document).ready(function () {
 
 		/* Alert the copied text */
 		$(this).addClass('active');
-		setTimeout(function() {
+		setTimeout(function () {
 			$('.author__code button').removeClass('active');
 		}, 1200);
 	});
@@ -333,8 +335,8 @@ $(document).ready(function () {
 	/*==============================
 	Section bg
 	==============================*/
-	$('.main__video-bg, .author__cover--bg, .main__author, .collection__cover, .hero__slide').each(function(){
-		if ($(this).attr('data-bg')){
+	$('.main__video-bg, .author__cover--bg, .main__author, .collection__cover, .hero__slide').each(function () {
+		if ($(this).attr('data-bg')) {
 			$(this).css({
 				'background': 'url(' + $(this).data('bg') + ')',
 				'background-position': 'center center',
@@ -347,8 +349,8 @@ $(document).ready(function () {
 	/*==============================
 	Upload file
 	==============================*/
-	$('.sign__file-upload').on('change', function() {
-		var videoLabel  = $(this).attr('data-name');
+	$('.sign__file-upload').on('change', function () {
+		var videoLabel = $(this).attr('data-name');
 
 		if ($(this).val() != '') {
 			$(videoLabel).text($(this)[0].files[0].name);
@@ -360,15 +362,15 @@ $(document).ready(function () {
 	/*==============================
 	Countdown
 	==============================*/
-	$('.asset__clock').countdown('2022/12/01', function(event) {
+	$('.asset__clock').countdown('2022/12/01', function (event) {
 		$(this).html(event.strftime('%D days %H:%M:%S'));
 	});
 
-	$('.card__clock--1').countdown('2022/12/01', function(event) {
+	$('.card__clock--1').countdown('2022/12/01', function (event) {
 		$(this).html(event.strftime('%H:%M:%S'));
 	});
 
-	$('.card__clock--2').countdown('2023/11/01', function(event) {
+	$('.card__clock--2').countdown('2023/11/01', function (event) {
 		$(this).html(event.strftime('%H:%M:%S'));
 	});
 

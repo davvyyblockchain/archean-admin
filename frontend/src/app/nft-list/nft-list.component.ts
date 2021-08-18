@@ -57,6 +57,7 @@ export class NFTListComponent implements OnInit {
     if (localStorage.getItem('Authorization') && localStorage.getItem('Authorization') != null) {
       await this.getNFTListingData(this.searchData);
     } else {
+      this.toaster.info('Please login first.')
       this.router.navigate([''])
     }
   }
