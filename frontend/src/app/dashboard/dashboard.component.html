@@ -44,7 +44,7 @@
                             <div class="card" *ngFor="let obj of landingData.onAuction;">
                                 <a href="javascript:;" class="card__cover " routerLink="/NFT-detail/{{obj._id && obj._id != undefined ? obj._id : '-'}}">
                                     <img class="sty img-fluid"
-                                        src="{{obj.sHash && obj.sHash != undefined ? 'https://ipfs.io/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }} "
+                                        src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }} "
                                         alt="">
                                     <span class="card__time">{{obj.eAuctionType && obj.eAuctionType != undefined ?
                                         obj.eAuctionType : '-'}}</span>
@@ -52,7 +52,7 @@
                                 <h3 class="card__title"><a href="javascript:;">{{obj.sName && obj.sName != undefined ?
                                         obj.sName : 'UnKnown'}}</a></h3>
                                 <div class="card__author card__author--verified">
-                                    <img src="{{obj.aCurrentOwner && obj.aCurrentOwner != undefined ? 'https://ipfs.io/ipfs/'+obj.aCurrentOwner['sProfilePicUrl'] :'assets/img/avatars/avatar5.jpg' }}"
+                                    <img src="{{obj.aCurrentOwner && obj.aCurrentOwner != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.aCurrentOwner['sProfilePicUrl'] :'assets/img/avatars/avatar5.jpg' }}"
                                         alt="">
                                     <a href="javascript:;">{{obj.aCurrentOwner && obj.aCurrentOwner != undefined ?
                                         obj.aCurrentOwner['oName']['sFirstname'] : '-'}} {{obj.aCurrentOwner &&
@@ -112,7 +112,7 @@
                             <div class="card" *ngFor="let obj of landingData.onSale;">
                                 <a href="javascript:;" class="card__cover " routerLink="/NFT-detail/{{obj._id && obj._id != undefined ? obj._id : '-'}}">
                                     <img class="sty img-fluid"
-                                        src="{{obj.sHash && obj.sHash != undefined ? 'https://ipfs.io/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }} "
+                                        src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }} "
                                         alt="">
                                     <span class="card__time">{{obj.eAuctionType && obj.eAuctionType != undefined ?
                                         obj.eAuctionType : '-'}}</span>
@@ -120,7 +120,7 @@
                                 <h3 class="card__title"><a href="javascript:;">{{obj.sName && obj.sName != undefined ?
                                         obj.sName : 'UnKnown'}}</a></h3>
                                 <div class="card__author card__author--verified">
-                                    <img src="{{obj.aCurrentOwner && obj.aCurrentOwner != undefined ? 'https://ipfs.io/ipfs/'+obj.aCurrentOwner['sProfilePicUrl'] :'assets/img/avatars/avatar5.jpg' }}"
+                                    <img src="{{obj.aCurrentOwner && obj.aCurrentOwner != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.aCurrentOwner['sProfilePicUrl'] :'assets/img/avatars/avatar5.jpg' }}"
                                         alt="">
                                     <a href="javascript:;">{{obj.aCurrentOwner && obj.aCurrentOwner != undefined ?
                                         obj.aCurrentOwner['oName']['sFirstname'] : '-'}} {{obj.aCurrentOwner &&
@@ -179,7 +179,7 @@
                             <div class="card" *ngFor="let obj of landingData.recentlyAdded;">
                                 <a href="javascript:;" class="card__cover " routerLink="/NFT-detail/{{obj._id && obj._id != undefined ? obj._id : '-'}}">
                                     <img class="sty img-fluid"
-                                        src="{{obj.sHash && obj.sHash != undefined ? 'https://ipfs.io/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }} "
+                                        src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }} "
                                         alt="">
                                     <span class="card__time">{{obj.eAuctionType && obj.eAuctionType != undefined ?
                                         obj.eAuctionType : '-'}}</span>
@@ -187,7 +187,7 @@
                                 <h3 class="card__title"><a href="javascript:;">{{obj.sName && obj.sName != undefined ?
                                         obj.sName : 'UnKnown'}}</a></h3>
                                 <div class="card__author card__author--verified">
-                                    <img src="{{obj.aCurrentOwner && obj.aCurrentOwner != undefined ? 'https://ipfs.io/ipfs/'+obj.aCurrentOwner['sProfilePicUrl'] :'assets/img/avatars/avatar5.jpg' }}"
+                                    <img src="{{obj.aCurrentOwner && obj.aCurrentOwner != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.aCurrentOwner['sProfilePicUrl'] :'assets/img/avatars/avatar5.jpg' }}"
                                         alt="">
                                     <a href="javascript:;">{{obj.aCurrentOwner && obj.aCurrentOwner != undefined ?
                                         obj.aCurrentOwner['oName']['sFirstname'] : '-'}} {{obj.aCurrentOwner &&
@@ -243,7 +243,7 @@
                             <div class="card" *ngFor="let obj of landingData.mostViewed;">
                                 <a href="javascript:;" class="card__cover " routerLink="/NFT-detail/{{obj._id && obj._id != undefined ? obj._id : '-'}}">
                                     <img class="sty img-fluid"
-                                        src="{{obj.sHash && obj.sHash != undefined ? 'https://ipfs.io/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }} "
+                                        src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }} "
                                         alt="">
                                     <span class="card__time">{{obj.eAuctionType && obj.eAuctionType != undefined ?
                                         obj.eAuctionType : '-'}}</span>
@@ -251,7 +251,7 @@
                                 <h3 class="card__title"><a href="javascript:;">{{obj.sName && obj.sName != undefined ?
                                         obj.sName : 'UnKnown'}}</a></h3>
                                 <div class="card__author card__author--verified">
-                                    <img src="{{obj.aCurrentOwner && obj.aCurrentOwner != undefined ? 'https://ipfs.io/ipfs/'+obj.aCurrentOwner['sProfilePicUrl'] :'assets/img/avatars/avatar5.jpg' }}"
+                                    <img src="{{obj.aCurrentOwner && obj.aCurrentOwner != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.aCurrentOwner['sProfilePicUrl'] :'assets/img/avatars/avatar5.jpg' }}"
                                         alt="">
                                     <a href="javascript:;">{{obj.aCurrentOwner && obj.aCurrentOwner != undefined ?
                                         obj.aCurrentOwner['oName']['sFirstname'] : '-'}} {{obj.aCurrentOwner &&

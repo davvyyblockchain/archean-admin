@@ -129,11 +129,8 @@ export class ApiService {
 
   // --dn
   async exportInstance(SCAddress: any, ABI: any) {
-    console.log('---------------s---------4', SCAddress);
-    console.log('--------------s----------4', ABI);
 
     let a = await new window.web3.eth.Contract(ABI, SCAddress);
-    console.log('------------s------------4', a);
     if (a) {
       return a;
     } else {
@@ -175,7 +172,6 @@ export class ApiService {
   getBalance(contractInstance: any, userWalletAccount: any) {
     return new Promise(async (resolve, reject) => {
       if (!userWalletAccount) {
-        console.log('Metamask/Wallet connection failed.');
         this.toaster.error('Metamask/Wallet connection failed.');
         return;
       }

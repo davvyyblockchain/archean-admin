@@ -39,7 +39,6 @@ controllers.register = (req, res) => {
 
             user.save()
                 .then((result) => {
-                    console.log("User created");
                     let token = signJWT(user);
                     req.session["_id"] = user._id;
                     req.session["sWalletAddress"] = user.sWalletAddress;
@@ -50,12 +49,10 @@ controllers.register = (req, res) => {
                     });
                 })
                 .catch((error) => {
-                    console.log("error from mongo" + error);
                     return res.reply(messages.already_exists('User'));
                 });
         });
     } catch (error) {
-        console.log(error);
         return res.reply(messages.server_error());
     }
 };
@@ -81,7 +78,6 @@ controllers.login = (req, res) => {
                 req.session["_id"] = user._id;
                 req.session["sWalletAddress"] = user.sWalletAddress;
                 req.session["sUsername"] = user.sUsername;
-                console.log("user login succesful");
                 return res.reply(messages.successfully('User Login'), {
                     auth: true,
                     token,
@@ -93,7 +89,6 @@ controllers.login = (req, res) => {
             }
         })
     } catch (error) {
-        console.log(error);
         return res.reply(messages.server_error());
     }
 }
@@ -113,7 +108,6 @@ controllers.logout = (req, res, next) => {
             });
         });
     } catch (error) {
-        console.log(error);
         return res.reply(messages.server_error());
     }
 };
@@ -123,7 +117,6 @@ controllers.checkuseraddress = (req, res) => {
         if (!req.body.sWalletAddress) return res.reply(messages.required_field('Wallet Address'));
         if (!validators.isValidWalletAddress(req.body.sWalletAddress)) return res.reply(messages.invalid('Wallet Address'));
 
-        console.log(req.body);
         User.findOne({
             sWalletAddress: _.toChecksumAddress(req.body.sWalletAddress)
         }, (err, user) => {
@@ -137,7 +130,6 @@ controllers.checkuseraddress = (req, res) => {
             });
         })
     } catch (error) {
-        console.log(error);
         return res.reply(messages.server_error());
     }
 }
@@ -173,7 +165,6 @@ controllers.adminlogin = (req, res) => {
             });
         })
     } catch (error) {
-        console.log(error);
         return res.reply(messages.server_error());
     }
 }
@@ -188,7 +179,6 @@ controllers.passwordReset = (req, res, next) => {
         var randomHash = '';
         crypto.randomBytes(20, function (err, buf) {
             randomHash = buf.toString('hex');
-            if (err) console.log("crypto error");
         });
 
         User.findOne({
@@ -208,10 +198,8 @@ controllers.passwordReset = (req, res, next) => {
                     upsert: true
                 })
                 .then((doc) => {
-                    console.log("reset token saved");
                 })
                 .catch((err) => {
-                    console.log("error " + err);
                 });
             nodemailer.send('forgot_password_mail.html', {
                 SITE_NAME: 'Blockchain Australia Solutions',
@@ -225,7 +213,6 @@ controllers.passwordReset = (req, res, next) => {
             return res.reply(messages.successfully('Email Sent'));
         });
     } catch (error) {
-        console.log(error);
         return res.reply(messages.server_error());
     }
 }

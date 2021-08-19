@@ -85,7 +85,7 @@
                             <div class="col-12 col-sm-6 col-lg-4" *ngFor="let obj of listData;">
                                 <div class="card">
                                     <a href="javascript:;" class="card__cover" routerLink="/NFT-detail/{{obj._id && obj._id != undefined ? obj._id : '-'}}">
-                                        <img src="{{obj.sHash && obj.sHash != undefined ? 'https://ipfs.io/ipfs/'+obj.sHash :'assets/img/cover/cover8.jpg' }} "
+                                        <img src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover8.jpg' }} "
                                             alt="">
                                         <span class="card__time card__time--clock">
                                             {{obj.eAuctionType && obj.eAuctionType != undefined ? obj.eAuctionType :
@@ -97,7 +97,7 @@
                                             ?
                                             obj.sName : 'UnKnown'}}</a></h3>
                                     <div class="card__author card__author--verified">
-                                        <img src="{{obj.oUser && obj.oUser != undefined ? 'https://ipfs.io/ipfs/'+obj.oUser['sProfilePicUrl'] :'assets/img/avatars/avatar5.jpg' }}"
+                                        <img src="{{obj.oUser && obj.oUser != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.oUser['sProfilePicUrl'] :'assets/img/avatars/avatar5.jpg' }}"
                                             alt="">
                                         <a href="javascript:;">{{obj.oUser && obj.oUser != undefined ?
                                             obj.oUser['oName']['sFirstname'] : '-'}} {{obj.oUser && obj.oUser !=

@@ -56,7 +56,6 @@ loadSCR(){
     await this.apiService.landingPage().subscribe(async (data: any) => {
 
       if (data['message'] == 'success') {
-        console.log('------------------data[sda---', data['data']);
         this.landingData = await data['data'];
         let scripts = [];
         scripts = [

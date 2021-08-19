@@ -18,7 +18,6 @@ middleware.verifyToken = (req, res, next) => {
             next();
         });
     } catch (error) {
-        console.log(error);
         return res.reply(messages.server_error());
     }
 }

@@ -23,7 +23,6 @@ middleware.verifyToken = (req, res, next) => {
                 return res.reply(messages.unauthorized());
         });
     } catch (error) {
-        console.log(error);
         return res.reply(messages.server_error());
     }
 }

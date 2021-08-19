@@ -31,7 +31,6 @@ const {
   }
   function doPatch(fileName, sourceCode, patchCode, patchIdentifier) {
     if (!existsSync(fileName)) {
-      console.log('file not found ' + fileName);
       return;
     }
     const contents = readFileSync(fileName).toString().split('\n');
@@ -51,9 +50,7 @@ const {
       const updatedContents = contents.join('\n');
       writeFileSync(fileName, updatedContents);
   
-      console.log('Monkey patched');
     } else {
-      console.log('already been patched');
     }
   }
   doPatch(fileToPatch, codeToPatch, patch, patchTag);

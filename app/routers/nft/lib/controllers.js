@@ -23,7 +23,6 @@ var allowedMimes;
 var errAllowed;
 
 let fileFilter = function (req, file, cb) {
-    console.log(file.mimetype);
     if (allowedMimes.includes(file.mimetype)) {
         cb(null, true);
     } else {
@@ -46,7 +45,6 @@ const upload = multer(oMulterObj).single('nftFile');
 
 controllers.create = async (req, res) => {
     try {
-        console.log(req.body);
         if (!req.userId) return res.reply(messages.unauthorized());
 
         allowedMimes = ['image/jpeg', "video/mp4", 'image/jpg', 'image/png', 'image/gif', 'audio/mp3', 'audio/mpeg'];
@@ -154,7 +152,6 @@ controllers.create = async (req, res) => {
                 const readableStreamForFile = fs.createReadStream(req.file.path);
 
                 pinata.pinFileToIPFS(readableStreamForFile, oOptions).then(async (result) => {
-                    console.log(result);
 
                     fs.unlinkSync(req.file.path);
                     let oNFTData = await NFT.findOne({
@@ -195,20 +192,17 @@ controllers.create = async (req, res) => {
                             return res.reply(messages.created('NFT'), result);
                         })
                         .catch((error) => {
-                            console.log(error);
                             return res.reply(messages.already_exists('NFT Address'));
                         })
 
                 }).catch((err) => {
                     //handle error here
                     fs.unlinkSync(req.file.path);
-                    console.log(err);
                     return res.reply(messages.error());
                 });
             }
         })
     } catch (error) {
-        console.log(error);
         return res.reply(messages.server_error());
     }
 };
@@ -217,7 +211,6 @@ controllers.create = async (req, res) => {
 //     try {
 //         if (!req.userId) return res.reply(messages.unauthorized());
 
-//         console.log(req.body);
 //         var nLimit = parseInt(req.body.length);
 //         var nOffset = parseInt(req.body.start);
 //         let oTypeQuery;
@@ -283,7 +276,6 @@ controllers.create = async (req, res) => {
 //             });
 //         }
 //     } catch (error) {
-//         console.log(error);
 //         return res.reply(messages.server_error());
 //     }
 // };
@@ -393,14 +385,12 @@ controllers.mynftlist = async (req, res) => {
             });
         }
     } catch (error) {
-        console.log(error);
         return res.reply(messages.server_error());
     }
 };
 
 controllers.createCollection = async (req, res) => {
     try {
-        console.log(req.body);
         if (!req.userId) return res.reply(messages.unauthorized());
 
         allowedMimes = ['image/jpeg', 'image/jpg', 'image/png'];
@@ -411,7 +401,6 @@ controllers.createCollection = async (req, res) => {
                 fs.unlinkSync(req.file.path);
                 return res.reply(messages.bad_request(error.message));
             } else {
-                console.log(req.body);
                 if (!req.body.sName) {
                     fs.unlinkSync(req.file.path);
                     return res.reply(messages.not_found("Collection Name"));
@@ -441,7 +430,6 @@ controllers.createCollection = async (req, res) => {
                 const readableStreamForFile = fs.createReadStream(req.file.path);
 
                 pinata.pinFileToIPFS(readableStreamForFile, oOptions).then(async (result) => {
-                    console.log(result);
 
                     fs.unlinkSync(req.file.path);
 
@@ -456,18 +444,15 @@ controllers.createCollection = async (req, res) => {
                             return res.reply(messages.created('Collection'), result);
                         })
                         .catch((error) => {
-                            console.log(error);
                             return res.reply(messages.already_exists('Collection'));
                         })
                 }).catch((err) => {
                     //handle error here
-                    console.log(err);
                     return res.reply(messages.error());
                 });
             }
         })
     } catch (error) {
-        console.log(error);
         return res.reply(messages.server_error());
     }
 };
@@ -501,14 +486,12 @@ controllers.collectionlist = async (req, res) => {
         return res.reply(messages.no_prefix('Collection Details'), aCollections);
 
     } catch (error) {
-        console.log(error);
         return res.reply(messages.server_error());
     }
 };
 
 controllers.nftListing = async (req, res) => {
     try {
-        console.log(req.body);
 
         var nLimit = parseInt(req.body.length);
         var nOffset = parseInt(req.body.start);
@@ -612,13 +595,11 @@ controllers.nftListing = async (req, res) => {
             });
         }
     } catch (error) {
-        console.log(error);
         return res.reply(messages.server_error());
     }
 };
 controllers.nftID = async (req, res) => {
     try {
-        console.log(req.params);
         if (!req.params.nNFTId)
             return res.reply(messages.not_found("NFT ID"));
 
@@ -646,13 +627,11 @@ controllers.nftID = async (req, res) => {
         }
         return res.reply(messages.success(), aNFT);
     } catch (error) {
-        console.log(error);
         return res.reply(messages.server_error());
     }
 };
 controllers.deleteNFT = async (req, res) => {
     try {
-        console.log(req.params);
         if (!req.params.nNFTId)
             return res.reply(messages.not_found("NFT ID"));
 
@@ -661,15 +640,13 @@ controllers.deleteNFT = async (req, res) => {
         await NFT.findByIdAndDelete(req.params.nNFTId);
         return res.reply(messages.success("NFT deleted"));
     } catch (error) {
-        console.log(error);
         return res.reply(messages.server_error());
     }
 };
 
 controllers.setTransactionHash = async (req, res) => {
     try {
-        console.log(req.body);
-        // if (!req.body.nTokenID) return res.reply(messages.not_found("Token ID"));
+        if (!req.body.nTokenID) return res.reply(messages.not_found("Token ID"));
         if (!req.body.nNFTId) return res.reply(messages.not_found("NFT ID"));
         if (!req.body.sTransactionHash) return res.reply(messages.not_found("Transaction Hash"));
 
@@ -678,9 +655,9 @@ controllers.setTransactionHash = async (req, res) => {
         if (!validators.isValidTransactionHash(req.body.sTransactionHash)) res.reply(messages.invalid("Transaction Hash"));
 
         NFT.findByIdAndUpdate(req.body.nNFTId, {
-            // nTokenID: req.body.nTokenID,
+            nTokenID: req.body.nTokenID,
             sTransactionHash: req.body.sTransactionHash,
-            sTransactionStatus: 0
+            sTransactionStatus: 1
         }, (err, nft) => {
             if (err) return res.reply(messages.server_error());
             if (!nft) return res.reply(messages.not_found('NFT'));
@@ -689,7 +666,6 @@ controllers.setTransactionHash = async (req, res) => {
         });
 
     } catch (error) {
-        console.log(error);
         return res.reply(messages.server_error());
     }
 }
@@ -793,7 +769,6 @@ controllers.landing = async (req, res) => {
 
         return res.reply(messages.success(), data[0]);
     } catch (error) {
-        console.log(error);
         return res.reply(messages.server_error());
     }
 };
@@ -802,7 +777,6 @@ controllers.toggleSellingType = async (req, res) => {
     try {
         if (!req.userId) return res.reply(messages.unauthorized());
 
-        console.log(req.body);
         if (!req.body.nNFTId) return res.reply(messages.not_found("NFT ID"));
         if (!req.body.sSellingType) return res.reply(messages.not_found("Selling Type"));
 
@@ -824,7 +798,6 @@ controllers.toggleSellingType = async (req, res) => {
             return res.reply(messages.updated("NFT Details"));
         });
     } catch (error) {
-        console.log(error);
         return res.reply(messages.server_error());
     }
 }

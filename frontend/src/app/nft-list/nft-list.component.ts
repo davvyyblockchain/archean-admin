@@ -68,10 +68,8 @@ export class NFTListComponent implements OnInit {
   getNFTListingData(obj: any) {
 
     this.apiService.nftListing(obj).subscribe(async (data: any) => {
-      console.log('---data-----', data);
       if (data && data['data']) {
         let res = await data['data'];
-        console.log('---res-----', res);
         this.filterData = res;
 
         if (res['data'] && res['data'] != 0 && res['data'].length) {

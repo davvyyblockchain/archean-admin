@@ -25,7 +25,6 @@ const storage = multer.diskStorage({
     }
 });
 let fileFilter = function (req, file, cb) {
-    console.log(file.mimetype)
     var allowedMimes = ['image/jpeg', 'image/jpg', 'image/png'];
 
     if (allowedMimes.includes(file.mimetype)) {
@@ -65,12 +64,9 @@ controllers.profile = (req, res) => {
         }, (err, user) => {
             if (err) return res.reply(messages.server_error());
             if (!user) return res.reply(messages.not_found('User'));
-
-            console.log("user details found: " + user.sEmail);
             return res.reply(messages.no_prefix('User Details'), user);
         });
     } catch (error) {
-        console.log(error);
         return res.reply(messages.server_error());
     }
 };
@@ -145,13 +141,11 @@ controllers.updateProfile = async (req, res, next) => {
                     const readableStreamForFile = fs.createReadStream(req.file.path);
 
                     await pinata.pinFileToIPFS(readableStreamForFile, oOptions).then(async (result) => {
-                        console.log(result);
                         oProfileDetails["sProfilePicUrl"] = result.IpfsHash;
                         fs.unlinkSync(req.file.path)
 
                     }).catch((err) => {
                         //handle error here
-                        console.log(err);
                         return res.reply(messages.error("From Pinata"));
                     });
                 }
@@ -167,7 +161,6 @@ controllers.updateProfile = async (req, res, next) => {
 
         })
     } catch (error) {
-        console.log(error);
         return res.reply(messages.server_error());
     }
 }
@@ -216,7 +209,6 @@ controllers.addCollaborator = async (req, res) => {
         });
 
     } catch (error) {
-        console.log(error);
         return res.reply(messages.server_error());
     }
 };
@@ -271,7 +263,6 @@ controllers.collaboratorList = async (req, res) => {
             "recordsFiltered": aUsers[0].totalCollaborators,
         });
     } catch (error) {
-        console.log(error);
         return res.reply(messages.server_error());
     }
 };
@@ -284,7 +275,6 @@ controllers.getCollaboratorList = (req, res) => {
             return res.reply(messages.successfully('Collaborator Detials'), user.aCollaborators);
         });
     } catch (error) {
-        console.log(error);
         return res.reply(messages.server_error());
     }
 };
@@ -301,7 +291,6 @@ controllers.addNewsLetterEmails = async (req, res) => {
         });
         newsLetterEmail.save()
             .then((result) => {
-                console.log('Name and Email added successfully', result);
                 return res.reply(messages.success(), {
                     Name: req.body.sName,
                     Email: req.body.sEmail
@@ -313,7 +302,6 @@ controllers.addNewsLetterEmails = async (req, res) => {
                 return res.reply(messages.error());
             });
     } catch (err) {
-        console.log(err);
         return res.reply(messages.server_error());
     }
 };
@@ -350,7 +338,6 @@ controllers.deleteCollaborator = (req, res) => {
             });
         });
     } catch (error) {
-        console.log(error);
         return res.reply(messages.server_error());
     }
 
@@ -385,7 +372,6 @@ controllers.getCollaboratorName = (req, res) => {
             return res.reply(messages.successfully('Details Found'), oCollaborator);
         });
     } catch (error) {
-        console.log(error);
         return res.reply(messages.server_error());
     }
 }
@@ -431,7 +417,6 @@ controllers.editCollaborator = async (req, res) => {
         });
 
     } catch (error) {
-        console.log(error);
         return res.reply(messages.server_error());
     }
 }

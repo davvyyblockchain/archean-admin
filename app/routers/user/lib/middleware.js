@@ -13,8 +13,6 @@ middleware.verifyToken = (req, res, next) => {
         token = token.replace('Bearer ', '');
         jwt.verify(token, process.env.JWT_SECRET, function (err, decoded) {
 
-            console.log('---------------decoded------3',decoded)
-
             if (err) {
                 return res.reply(messages.unauthorized());
             }
@@ -23,7 +21,6 @@ middleware.verifyToken = (req, res, next) => {
             next();
         });
     } catch (error) {
-        console.log(error);
         return res.reply(messages.server_error());
     }
 }

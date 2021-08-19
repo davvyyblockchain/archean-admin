@@ -152,9 +152,9 @@
 
                         <div class="col-12">
                             <div class="sign__file">
-                                <label id="file1" for="sign__file-upload">e. g. Image</label>
+                                <label id="file1" for="sign__file-upload">{{ createCollectionForm.value && createCollectionForm.value.sFile ?createCollectionForm.value.sFile:'e.g. Image' }}</label>
                                 <input data-name="#file1" id="sign__file-upload" name="file"
-                                    (change)="onSelectDocumentCollection($event)" class="sign__file-upload" type="file"
+                                    (change)="onSelectDocumentCollection($event)" class="sign__file-upload" type="file"  formControlName="sFile" 
                                     accept="video/mp4,video/x-m4v,video/*,.png,.jpg,.jpeg">
                             </div>
                         </div>
@@ -254,9 +254,9 @@
 
                         <div class="col-12">
                             <div class="sign__file">
-                                <label id="file1" for="sign__file-upload">e. g. Image</label>
-                                <input data-name="#file1" (change)="onSelectDocumentNFT($event)" id="sign__file-upload"
-                                    name="file" class="sign__file-upload" type="file"
+                                <label id="file1" for="sign__file-upload">{{ createNFTForm.value && createNFTForm.value.nftFile ?createNFTForm.value.nftFile:'e.g. Image' }}</label>
+                                <input data-name="#file1" (change)="onSelectDocumentNFT($event)"  id="sign__file-upload"
+                                    name="file" class="sign__file-upload" type="file"  formControlName="nftFile"
                                     accept="video/mp4,video/x-m4v,video/*,.png,.jpg,.jpeg">
                             </div>
                         </div>

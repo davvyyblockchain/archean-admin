@@ -64,9 +64,7 @@ export class CreateNFTComponent implements OnInit {
     this._script.loadScripts("app-create-nft", scripts).then(function () {
 
     })
-    console.log('---------------create-nft-------------', localStorage.getItem('Authorization'))
     if (localStorage.getItem('Authorization') && localStorage.getItem('Authorization') != null) {
-      console.log('---------------create 1-------------')
       this.buildCreateCollectionForm();
       this.buildCreateCollaboratorForm();
       this.buildCreateNFTForm();
@@ -90,6 +88,7 @@ export class CreateNFTComponent implements OnInit {
     this.createCollectionForm = this._formBuilder.group({
       sName: ['', [Validators.required]],
       sDescription: ['', [Validators.required]],
+      sFile: ['', []]
     });
   }
 
@@ -117,7 +116,7 @@ export class CreateNFTComponent implements OnInit {
       sCollaborator: ['', []],
       nCollaboratorPercentage: ['', []],
       sSetRoyaltyPercentage: ['', []],
-
+      nftFile: ['', []],
     });
   }
   onClickRadio(type: any) {
@@ -134,22 +133,19 @@ export class CreateNFTComponent implements OnInit {
     this.apiService.getprofile().subscribe(async (res: any) => {
       if (res && res['data']) {
         this.profileData = await res['data'];
-        this.profileData.sProfilePicUrl = this.profileData.sProfilePicUrl == undefined ? 'assets/img/avatars/avatar5.jpg' : 'https://ipfs.io/ipfs/' + this.profileData.sProfilePicUrl;
+        this.profileData.sProfilePicUrl = this.profileData.sProfilePicUrl == undefined ? 'assets/img/avatars/avatar5.jpg' : 'https://decryptnft.mypinata.cloud/ipfs/' + this.profileData.sProfilePicUrl;
         this.profileData.sFirstname = this.profileData && this.profileData.oName && this.profileData.oName.sFirstname ? this.profileData.oName.sFirstname : '';
         this.profileData.sLastname = this.profileData && this.profileData.oName && this.profileData.oName.sLastname ? this.profileData.oName.sLastname : '';
 
 
 
         var NFTinstance = await this.apiService.exportInstance(environment.NFTaddress, environment.NFTabi);
-        console.log('------------------------4', NFTinstance);
 
         if (NFTinstance && NFTinstance != undefined) {
 
-          console.log('------------------------5',);
 
           // let nAdminCommissionPercentage = await NFTinstance.methods.getAdminCommissionPercentage().call({ from: this.profileData.sWalletAddress });
           // console.log("nAdminCommissionPercentage: " + nAdminCommissionPercentage);
-          // console.log('------------------------6',);
           // // mintToken(bool,string,string,uint256,uint8,address[],uint8[])
           // let nEstimatedGasLimit = await NFTinstance.methods.mintToken(true, 'QmT1omejnb9vnAzpyZbVec7tNmM4GfbZZXpoKv4VVU6iGW', 'MARIO NFT', 10, 5, [
           //   "0x79647CC2A785B63c2A7A5D324b2D15c0CA17115D",
@@ -202,8 +198,6 @@ export class CreateNFTComponent implements OnInit {
           //     }
           //   });
 
-
-          console.log();
         } else {
           this.spinner.hide();
           this.toaster.error("There is something issue with NFT address.");
@@ -214,7 +208,6 @@ export class CreateNFTComponent implements OnInit {
 
       }
     }, (err: any) => {
-      console.log('-----err--------', err)
     });
   }
 
@@ -224,7 +217,6 @@ export class CreateNFTComponent implements OnInit {
         this.collectionList = res['data'];
       }
     }, (err: any) => {
-      console.log('-----err--------', err)
     });
   }
 
@@ -235,7 +227,6 @@ export class CreateNFTComponent implements OnInit {
         this.categoriesList = res['data'];
       }
     }, (err: any) => {
-      console.log('-----err--------', err)
     });
   }
 
@@ -246,7 +237,6 @@ export class CreateNFTComponent implements OnInit {
         this.collaboratorList = res['data'];
       }
     }, (err: any) => {
-      console.log('-----err--------', err)
     });
   }
 
@@ -276,7 +266,6 @@ export class CreateNFTComponent implements OnInit {
       } else {
 
         let res = this.createCollectionForm.value;
-        console.log('-------------res', res)
         var fd = new FormData();
 
         fd.append('sName', res.sName);
@@ -288,7 +277,6 @@ export class CreateNFTComponent implements OnInit {
           this.spinner.hide();
 
           if (updateData && updateData['data']) {
-            console.log('---------updateData---------', updateData);
             this.toaster.success(updateData['message'])
             this.onClickRefresh();
           } else {
@@ -298,6 +286,8 @@ export class CreateNFTComponent implements OnInit {
         }, (err: any) => {
           this.spinner.hide();
           if (err && err['message']) {
+            err = err['error'];
+            this.toaster.error(err['message'])
 
           }
         });
@@ -318,7 +308,6 @@ export class CreateNFTComponent implements OnInit {
     } else {
 
       let res = this.createCollaboratorForm.value;
-      console.log('-------------res', res)
       var fd = {
         'sFullname': res.sFullname,
         'sAddress': res.sAddress,
@@ -328,7 +317,6 @@ export class CreateNFTComponent implements OnInit {
         this.spinner.hide();
 
         if (updateData && updateData['data']) {
-          console.log('---------updateData---------', updateData);
           this.toaster.success(updateData['message'])
           this.onClickRefresh();
         } else {
@@ -338,7 +326,6 @@ export class CreateNFTComponent implements OnInit {
       }, (err: any) => {
         this.spinner.hide();
         if (err && err['message']) {
-          console.log('----------------errr',)
           err = err['error'];
           this.toaster.error(err['message'])
 
@@ -358,7 +345,6 @@ export class CreateNFTComponent implements OnInit {
       } else {
 
         let res = this.createNFTForm.value;
-        console.log('-------------res', res)
 
         // // 'Auction', 'Fixed Sale', 'Unlockable'
         // // TODO multiple
@@ -388,42 +374,34 @@ export class CreateNFTComponent implements OnInit {
         if (res.eAuctionType == 'Auction' || res.eAuctionType == 'Fixed Sale') {
           fd.append('nBasePrice', res.nBasePrice ? res.nBasePrice : 0);
         }
-        console.log('------------------------1')
         // 
         await this.apiService.createNFT(fd).subscribe(async (data: any) => {
           this.spinner.hide();
-          console.log('------------------------2', data)
           if (data && data['data']) {
-            console.log('------------------------3',);
             let returnData = await data['data'];
             this.spinner.show();
             var NFTinstance = await this.apiService.exportInstance(environment.NFTaddress, environment.NFTabi);
-            console.log('------------------------4', NFTinstance);
 
             if (NFTinstance && NFTinstance != undefined) {
               this.spinner.hide();
-              console.log('------------------------5',);
 
               let nAdminCommissionPercentage = await NFTinstance.methods.getAdminCommissionPercentage().call({ from: this.profileData.sWalletAddress });
-              console.log("nAdminCommissionPercentage: " + nAdminCommissionPercentage);
-              console.log('------------------------6',);
+              // console.log("nAdminCommissionPercentage: " + nAdminCommissionPercentage);
 
               let nEstimatedGasLimit = await NFTinstance.methods.mintToken(parseInt(returnData.nQuantity) > 1 ? true : false, returnData.sHash, returnData.sName, parseInt(returnData.nQuantity), returnData.sSetRroyalityPercentage, returnData.sCollaborator, returnData.nCollaboratorPercentage).estimateGas({
                 from: this.profileData.sWalletAddress,
                 value: 1
               });
-              console.log("nEstimatedGasLimit: " + nEstimatedGasLimit);
+              // console.log("nEstimatedGasLimit: " + nEstimatedGasLimit);
 
               let nGasPrice = parseInt(await window.web3.eth.getGasPrice());
-              console.log("nGasPrice: " + nGasPrice);
+              // console.log("nGasPrice: " + nGasPrice);
 
               let nTotalTransactionCost = nGasPrice * nEstimatedGasLimit;
-              console.log("nTotalTransactionCost: " + nTotalTransactionCost);
+              // console.log("nTotalTransactionCost: " + nTotalTransactionCost);
 
               let nAdminCommission = (nTotalTransactionCost * nAdminCommissionPercentage) / 100;
-              console.log("nAdminCommission: " + nAdminCommission);
-              console.log();
-
+              // console.log("nAdminCommission: " + nAdminCommission);
 
               const that = this;
               this.spinner.show();
@@ -432,13 +410,15 @@ export class CreateNFTComponent implements OnInit {
                   from: this.profileData.sWalletAddress,
                   value: nAdminCommission,
                   gas: nEstimatedGasLimit
-                })
-                .on('transactionHash', async (hash: any) => {
+                }).then(async (successData: any) => {
+                  // 
+
                   this.spinner.hide();
-                  console.log(hash);
+                  console.log(successData);
                   let oDataToPass = {
                     nNFTId: returnData._id,
-                    sTransactionHash: hash
+                    sTransactionHash: successData['transactionHash'],
+                    nTokenID: successData && successData.events && successData.events.TokenCounter && successData.events.TokenCounter.returnValues['0']
                   };
 
                   console.log(oDataToPass);
@@ -451,7 +431,27 @@ export class CreateNFTComponent implements OnInit {
                     } else {
                       this.toaster.success(transData['message']);
                     }
+
                   })
+                  // .on('transactionHash', async (hash: any) => {
+                  //   this.spinner.hide();
+                  //   console.log(hash);
+                  //   let oDataToPass = {
+                  //     nNFTId: returnData._id,
+                  //     sTransactionHash: hash
+                  //   };
+
+                  //   console.log(oDataToPass);
+                  //   this.spinner.show();
+                  //   await this.apiService.setTransactionHash(oDataToPass).subscribe(async (transData: any) => {
+                  //     this.spinner.hide();
+                  //     if (transData && transData['data']) {
+                  //       this.toaster.success('NFT created successfully');
+                  //       this.onClickRefresh();
+                  //     } else {
+                  //       this.toaster.success(transData['message']);
+                  //     }
+                  //   })
 
                 })
                 .catch(function (error: any) {
@@ -474,11 +474,9 @@ export class CreateNFTComponent implements OnInit {
             }
           } else {
             this.spinner.hide();
-            console.log('------------------------4')
           }
         }, (error) => {
           this.spinner.hide();
-          console.log('------------------------5', error)
         });
 
       }

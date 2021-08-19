@@ -76,7 +76,7 @@ export class MyProfileComponent implements OnInit {
 
         if (res && res['data']) {
           this.profileData = res['data'];
-          this.profileData.sProfilePicUrl = this.profileData.sProfilePicUrl == undefined ? 'assets/img/avatars/avatar5.jpg' : 'https://ipfs.io/ipfs/' + this.profileData.sProfilePicUrl;
+          this.profileData.sProfilePicUrl = this.profileData.sProfilePicUrl == undefined ? 'assets/img/avatars/avatar5.jpg' : 'https://decryptnft.mypinata.cloud/ipfs/' + this.profileData.sProfilePicUrl;
 
 
           this.profileData.sFirstname = this.profileData && this.profileData.oName && this.profileData.oName.sFirstname ? this.profileData.oName.sFirstname : '';
@@ -86,7 +86,6 @@ export class MyProfileComponent implements OnInit {
         }
 
       }, (err: any) => {
-        console.log('-----err--------', err)
 
       });
 
@@ -111,12 +110,10 @@ export class MyProfileComponent implements OnInit {
         } else {
           this.listData = [];
         }
-        console.log('-----this.listData--------', this.listData)
 
       }
 
     }, (err: any) => {
-      console.log('-----err--------', err)
 
     });
   }
@@ -169,7 +166,6 @@ export class MyProfileComponent implements OnInit {
     } else {
 
       let res = this.editProfileform.value;
-      console.log('-------------res', res)
       var fd = new FormData();
 
       fd.append('sFirstname', res.sFirstname);

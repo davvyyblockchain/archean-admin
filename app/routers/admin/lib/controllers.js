@@ -71,7 +71,6 @@ controllers.updateProfile = async (req, res, next) => {
             //         folder: "Blockchain Australia Solutions/User_Profile"
             //     })
             //         .then(image => {
-            //             console.log("*** " + image.url);
             //             oProfileDetails["sProfilePicUrl"] = image.url;
             //             fs.unlinkSync(req.file.path);
             //         })
@@ -88,7 +87,6 @@ controllers.updateProfile = async (req, res, next) => {
                 });
         });
     } catch (error) {
-        console.log(error);
         return res.reply(messages.server_error());
     }
 }
@@ -186,7 +184,6 @@ controllers.getDashboardData = async (req, res) => {
             nSoldNFTsCount: (!aSoldNFTsCount[0]) ? 0 : aSoldNFTsCount[0].count
         });
     } catch (error) {
-        console.log(error);
         return res.reply(messages.server_error());
     }
 };
@@ -386,7 +383,6 @@ controllers.toggleUserStatus = async (req, res, next) => {
                 return res.reply(messages.updated('User Status'));
             });
     } catch (error) {
-        console.log(error);
         return res.reply(messages.server_error());
     }
 }
@@ -411,7 +407,6 @@ controllers.sendNewsLetterEmail = async (req, res, next) => {
         });
         if (emailsArray.length > 0) {
 
-            console.log(emailsArray);
             await nodemailer.sendMail({
                 from: 'Blockchain Australia Solutions ' + process.env.SMTP_USERNAME,
                 bcc: emailsArray,
@@ -421,19 +416,16 @@ controllers.sendNewsLetterEmail = async (req, res, next) => {
 
             return res.reply(messages.success("Email send"));
         } else {
-            console.log(emailsArray);
             return res.reply(messages.no_prefix("No emails found"));
         }
     } catch (error) {
-        console.log(error);
         return res.reply(messages.server_error());
     }
 };
 
 controllers.getNewsLetterEmailsLists = async (req, res, next) => {
     try {
-        console.log(req.body.start);
-        console.log(req.body.length);
+
         await NewsLetterEmail.countDocuments({}, async (err, nCount) => {
             await NewsLetterEmail.find({}, {
                 __v: 0
@@ -448,12 +440,10 @@ controllers.getNewsLetterEmailsLists = async (req, res, next) => {
                     "recordsTotal": nCount,
                     "data": aEmails
                 });
-                console.log(aEmails);
                 res.send(data);
             });
         });
     } catch (error) {
-        console.log(error);
         return res.reply(messages.server_error());
     }
 };
@@ -464,13 +454,11 @@ controllers.deleteNewsLetterEmail = async (req, res) => {
             _id: req.headers._id
         }, (err, result) => {
             if (err) return res.reply(messages.error());
-            console.log(result);
             return res.reply(messages.success("Email deletion "), {
                 email: result.sEmail
             });
         });
     } catch (error) {
-        console.log(error);
         return res.reply(messages.server_error());
     }
 };
@@ -496,7 +484,6 @@ controllers.addCategory = async (req, res) => {
                 return res.reply(messages.already_exists("Category"));
             })
     } catch (error) {
-        console.log(error);
         return res.reply(messages.server_error());
     }
 }
@@ -558,7 +545,6 @@ controllers.getCategories = async (req, res) => {
             recordsFiltered: nTotalFilteredRecords
         });
     } catch (error) {
-        console.log(error);
         return res.reply(messages.server_error());
     }
 }
@@ -581,7 +567,6 @@ controllers.toggleCategory = async (req, res) => {
             return res.reply(messages.updated("Category Status"));
         });
     } catch (error) {
-        console.log(error);
         return res.reply(messages.server_error());
     }
 }
@@ -599,7 +584,6 @@ controllers.deleteCategory = (req, res) => {
             return res.reply(messages.successfully("Deleted"));
         });
     } catch (error) {
-        console.log(error);
         return res.reply(messages.server_error());
     }
 }
@@ -623,7 +607,6 @@ controllers.editCategory = async (req, res) => {
             return res.reply(messages.updated("Category"));
         });
     } catch (error) {
-        console.log(error);
         return res.reply(messages.server_error());
     }
 }
@@ -646,7 +629,6 @@ controllers.updateAboutus = async (req, res) => {
         });
         return res.reply(messages.updated("Aboutus"));
     } catch (error) {
-        console.log(error);
         return res.reply(messages.server_error());
     }
 }
@@ -671,7 +653,6 @@ controllers.updateFAQs = async (req, res) => {
                 return res.reply(messages.server_error());
             })
     } catch (error) {
-        console.log(error);
         return res.reply(messages.server_error());
     }
 }
@@ -693,7 +674,6 @@ controllers.updateTerms = async (req, res) => {
         });
         return res.reply(messages.updated("Terms & Condition"));
     } catch (error) {
-        console.log(error);
         return res.reply(messages.server_error());
     }
 }

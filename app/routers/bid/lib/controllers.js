@@ -9,7 +9,6 @@ const controllers = {};
 
 controllers.create = async (req, res) => {
     try {
-        console.log(req.body);
         if (!req.userId) return res.reply(messages.unauthorized());
         if (!req.body.eBidStatus) return res.reply(messages.not_found("Bod Status"));
         if (!req.body.oRecipient) return res.reply(messages.not_found("Recipient"));
@@ -46,15 +45,9 @@ controllers.create = async (req, res) => {
 
         // Check if the bidder has already placed bid earlier
         let aBids = await Bid.findOne({
-            oBidder: {
-                $eq: req.userId
-            },
-            oNFTId: {
-                $eq: req.body.oNFTId
-            },
-            eBidStatus: {
-                $eq: "Bid"
-            }
+            oBidder: req.userId,
+            oNFTId: req.body.oNFTId,
+            eBidStatus: "Bid"
         });
 
         // If previous bid found
@@ -66,23 +59,15 @@ controllers.create = async (req, res) => {
 
             // Update The bid
             Bid.findOneAndUpdate({
-                oBidder: {
-                    $eq: req.userId
-                },
-                oNFTId: {
-                    $eq: req.body.oNFTId
-                },
-                eBidStatus: {
-                    $eq: "Bid"
-                }
+                oBidder: req.userId ,
+                oNFTId:   req.body.oNFTId,
+                eBidStatus:"Bid"
             }, {
                 nBidPrice: req.body.nBidPrice,
                 sTransactionHash: req.body.sTransactionHash,
                 nQuantity: req.body.nQuantity
             }, (err, bid) => {
-                console.log(err);
                 if (err) return res.reply(messages.server_error());
-                console.log(bid);
                 return res.reply(messages.successfully("Bid Placed"));
             });
         } else {
@@ -171,7 +156,6 @@ controllers.create = async (req, res) => {
                                         throw error;
                                     });
                                 }).catch((error) => {
-                                    console.log(error);
                                     throw error;
                                     // if (error) return res.reply(messages.server_error());
                                 });
@@ -192,12 +176,10 @@ controllers.create = async (req, res) => {
                     return res.reply(messages.successfully((req.body.eBidStatus == "Sold") ? "Bought" : (req.body.eBidStatus == "Transfer") ? "Transferred" : 'Bid Placed'), result);
                 })
                 .catch((error) => {
-                    console.log("error from createItem mongo " + error);
                     return res.reply(messages.server_error());
                 });
         }
     } catch (error) {
-        console.log(error);
         return res.reply(messages.server_error());
     }
 };
@@ -207,14 +189,12 @@ controllers.getBidHistoryOfItem = async (req, res, next) => {
         if (!req.params.nNFTId) return res.reply(messages.not_found("NFT ID"));
         if (!validators.isValidObjectID(req.params.nNFTId)) return res.reply(messages.invalid("NFT ID"));
 
-        var nLimit = parseInt(req.body.length);
-        var nOffset = parseInt(req.body.start);
+        // var nLimit = parseInt(req.body.length);
+        // var nOffset = parseInt(req.body.start);
         let data = await Bid.aggregate([{
             '$match': {
                 'oNFTId': mongoose.Types.ObjectId(req.params.nNFTId),
-                "sTransactionStatus": {
-                    $eq: 1
-                }
+                "sTransactionStatus":   1
             }
         }, {
             '$project': {
@@ -255,8 +235,7 @@ controllers.getBidHistoryOfItem = async (req, res, next) => {
                 }]
             }
         }]);
-
-        console.log(data[0].bids);
+console.log('-------------data',data)
         let iFiltered = data[0].bids.length;
         if (data[0].totalCount[0] == undefined) {
             return res.reply(messages.no_prefix('Bid Details'), {
@@ -274,14 +253,12 @@ controllers.getBidHistoryOfItem = async (req, res, next) => {
             });
         }
     } catch (error) {
-        console.log(error);
         return res.reply(messages.server_error());
     }
 }
 
 controllers.toggleBidStatus = async (req, res, next) => {
     try {
-        console.log(req.body);
         if (!req.body.eBidStatus) return res.reply(messages.not_found("Bid Status"));
         if (!req.body.oNFTId) return res.reply(messages.not_found("NFT ID"));
         if (!req.body.oBidderId) return res.reply(messages.not_found("Bidder ID"));
@@ -369,7 +346,6 @@ controllers.toggleBidStatus = async (req, res, next) => {
                             throw error;
                         });
                     }).catch((error) => {
-                        console.log(error);
                         throw error;
                         // if (error) return res.reply(messages.server_error());
                     });
@@ -403,19 +379,16 @@ controllers.toggleBidStatus = async (req, res, next) => {
                         eBidStatus: "Rejected"
                     }, (err, result) => {
                         if (err) throw err;
-                        console.log(result);
                     });
                 }
                 return res.reply(messages.updated('Bid Status'));
             });
     } catch (error) {
-        console.log(error);
         return res.reply(messages.server_error());
     }
 }
 controllers.bidByUser = async (req, res, next) => {
     try {
-        console.log(req.body);
         if (!req.userId) return res.reply(messages.unauthorized());
 
         var nLimit = parseInt(req.body.length);
@@ -484,7 +457,6 @@ controllers.bidByUser = async (req, res, next) => {
             });
         }
     } catch (error) {
-        console.log(error);
         return res.reply(messages.server_error());
     }
 }

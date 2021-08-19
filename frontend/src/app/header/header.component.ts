@@ -33,9 +33,7 @@ export class HeaderComponent implements OnInit {
     this.spinner.show();
     const that = this;
     this.showObj.wallet_address = await this.apiService.export();
-    console.log('------this.showObj.wallet_address ------', this.showObj.wallet_address)
     if (this.showObj.wallet_address && this.showObj.wallet_address != '' && this.showObj.wallet_address != []) {
-      console.log('--------------0')
       that.spinner.hide();
 
       this.showObj.network_name = await this.apiService.getNetworkName();
@@ -43,7 +41,6 @@ export class HeaderComponent implements OnInit {
 
       let call = await this.apiService.checkuseraddress(this.showObj.wallet_address).subscribe((data) => {
         that.spinner.hide();
-        console.log('--------------1')
         if (data) {
 
           that.spinner.hide();
@@ -55,8 +52,6 @@ export class HeaderComponent implements OnInit {
         }
       }, (err) => {
         that.spinner.hide();
-        console.log('--------------2')
-
         if (err['error'] && err['error']['message'] == 'User not found') {
           this.showObj.show = 'signup';
           call.unsubscribe();
