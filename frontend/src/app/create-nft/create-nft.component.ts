@@ -242,14 +242,14 @@ export class CreateNFTComponent implements OnInit {
 
   onSelectDocumentNFT(event: any) {
     if (event.target.files && event.target.files[0]) {
-      if (event.target.files[0].name.match(/\.(jpeg|jpg|png|mp3)$/)) {
+      if (event.target.files[0].name.match(/\.(jpeg|jpg|png|mp3|gif)$/)) {
         this.file = event.target.files[0];
       }
     }
   }
   onSelectDocumentCollection(event: any) {
     if (event.target.files && event.target.files[0]) {
-      if (event.target.files[0].name.match(/\.(jpeg|jpg|png|mp3)$/)) {
+      if (event.target.files[0].name.match(/\.(jpeg|jpg|png|mp3|gif)$/)) {
         this.nftFile = event.target.files[0];
       }
     }
@@ -479,8 +479,13 @@ export class CreateNFTComponent implements OnInit {
           }
         }, (error) => {
           this.spinner.hide();
-        });
-
+          if (error && error['message']) {
+            error = error['error'];
+            this.toaster.error(error['message'])
+  
+          }
+        })
+      
       }
     } else {
       this.toaster.warning('Please select image.')

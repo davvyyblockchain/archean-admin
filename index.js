@@ -1,6 +1,6 @@
 require('./env');
 require('./globals');
-require('./transactionTracker');
+// require('./transactionTracker');
 
 const { mongodb } = require('./app/utils');
 const router = require('./app/routers');
