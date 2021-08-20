@@ -32,6 +32,8 @@ mongoose
 // });
 
 async function mintChecker() {
+    console.log("11 Mints...");
+
     try {
         console.log("Checking for pending Mints...");
         let aNFTs = await NFT.find({

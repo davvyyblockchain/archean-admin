@@ -43,7 +43,10 @@ Router.prototype.setupMiddleware = function () {
     this.app.enable('trust proxy');
     this.app.use(cors(this.corsOptions));
     this.app.use(session({
-        secret: process.env.JWT_SECRET
+        secret: process.env.JWT_SECRET,
+        resave: true,
+        saveUninitialized: true
+    
     }));
     // this.app.use(helmet());
     this.app.use(compression());

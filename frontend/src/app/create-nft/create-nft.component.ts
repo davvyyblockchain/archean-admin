@@ -410,15 +410,39 @@ export class CreateNFTComponent implements OnInit {
                   from: this.profileData.sWalletAddress,
                   value: nAdminCommission,
                   gas: nEstimatedGasLimit
-                }).then(async (successData: any) => {
-                  // 
+                })
+            //     .then(async (successData: any) => {
+            //       // 
 
+            //       this.spinner.hide();
+            //       console.log(successData);
+            //       let oDataToPass = {
+            //         nNFTId: returnData._id,
+            //         sTransactionHash: successData['transactionHash'],
+            //         nTokenID: successData && successData.events && successData.events.TokenCounter && successData.events.TokenCounter.returnValues['0']
+            //       };
+
+            //       console.log(oDataToPass);
+            //       this.spinner.show();
+            //       await this.apiService.setTransactionHash(oDataToPass).subscribe(async (transData: any) => {
+            //         this.spinner.hide();
+            //         if (transData && transData['data']) {
+            //           this.toaster.success('NFT created successfully');
+            //           this.onClickRefresh();
+            //         } else {
+            //           this.toaster.success(transData['message']);
+            //         }
+
+            //       })
+                  
+            // })
+
+                .on('transactionHash', async (hash: any) => {
                   this.spinner.hide();
-                  console.log(successData);
+                  console.log(hash);
                   let oDataToPass = {
                     nNFTId: returnData._id,
-                    sTransactionHash: successData['transactionHash'],
-                    nTokenID: successData && successData.events && successData.events.TokenCounter && successData.events.TokenCounter.returnValues['0']
+                    sTransactionHash: hash
                   };
 
                   console.log(oDataToPass);
@@ -431,30 +455,8 @@ export class CreateNFTComponent implements OnInit {
                     } else {
                       this.toaster.success(transData['message']);
                     }
-
                   })
-                  // .on('transactionHash', async (hash: any) => {
-                  //   this.spinner.hide();
-                  //   console.log(hash);
-                  //   let oDataToPass = {
-                  //     nNFTId: returnData._id,
-                  //     sTransactionHash: hash
-                  //   };
-
-                  //   console.log(oDataToPass);
-                  //   this.spinner.show();
-                  //   await this.apiService.setTransactionHash(oDataToPass).subscribe(async (transData: any) => {
-                  //     this.spinner.hide();
-                  //     if (transData && transData['data']) {
-                  //       this.toaster.success('NFT created successfully');
-                  //       this.onClickRefresh();
-                  //     } else {
-                  //       this.toaster.success(transData['message']);
-                  //     }
-                  //   })
-
-                })
-                .catch(function (error: any) {
+                }).catch(function (error: any) {
                   that.spinner.hide();
                   console.log(error);
                   if (error.code == 32603) {

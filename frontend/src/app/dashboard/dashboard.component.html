@@ -54,9 +54,9 @@
                                 <div class="card__author card__author--verified">
                                     <img src="{{obj.aCurrentOwner && obj.aCurrentOwner != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.aCurrentOwner['sProfilePicUrl'] :'assets/img/avatars/avatar5.jpg' }}"
                                         alt="">
-                                    <a href="javascript:;">{{obj.aCurrentOwner && obj.aCurrentOwner != undefined ?
+                                    <a href="javascript:;">{{obj.aCurrentOwner && obj.aCurrentOwner != undefined && obj.aCurrentOwner['oName'] != undefined  ?
                                         obj.aCurrentOwner['oName']['sFirstname'] : '-'}} {{obj.aCurrentOwner &&
-                                        obj.aCurrentOwner != undefined ?
+                                        obj.aCurrentOwner != undefined && obj.aCurrentOwner['oName'] != undefined ?
                                         obj.aCurrentOwner['oName']['sLastname'] : '-'}}</a>
                                 </div>
                                 <div class="card__info">
@@ -120,17 +120,17 @@
                                 <h3 class="card__title"><a href="javascript:;">{{obj.sName && obj.sName != undefined ?
                                         obj.sName : 'UnKnown'}}</a></h3>
                                 <div class="card__author card__author--verified">
-                                    <img src="{{obj.aCurrentOwner && obj.aCurrentOwner != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.aCurrentOwner['sProfilePicUrl'] :'assets/img/avatars/avatar5.jpg' }}"
+                                    <img src="{{obj.aCurrentOwner && obj.aCurrentOwner != undefined && obj.aCurrentOwner['sProfilePicUrl']!= undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.aCurrentOwner['sProfilePicUrl'] :'assets/img/avatars/avatar5.jpg' }}"
                                         alt="">
-                                    <a href="javascript:;">{{obj.aCurrentOwner && obj.aCurrentOwner != undefined ?
+                                    <a href="javascript:;">{{obj.aCurrentOwner && obj.aCurrentOwner != undefined  && obj.aCurrentOwner['oName'] != undefined?
                                         obj.aCurrentOwner['oName']['sFirstname'] : '-'}} {{obj.aCurrentOwner &&
-                                        obj.aCurrentOwner != undefined ?
+                                        obj.aCurrentOwner != undefined && obj.aCurrentOwner['oName']!= undefined ?
                                         obj.aCurrentOwner['oName']['sLastname'] : '-'}}</a>
                                 </div>
                                 <div class="card__info">
                                     <div class="card__price">
                                         <span>Current price</span>
-                                        <span>{{obj.nBasePrice && obj.nBasePrice != undefined ?
+                                        <span>{{obj.nBasePrice && obj.nBasePrice != undefined != undefined ?
                                             obj.nBasePrice['$numberDecimal'] : 0}} BNB</span>
                                     </div>
 
@@ -187,11 +187,11 @@
                                 <h3 class="card__title"><a href="javascript:;">{{obj.sName && obj.sName != undefined ?
                                         obj.sName : 'UnKnown'}}</a></h3>
                                 <div class="card__author card__author--verified">
-                                    <img src="{{obj.aCurrentOwner && obj.aCurrentOwner != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.aCurrentOwner['sProfilePicUrl'] :'assets/img/avatars/avatar5.jpg' }}"
+                                    <img src="{{obj.aCurrentOwner && obj.aCurrentOwner != undefined && obj.aCurrentOwner['sProfilePicUrl']!= undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.aCurrentOwner['sProfilePicUrl'] :'assets/img/avatars/avatar5.jpg' }}"
                                         alt="">
-                                    <a href="javascript:;">{{obj.aCurrentOwner && obj.aCurrentOwner != undefined ?
+                                    <a href="javascript:;">{{obj.aCurrentOwner && obj.aCurrentOwner != undefined && obj.aCurrentOwner['oName']!= undefined ?
                                         obj.aCurrentOwner['oName']['sFirstname'] : '-'}} {{obj.aCurrentOwner &&
-                                        obj.aCurrentOwner != undefined ?
+                                        obj.aCurrentOwner != undefined && obj.aCurrentOwner['oName'] != undefined ?
                                         obj.aCurrentOwner['oName']['sLastname'] : '-'}}</a>
                                 </div>
                                 <div class="card__info">
@@ -251,11 +251,11 @@
                                 <h3 class="card__title"><a href="javascript:;">{{obj.sName && obj.sName != undefined ?
                                         obj.sName : 'UnKnown'}}</a></h3>
                                 <div class="card__author card__author--verified">
-                                    <img src="{{obj.aCurrentOwner && obj.aCurrentOwner != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.aCurrentOwner['sProfilePicUrl'] :'assets/img/avatars/avatar5.jpg' }}"
+                                    <img src="{{obj.aCurrentOwner && obj.aCurrentOwner != undefined && obj.aCurrentOwner['sProfilePicUrl']!= undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.aCurrentOwner['sProfilePicUrl'] :'assets/img/avatars/avatar5.jpg' }}"
                                         alt="">
-                                    <a href="javascript:;">{{obj.aCurrentOwner && obj.aCurrentOwner != undefined ?
+                                    <a href="javascript:;">{{obj.aCurrentOwner && obj.aCurrentOwner != undefined  && obj.aCurrentOwner['oName'] != undefined?
                                         obj.aCurrentOwner['oName']['sFirstname'] : '-'}} {{obj.aCurrentOwner &&
-                                        obj.aCurrentOwner != undefined ?
+                                        obj.aCurrentOwner != undefined && obj.aCurrentOwner['oName']!= undefined ?
                                         obj.aCurrentOwner['oName']['sLastname'] : '-'}}</a>
                                 </div>
                                 <div class="card__info">

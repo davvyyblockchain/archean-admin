@@ -97,17 +97,16 @@
                                             ?
                                             obj.sName : 'UnKnown'}}</a></h3>
                                     <div class="card__author card__author--verified">
-                                        <img src="{{obj.oUser && obj.oUser != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.oUser['sProfilePicUrl'] :'assets/img/avatars/avatar5.jpg' }}"
+                                        <img src="{{obj.oUser && obj.oUser != undefined && obj.oUser['sProfilePicUrl'] != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.oUser['sProfilePicUrl'] :'assets/img/avatars/avatar5.jpg' }}"
                                             alt="">
-                                        <a href="javascript:;">{{obj.oUser && obj.oUser != undefined ?
-                                            obj.oUser['oName']['sFirstname'] : '-'}} {{obj.oUser && obj.oUser !=
-                                            undefined ?
+                                        <a href="javascript:;">{{obj.oUser && obj.oUser != undefined &&
+                                            obj.oUser['oName']  && obj.oUser['oName']!=undefined && obj.oUser['oName']['sFirstname'] ? obj.oUser['oName']['sFirstname'] : '-'}} {{obj.oUser && obj.oUser != undefined  && obj.oUser['oName'] != undefined ?
                                             obj.oUser['oName']['sLastname'] : '-'}}</a>
                                     </div>
                                     <div class="card__info">
                                         <div class="card__price">
                                             <span>Was sold for</span>
-                                            <span>{{obj.nBasePrice && obj.nBasePrice != undefined ?
+                                            <span>{{obj.nBasePrice && obj.nBasePrice != undefined  &&  obj.nBasePrice['$numberDecimal']!= undefined?
                                                 obj.nBasePrice['$numberDecimal'] : 0}} BNB</span>
                                         </div>
 

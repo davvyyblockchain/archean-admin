@@ -62,15 +62,15 @@
                         <li>
                             <span>Creator</span>
                             <div class="asset__author asset__author--verified">
-                                <img src="{{NFTData && NFTData.oCurrentOwner && NFTData.oCurrentOwner != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+ NFTData.oCurrentOwner.sProfilePicUrl :'assets/img/avatars/avatar5.jpg' }}"
+                                <img src="{{NFTData && NFTData.oCurrentOwner && NFTData.oCurrentOwner != undefined  && NFTData.oCurrentOwner.sProfilePicUrl != undefined? 'https://decryptnft.mypinata.cloud/ipfs/'+ NFTData.oCurrentOwner.sProfilePicUrl :'assets/img/avatars/avatar5.jpg' }}"
                                     alt="">
-                                <a href="javascript:;">{{NFTData.oCurrentOwner &&NFTData.oCurrentOwner.oName &&
+                                <a href="javascript:;">{{NFTData && NFTData.oCurrentOwner && NFTData.oCurrentOwner.oName&&  NFTData.oCurrentOwner.oName!= undefined &&
                                     NFTData.oCurrentOwner.oName.sFirstname &&
                                     NFTData.oCurrentOwner.oName.sFirstname!= undefined ?
                                     NFTData.oCurrentOwner.oName.sFirstname:'-' }}
 
-                                    {{NFTData.oCurrentOwner &&NFTData.oCurrentOwner.oName &&
-                                    NFTData.oCurrentOwner.oName.sLastname &&
+                                    {{NFTData && NFTData.oCurrentOwner && NFTData.oCurrentOwner.oName && NFTData.oCurrentOwner.oName != undefined &&
+                                    NFTData.oCurrentOwner.oName.sLastname && 
                                     NFTData.oCurrentOwner.oName.sLastname!= undefined ?
                                     NFTData.oCurrentOwner.oName.sLastname:'-' }}
                                 </a>
@@ -108,11 +108,11 @@
                                 <div class="asset__actions" *ngFor="let obj of historyData;">
                                     <div class="asset__action asset__action--verified">
                                         <img src="assets/img/avatars/avatar10.jpg" alt="">
-                                        <p>Bid placed for <b>{{obj && obj.nBidPrice && obj.nBidPrice ?
+                                        <p>Bid placed for <b>{{obj && obj.nBidPrice && obj.nBidPrice && obj.nBidPrice['$numberDecimal'] != undefined ?
                                                 obj.nBidPrice['$numberDecimal'] :0}} BNB</b> by <br> <a
-                                                href="javascript:;">{{obj &&obj.oBidder && obj.oBidder.oName &&
-                                                obj.oBidder.oName.sFirstname ? obj.oBidder.oName.sFirstname :0}}
-                                                {{obj.oBidder && obj.oBidder.oName && obj.oBidder.oName.sLastname ?
+                                                href="javascript:;">{{obj &&obj.oBidder && obj.oBidder.oName && obj.oBidder.oName != undefined && 
+                                                obj.oBidder.oName.sFirstname && obj.oBidder.oName.sFirstname != undefined ? obj.oBidder.oName.sFirstname :0}}
+                                                {{obj.oBidder && obj.oBidder.oName && obj.oBidder.oName!= undefined && obj.oBidder.oName.sLastname && obj.oBidder.oName.sLastname!= undefined ?
                                                 obj.oBidder.oName.sLastname :0}}</a></p>
                                     </div>
 
@@ -158,7 +158,7 @@
 
                         <div class="asset__price">
                             <span>Minimum bid</span>
-                            <span>{{NFTData.nBasePrice && NFTData.nBasePrice != undefined ?
+                            <span>{{NFTData.nBasePrice && NFTData.nBasePrice != undefined && NFTData.nBasePrice['$numberDecimal'] != undefined ?
                                 NFTData.nBasePrice['$numberDecimal'] :'-' }} BNB</span>
                         </div>
                     </div>
