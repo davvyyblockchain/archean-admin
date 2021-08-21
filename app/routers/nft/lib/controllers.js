@@ -646,7 +646,7 @@ controllers.deleteNFT = async (req, res) => {
 
 controllers.setTransactionHash = async (req, res) => {
     try {
-        if (!req.body.nTokenID) return res.reply(messages.not_found("Token ID"));
+        // if (!req.body.nTokenID) return res.reply(messages.not_found("Token ID"));
         if (!req.body.nNFTId) return res.reply(messages.not_found("NFT ID"));
         if (!req.body.sTransactionHash) return res.reply(messages.not_found("Transaction Hash"));
 
@@ -655,9 +655,9 @@ controllers.setTransactionHash = async (req, res) => {
         if (!validators.isValidTransactionHash(req.body.sTransactionHash)) res.reply(messages.invalid("Transaction Hash"));
 
         NFT.findByIdAndUpdate(req.body.nNFTId, {
-            nTokenID: req.body.nTokenID,
+            // nTokenID: req.body.nTokenID,
             sTransactionHash: req.body.sTransactionHash,
-            sTransactionStatus: 1
+            sTransactionStatus: 0
         }, (err, nft) => {
             if (err) return res.reply(messages.server_error());
             if (!nft) return res.reply(messages.not_found('NFT'));
