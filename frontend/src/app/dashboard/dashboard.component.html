@@ -35,26 +35,34 @@
                 </div>
             </div>
             <!-- end title -->
-          
+
             <!-- carousel -->
             <div class="col-12">
                 <div class="main__carousel-wrap">
                     <div class="main__carousel main__carousel--live owl-carousel" id="liveA">
                         <ng-container *ngIf="landingData.onAuction && landingData.onAuction.length">
                             <div class="card" *ngFor="let obj of landingData.onAuction;">
-                                <a href="javascript:;" class="card__cover " routerLink="/NFT-detail/{{obj._id && obj._id != undefined ? obj._id : '-'}}">
+                                <a href="javascript:;" class="card__cover "
+                                    routerLink="/NFT-detail/{{obj._id && obj._id != undefined ? obj._id : '-'}}">
                                     <img class="sty img-fluid"
+                                        *ngIf="obj.eType && obj.eType != undefined && obj.eType == 'Image'"
                                         src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }} "
                                         alt="">
+                                        <!--   -->
+                                    <audio id="audio" controls  class="sty "
+                                        *ngIf="obj.eType && obj.eType != undefined && obj.eType == 'Audio'">
+                                        <source src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }}" type="audio/mp3" id="src" />
+                                    </audio>
                                     <span class="card__time">{{obj.eAuctionType && obj.eAuctionType != undefined ?
                                         obj.eAuctionType : '-'}}</span>
                                 </a>
                                 <h3 class="card__title"><a href="javascript:;">{{obj.sName && obj.sName != undefined ?
                                         obj.sName : 'UnKnown'}}</a></h3>
                                 <div class="card__author card__author--verified">
-                                    <img src="{{obj.aCurrentOwner && obj.aCurrentOwner != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.aCurrentOwner['sProfilePicUrl'] :'assets/img/avatars/avatar5.jpg' }}"
+                                    <img src="{{obj.aCurrentOwner && obj.aCurrentOwner != undefined && obj.aCurrentOwner['sProfilePicUrl']!= undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.aCurrentOwner['sProfilePicUrl'] :'assets/img/avatars/avatar5.jpg' }}"
                                         alt="">
-                                    <a href="javascript:;">{{obj.aCurrentOwner && obj.aCurrentOwner != undefined && obj.aCurrentOwner['oName'] != undefined  ?
+                                    <a href="javascript:;">{{obj.aCurrentOwner && obj.aCurrentOwner != undefined &&
+                                        obj.aCurrentOwner['oName'] != undefined ?
                                         obj.aCurrentOwner['oName']['sFirstname'] : '-'}} {{obj.aCurrentOwner &&
                                         obj.aCurrentOwner != undefined && obj.aCurrentOwner['oName'] != undefined ?
                                         obj.aCurrentOwner['oName']['sLastname'] : '-'}}</a>
@@ -67,7 +75,7 @@
                                     </div>
 
                                     <button class="card__likes" type="button">
-                                    
+
                                         <span>{{obj.eType && obj.eType != undefined ? obj.eType : '-'}}</span>
                                     </button>
                                 </div>
@@ -87,8 +95,8 @@
                                 d="M17.92,11.62a1,1,0,0,0-.21-.33l-5-5a1,1,0,0,0-1.42,1.42L14.59,11H7a1,1,0,0,0,0,2h7.59l-3.3,3.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0l5-5a1,1,0,0,0,.21-.33A1,1,0,0,0,17.92,11.62Z" />
                         </svg></button>
                 </div>
-            
-            
+
+
             </div>
             <!-- end carousel -->
         </section>
@@ -103,14 +111,15 @@
                 </div>
             </div>
             <!-- end title -->
-          
+
             <!-- carousel -->
             <div class="col-12">
                 <div class="main__carousel-wrap">
                     <div class="main__carousel main__carousel--live owl-carousel" id="liveS">
                         <ng-container *ngIf="landingData.onSale && landingData.onSale.length">
                             <div class="card" *ngFor="let obj of landingData.onSale;">
-                                <a href="javascript:;" class="card__cover " routerLink="/NFT-detail/{{obj._id && obj._id != undefined ? obj._id : '-'}}">
+                                <a href="javascript:;" class="card__cover "
+                                    routerLink="/NFT-detail/{{obj._id && obj._id != undefined ? obj._id : '-'}}">
                                     <img class="sty img-fluid"
                                         src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }} "
                                         alt="">
@@ -122,7 +131,8 @@
                                 <div class="card__author card__author--verified">
                                     <img src="{{obj.aCurrentOwner && obj.aCurrentOwner != undefined && obj.aCurrentOwner['sProfilePicUrl']!= undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.aCurrentOwner['sProfilePicUrl'] :'assets/img/avatars/avatar5.jpg' }}"
                                         alt="">
-                                    <a href="javascript:;">{{obj.aCurrentOwner && obj.aCurrentOwner != undefined  && obj.aCurrentOwner['oName'] != undefined?
+                                    <a href="javascript:;">{{obj.aCurrentOwner && obj.aCurrentOwner != undefined &&
+                                        obj.aCurrentOwner['oName'] != undefined?
                                         obj.aCurrentOwner['oName']['sFirstname'] : '-'}} {{obj.aCurrentOwner &&
                                         obj.aCurrentOwner != undefined && obj.aCurrentOwner['oName']!= undefined ?
                                         obj.aCurrentOwner['oName']['sLastname'] : '-'}}</a>
@@ -135,7 +145,7 @@
                                     </div>
 
                                     <button class="card__likes" type="button">
-                                    
+
                                         <span>{{obj.eType && obj.eType != undefined ? obj.eType : '-'}}</span>
                                     </button>
                                 </div>
@@ -155,8 +165,8 @@
                                 d="M17.92,11.62a1,1,0,0,0-.21-.33l-5-5a1,1,0,0,0-1.42,1.42L14.59,11H7a1,1,0,0,0,0,2h7.59l-3.3,3.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0l5-5a1,1,0,0,0,.21-.33A1,1,0,0,0,17.92,11.62Z" />
                         </svg></button>
                 </div>
-            
-            
+
+
             </div>
             <!-- end carousel -->
         </section>
@@ -177,7 +187,8 @@
                     <div class="main__carousel main__carousel--live owl-carousel" id="liveR">
                         <ng-container *ngIf="landingData.recentlyAdded && landingData.recentlyAdded.length">
                             <div class="card" *ngFor="let obj of landingData.recentlyAdded;">
-                                <a href="javascript:;" class="card__cover " routerLink="/NFT-detail/{{obj._id && obj._id != undefined ? obj._id : '-'}}">
+                                <a href="javascript:;" class="card__cover "
+                                    routerLink="/NFT-detail/{{obj._id && obj._id != undefined ? obj._id : '-'}}">
                                     <img class="sty img-fluid"
                                         src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }} "
                                         alt="">
@@ -189,7 +200,8 @@
                                 <div class="card__author card__author--verified">
                                     <img src="{{obj.aCurrentOwner && obj.aCurrentOwner != undefined && obj.aCurrentOwner['sProfilePicUrl']!= undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.aCurrentOwner['sProfilePicUrl'] :'assets/img/avatars/avatar5.jpg' }}"
                                         alt="">
-                                    <a href="javascript:;">{{obj.aCurrentOwner && obj.aCurrentOwner != undefined && obj.aCurrentOwner['oName']!= undefined ?
+                                    <a href="javascript:;">{{obj.aCurrentOwner && obj.aCurrentOwner != undefined &&
+                                        obj.aCurrentOwner['oName']!= undefined ?
                                         obj.aCurrentOwner['oName']['sFirstname'] : '-'}} {{obj.aCurrentOwner &&
                                         obj.aCurrentOwner != undefined && obj.aCurrentOwner['oName'] != undefined ?
                                         obj.aCurrentOwner['oName']['sLastname'] : '-'}}</a>
@@ -202,7 +214,7 @@
                                     </div>
 
                                     <button class="card__likes" type="button">
-                                    
+
                                         <span>{{obj.eType && obj.eType != undefined ? obj.eType : '-'}}</span>
                                     </button>
                                 </div>
@@ -241,7 +253,8 @@
                     <div class="main__carousel main__carousel--live owl-carousel" id="liveM">
                         <ng-container *ngIf="landingData.mostViewed && landingData.mostViewed.length">
                             <div class="card" *ngFor="let obj of landingData.mostViewed;">
-                                <a href="javascript:;" class="card__cover " routerLink="/NFT-detail/{{obj._id && obj._id != undefined ? obj._id : '-'}}">
+                                <a href="javascript:;" class="card__cover "
+                                    routerLink="/NFT-detail/{{obj._id && obj._id != undefined ? obj._id : '-'}}">
                                     <img class="sty img-fluid"
                                         src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }} "
                                         alt="">
@@ -253,7 +266,8 @@
                                 <div class="card__author card__author--verified">
                                     <img src="{{obj.aCurrentOwner && obj.aCurrentOwner != undefined && obj.aCurrentOwner['sProfilePicUrl']!= undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.aCurrentOwner['sProfilePicUrl'] :'assets/img/avatars/avatar5.jpg' }}"
                                         alt="">
-                                    <a href="javascript:;">{{obj.aCurrentOwner && obj.aCurrentOwner != undefined  && obj.aCurrentOwner['oName'] != undefined?
+                                    <a href="javascript:;">{{obj.aCurrentOwner && obj.aCurrentOwner != undefined &&
+                                        obj.aCurrentOwner['oName'] != undefined?
                                         obj.aCurrentOwner['oName']['sFirstname'] : '-'}} {{obj.aCurrentOwner &&
                                         obj.aCurrentOwner != undefined && obj.aCurrentOwner['oName']!= undefined ?
                                         obj.aCurrentOwner['oName']['sLastname'] : '-'}}</a>
@@ -266,7 +280,7 @@
                                     </div>
 
                                     <button class="card__likes" type="button">
-                                   
+
                                         <span>{{obj.eType && obj.eType != undefined ? obj.eType : '-'}}</span>
                                     </button>
                                 </div>
@@ -466,7 +480,8 @@
                     </span>
                     <h3 class="feature__title">Set up your wallet</h3>
                     <p class="feature__text">Once you’ve set up your wallet of choice, connect it to NFT marketplace by
-                        clicking this link. <br><a href="javascript:;"  (click)="connectToMetaMask()">Connect my wallet</a>.</p>
+                        clicking this link. <br><a href="javascript:;" (click)="connectToMetaMask()">Connect my
+                            wallet</a>.</p>
                 </div>
             </div>
 
