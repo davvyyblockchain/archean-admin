@@ -35,7 +35,7 @@
 
                             <div class="filter__group">
                                 <label class="filter__label">Keyword:</label>
-                                <input type="text" class="filter__input" placeholder="Keyword"
+                                <input type="text" class="filter__input" autofocus placeholder="Keyword"
                                     (keyup)="onkeyUp($event)">
                             </div>
 
@@ -140,8 +140,20 @@
                             <div class="card">
                                 <a href="javascript:;" class="card__cover"
                                     routerLink="/NFT-detail/{{obj._id && obj._id != undefined ? obj._id : '-'}}">
-                                    <img src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover5.jpg' }}"
+
+
+
+                                    <img class="sty img-fluid"
+                                        *ngIf="obj.eType && obj.eType != undefined && obj.eType != 'Audio'"
+                                        src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover5.jpg' }} "
                                         alt="">
+                                    <!--   -->
+                                    <audio id="audio" controls class="sty "
+                                        *ngIf="obj.eType && obj.eType != undefined && obj.eType == 'Audio'">
+                                        <source
+                                            src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }}"
+                                            type="audio/mp3" id="src" />
+                                    </audio>
 
                                     <span class="card__time card__time--clock">
                                         {{obj.eAuctionType && obj.eAuctionType != undefined ? obj.eAuctionType : '-'}}
@@ -154,8 +166,10 @@
 
                                     <img src="{{obj.oUser && obj.oUser != undefined && obj.oUser['sProfilePicUrl']!= undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.oUser['sProfilePicUrl'] :'assets/img/avatars/avatar9.jpg' }}"
                                         alt="">
-                                    <a href="javascript:;">{{obj.oUser && obj.oUser != undefined && obj.oUser['oName']!= undefined ?
-                                        obj.oUser['oName']['sFirstname'] : '-'}} {{obj.oUser && obj.oUser != undefined && obj.oUser['oName'] != undefined ?
+                                    <a href="javascript:;">{{obj.oUser && obj.oUser != undefined && obj.oUser['oName']!=
+                                        undefined ?
+                                        obj.oUser['oName']['sFirstname'] : '-'}} {{obj.oUser && obj.oUser != undefined
+                                        && obj.oUser['oName'] != undefined ?
                                         obj.oUser['oName']['sLastname'] : '-'}}</a>
                                 </div>
                                 <div class="card__info">

@@ -18,6 +18,7 @@ import { UsersComponent } from './users/users.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { ScriptLoaderService } from './script-loader.service';
+import { AutoFocusDirective } from './auto-focus.directive';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { ScriptLoaderService } from './script-loader.service';
     UsersComponent,
     HeaderComponent,
     FooterComponent,
+    AutoFocusDirective,
   ],
   imports: [
     FormsModule,

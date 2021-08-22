@@ -1,7 +1,8 @@
 const fs = require('fs');
 const {
     NFT,
-    Collection
+    Collection,
+    User
 } = require('../../../models');
 const pinataSDK = require('@pinata/sdk');
 const multer = require('multer');
@@ -173,7 +174,7 @@ controllers.create = async (req, res) => {
 
                     const nft = new NFT({
                         sName: req.body.sName,
-                        sCollection: req.body.sCollection,
+                        sCollection: req.body.sCollection && req.body.sCollection != undefined ? req.body.sCollection : '',
                         sHash: result.IpfsHash,
                         eType: req.body.eType,
                         nQuantity: req.body.nQuantity,
@@ -347,7 +348,7 @@ controllers.mynftlist = async (req, res) => {
                 'nTokenID': 1,
                 'oCurrentOwner': 1,
                 "sTransactionStatus": 1,
-                eAuctionType:1,
+                eAuctionType: 1,
             }
         }, {
             '$lookup': {
@@ -356,7 +357,7 @@ controllers.mynftlist = async (req, res) => {
                 'foreignField': '_id',
                 'as': 'oUser'
             }
-        },{$unwind:'$oUser'}, {
+        }, { $unwind: '$oUser' }, {
             '$facet': {
                 'nfts': [{
                     "$skip": +nOffset
@@ -535,15 +536,15 @@ controllers.nftListing = async (req, res) => {
         let data = await NFT.aggregate([{
             '$match': {
                 '$and': [{
-                        sTransactionStatus: {
-                            $eq: 1
-                        }
-                    },
-                    {
-                        eAuctionType: {
-                            $ne: "Unlockable"
-                        }
-                    },
+                    sTransactionStatus: {
+                        $eq: 1
+                    }
+                },
+                {
+                    eAuctionType: {
+                        $ne: "Unlockable"
+                    }
+                },
                     oTypeQuery, oTtextQuery, oSellingTypeQuery
                 ]
             }
@@ -557,7 +558,7 @@ controllers.nftListing = async (req, res) => {
                 'nBasePrice': 1,
                 'sHash': 1,
                 'oCurrentOwner': 1,
-                'eAuctionType':1,
+                'eAuctionType': 1,
             }
         }, {
             '$lookup': {
@@ -566,7 +567,7 @@ controllers.nftListing = async (req, res) => {
                 'foreignField': '_id',
                 'as': 'oUser'
             }
-        },{$unwind:'$oUser'}, {
+        }, { $unwind: '$oUser' }, {
             '$facet': {
                 'nfts': [{
                     "$skip": +nOffset
@@ -696,7 +697,7 @@ controllers.landing = async (req, res) => {
                         'foreignField': '_id',
                         'as': 'aCurrentOwner'
                     }
-                },{$unwind:'$aCurrentOwner'}],
+                }, { $unwind: '$aCurrentOwner' }],
                 'mostViewed': [{
                     '$match': {
                         'sTransactionStatus': 1,
@@ -717,7 +718,7 @@ controllers.landing = async (req, res) => {
                         'foreignField': '_id',
                         'as': 'aCurrentOwner'
                     }
-                },{$unwind:'$aCurrentOwner'}],
+                }, { $unwind: '$aCurrentOwner' }],
                 'onSale': [{
                     '$match': {
                         'sTransactionStatus': {
@@ -740,7 +741,7 @@ controllers.landing = async (req, res) => {
                         'foreignField': '_id',
                         'as': 'aCurrentOwner'
                     }
-                },{$unwind:'$aCurrentOwner'}],
+                }, { $unwind: '$aCurrentOwner' }],
                 'onAuction': [{
                     '$match': {
                         'sTransactionStatus': {
@@ -763,10 +764,11 @@ controllers.landing = async (req, res) => {
                         'foreignField': '_id',
                         'as': 'aCurrentOwner'
                     }
-                },{$unwind:'$aCurrentOwner'}]
+                }, { $unwind: '$aCurrentOwner' }]
             }
         }]);
-
+        data[0].users  = [];
+        data[0].users  = await User.find({"sRole" : "user"});
         return res.reply(messages.success(), data[0]);
     } catch (error) {
         return res.reply(messages.server_error());

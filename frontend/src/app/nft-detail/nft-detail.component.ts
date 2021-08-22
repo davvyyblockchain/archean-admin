@@ -298,7 +298,7 @@ export class NFTDetailComponent implements OnInit {
               })
             })
             .catch((error: any) => {
-              console.log(error);
+              
               this.toaster["error"]((error.code == 4001) ? "You Denied MetaMask Transaction Signature" : "Something Went Wrong!");
             });
 
@@ -366,7 +366,7 @@ export class NFTDetailComponent implements OnInit {
             })
           })
           .catch((error: any) => {
-            console.log(error);
+            
             this.toaster["error"]((error.code == 4001) ? "You Denied MetaMask Transaction Signature" : "Something Went Wrong!");
           });
 
@@ -430,7 +430,7 @@ export class NFTDetailComponent implements OnInit {
               })
             })
             .catch((error: any) => {
-              console.log(error);
+              
               this.toaster["error"]((error.code == 4001) ? "You Denied MetaMask Transaction Signature" : "Something Went Wrong!");
             });
 
@@ -466,17 +466,21 @@ export class NFTDetailComponent implements OnInit {
     var oContract = await this.apiService.exportInstance(environment.NFTaddress, environment.NFTabi);
     if (oContract && oContract != undefined) {
 
-      console.log(window.sessionStorage.getItem("sWalletAddress"));
+      console.log(this.showObj.wallet_address);
 
       oContract.methods.acceptBid(nTokenID, obj.oBidder.sWalletAddress, obj.nQuantity)
         .send({
-          from: window.sessionStorage.getItem("sWalletAddress")
+          from: this.showObj.wallet_address
         }).on('transactionHash', async (hash: any) => {
           this.spinner.hide();
           oOptions["sTransactionHash"] = hash;
           await this.sendData(oOptions);
         }).catch((error: any) => {
-          console.log(error);
+          this.spinner.hide();
+          
+          if(error && error.code  == 4001){
+            this.toaster.error(error['message'])
+          }
         });
     } else {
       this.spinner.hide();
@@ -501,13 +505,17 @@ export class NFTDetailComponent implements OnInit {
     if (oContract && oContract != undefined) {
       oContract.methods.rejectBid(nTokenID, obj.oBidder.sWalletAddress)
         .send({
-          from: window.sessionStorage.getItem("sWalletAddress")
+          from: this.showObj.wallet_address
         }).on('transactionHash', async (hash: any) => {
           this.spinner.hide();
           oOptions["sTransactionHash"] = hash;
           await this.sendData(oOptions);
         }).catch((error: any) => {
-          console.log(error);
+          this.spinner.hide();
+          if(error && error.code  == 4001){
+            this.toaster.error(error['message'])
+          }
+          
         });
     } else {
       this.spinner.hide();
@@ -533,13 +541,17 @@ export class NFTDetailComponent implements OnInit {
     if (oContract && oContract != undefined) {
       oContract.methods.cancelBid(nTokenID, this.NFTData.oCurrentOwner.sWalletAddress)
         .send({
-          from: window.sessionStorage.getItem("sWalletAddress")
+          from: this.showObj.wallet_address
         }).on('transactionHash', async (hash: any) => {
           this.spinner.hide();
           oOptions["sTransactionHash"] = hash;
           await this.sendData(oOptions);
         }).catch((error: any) => {
-          console.log(error);
+          this.spinner.hide();
+          if(error && error.code  == 4001){
+            this.toaster.error(error['message'])
+          }
+          
         });
     } else {
       this.spinner.hide();

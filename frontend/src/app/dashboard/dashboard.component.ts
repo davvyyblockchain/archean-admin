@@ -20,6 +20,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     onAuction: [],
     onSale: [],
     recentlyAdded: [],
+    users:[]
   };
 
   constructor(

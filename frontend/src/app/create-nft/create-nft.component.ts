@@ -105,7 +105,7 @@ export class CreateNFTComponent implements OnInit {
 
     this.createNFTForm = this._formBuilder.group({
       sName: ['', [Validators.required]],
-      sCollection: ['', [Validators.required]],
+      sCollection: ['', []],
       eType: ['Image', [Validators.required]],
       nQuantity: ['', [Validators.required]],
       sNftdescription: ['', [Validators.required]],
