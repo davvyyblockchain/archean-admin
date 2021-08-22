@@ -330,7 +330,9 @@ export class ApiService {
   bidCreate(data: any) {
     return this.http.post(this.URL + '/bid/create', data, { headers: { 'Authorization': this.getHeaders() } });
   }
-
+  toggleBidStatus(data: any) {
+    return this.http.post(this.URL + '/bid/toggleBidStatus', data, { headers: { 'Authorization': this.getHeaders() } });
+  }
   onClickRefresh() {
     window.location.reload();
   }

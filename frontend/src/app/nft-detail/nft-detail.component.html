@@ -7,9 +7,10 @@
             <!-- breadcrumb -->
             <div class="col-12">
                 <ul class="breadcrumb">
-                    <li class="breadcrumb__item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb__item"><a href="author.html">Author</a></li>
-                    <li class="breadcrumb__item breadcrumb__item--active">Item</li>
+                    <li class="breadcrumb__item"><a href="javascript:;" routerLink="">Home</a></li>
+                    <li class="breadcrumb__item"><a href="javascript:;" routerLink="/NFT-marketplace">Marketplace</a>
+                    </li>
+                    <li class="breadcrumb__item breadcrumb__item--active">NFT</li>
                 </ul>
             </div>
             <!-- end breadcrumb -->
@@ -64,13 +65,15 @@
                             <div class="asset__author asset__author--verified">
                                 <img src="{{NFTData && NFTData.oCurrentOwner && NFTData.oCurrentOwner != undefined  && NFTData.oCurrentOwner.sProfilePicUrl != undefined? 'https://decryptnft.mypinata.cloud/ipfs/'+ NFTData.oCurrentOwner.sProfilePicUrl :'assets/img/avatars/avatar5.jpg' }}"
                                     alt="">
-                                <a href="javascript:;">{{NFTData && NFTData.oCurrentOwner && NFTData.oCurrentOwner.oName&&  NFTData.oCurrentOwner.oName!= undefined &&
+                                <a href="javascript:;">{{NFTData && NFTData.oCurrentOwner &&
+                                    NFTData.oCurrentOwner.oName&& NFTData.oCurrentOwner.oName!= undefined &&
                                     NFTData.oCurrentOwner.oName.sFirstname &&
                                     NFTData.oCurrentOwner.oName.sFirstname!= undefined ?
                                     NFTData.oCurrentOwner.oName.sFirstname:'-' }}
 
-                                    {{NFTData && NFTData.oCurrentOwner && NFTData.oCurrentOwner.oName && NFTData.oCurrentOwner.oName != undefined &&
-                                    NFTData.oCurrentOwner.oName.sLastname && 
+                                    {{NFTData && NFTData.oCurrentOwner && NFTData.oCurrentOwner.oName &&
+                                    NFTData.oCurrentOwner.oName != undefined &&
+                                    NFTData.oCurrentOwner.oName.sLastname &&
                                     NFTData.oCurrentOwner.oName.sLastname!= undefined ?
                                     NFTData.oCurrentOwner.oName.sLastname:'-' }}
                                 </a>
@@ -94,11 +97,11 @@
                                 aria-selected="false">Bids</a>
                         </li>
 
-
+<!-- 
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#tab-3" role="tab" aria-controls="tab-3"
                                 aria-selected="false">Details</a>
-                        </li>
+                        </li> -->
                     </ul>
 
                     <div class="tab-content">
@@ -106,15 +109,23 @@
                         <div class="tab-pane fade show active" id="tab-2" role="tabpanel">
                             <ng-container *ngIf="historyData && historyData.length">
                                 <div class="asset__actions" *ngFor="let obj of historyData;">
-                                    <div class="asset__action asset__action--verified">
-                                        <img src="assets/img/avatars/avatar10.jpg" alt="">
-                                        <p>Bid placed for <b>{{obj && obj.nBidPrice && obj.nBidPrice && obj.nBidPrice['$numberDecimal'] != undefined ?
-                                                obj.nBidPrice['$numberDecimal'] :0}} BNB</b> by <br> <a
-                                                href="javascript:;">{{obj &&obj.oBidder && obj.oBidder.oName && obj.oBidder.oName != undefined && 
-                                                obj.oBidder.oName.sFirstname && obj.oBidder.oName.sFirstname != undefined ? obj.oBidder.oName.sFirstname :0}}
-                                                {{obj.oBidder && obj.oBidder.oName && obj.oBidder.oName!= undefined && obj.oBidder.oName.sLastname && obj.oBidder.oName.sLastname!= undefined ?
-                                                obj.oBidder.oName.sLastname :0}}</a></p>
-                                    </div>
+                                    <ng-container *ngIf=" obj.eBidStatus == 'Bid'">
+                                        <div class="asset__action asset__action--verified">
+                                            <img src="assets/img/avatars/avatar10.jpg" alt="">
+                                            <p>Bid placed for <b>{{obj && obj.nBidPrice && obj.nBidPrice &&
+                                                    obj.nBidPrice['$numberDecimal'] != undefined ?
+                                                    obj.nBidPrice['$numberDecimal'] :0}} BNB</b> by <br> <a
+                                                    href="javascript:;">{{obj &&obj.oBidder && obj.oBidder.oName &&
+                                                    obj.oBidder.oName != undefined &&
+                                                    obj.oBidder.oName.sFirstname && obj.oBidder.oName.sFirstname !=
+                                                    undefined ? obj.oBidder.oName.sFirstname :0}}
+                                                    {{obj.oBidder && obj.oBidder.oName && obj.oBidder.oName!= undefined
+                                                    &&
+                                                    obj.oBidder.oName.sLastname && obj.oBidder.oName.sLastname!=
+                                                    undefined ?
+                                                    obj.oBidder.oName.sLastname :0}}</a></p>
+                                        </div>
+                                    </ng-container>
 
                                 </div>
                             </ng-container>
@@ -158,7 +169,8 @@
 
                         <div class="asset__price">
                             <span>Minimum bid</span>
-                            <span>{{NFTData.nBasePrice && NFTData.nBasePrice != undefined && NFTData.nBasePrice['$numberDecimal'] != undefined ?
+                            <span>{{NFTData.nBasePrice && NFTData.nBasePrice != undefined &&
+                                NFTData.nBasePrice['$numberDecimal'] != undefined ?
                                 NFTData.nBasePrice['$numberDecimal'] :'-' }} BNB</span>
                         </div>
                     </div>
@@ -171,14 +183,78 @@
                             bid</a>
                     </div>
                     <div class="asset__btns">
-                        <a href="#modal-transfer" *ngIf="showObj.showTransferCurrent == 'show'"
+
+                        <a href="#modal-tran" *ngIf="showObj.showTransferCurrent == 'show'"
                             class="asset__btn asset__btn--full asset__btn--clr open-modal">Transfer
                             NFT</a>
+                    </div>
+                    <div class="asset__btns">
+                        <a href="#modal-buy" *ngIf="showObj.showBuyCurrent == 'show'"
+                            class="asset__btn asset__btn--full asset__btn--clr open-modal">Buy now</a>
                     </div>
                     <!-- end actions -->
                 </div>
             </div>
             <!-- end sidebar -->
+        </div>
+
+
+        <div class="row">
+            <div class="col-12">
+                <div class="main__title main__title--page">
+                    <h1>Transaction Table</h1>
+                </div>
+            </div>
+            <table class="table mt-5">
+                <thead>
+                    <tr>
+                        <th scope="col">Type</th>
+                        <th scope="col">From</th>
+                        <th scope="col">To</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Txn</th>
+                        <th scope="col">Action</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let obj of historyData;">
+                        <td>{{obj && obj.eBidStatus &&
+                            obj.eBidStatus != undefined ?
+                            obj.eBidStatus :0}}</td>
+                        <td>{{obj && obj.oBidder && obj.oBidder &&
+                            obj.oBidder['sUserName'] != undefined ?
+                            obj.oBidder['sUserName'] :0}}</td>
+                        <td>{{obj && obj.oRecipient && obj.oRecipient &&
+                            obj.oRecipient['sUserName'] != undefined ?
+                            obj.oRecipient['sUserName'] :0}}</td>
+                        <td> {{obj && obj.nQuantity &&
+                            obj.nQuantity != undefined ?
+                            obj.nQuantity :0}}</td>
+                        <td>{{obj && obj.nBidPrice && obj.nBidPrice &&
+                            obj.nBidPrice['$numberDecimal'] != undefined ?
+                            obj.nBidPrice['$numberDecimal'] :0}} BNB</td>
+                        <td>{{obj && obj.sCreated &&
+                            obj.sCreated != undefined ?
+                            (obj.sCreated | date: 'medium'):0}} </td>
+                        <td>
+                            <div class="d-flex" *ngIf="obj.eBidStatus && obj.eBidStatus == 'Bid' && showObj.wallet_address == obj.oRecipient.sWalletAddress">
+                                <a href="javascript:;" (click)="clickAccept(obj)"
+                                    class="asset__btn asset__btn--full asset__btn--clr open-modal">Accept</a> <a
+                                    href="javascript:;" (click)="clickReject(obj)"
+                                    class="asset__btn asset__btn--full asset__btn--clr open-modal">Reject</a>
+                            </div>
+                            <div class="d-flex" *ngIf="obj.eBidStatus && obj.eBidStatus == 'Bid' && showObj.wallet_address == obj.oBidder.sWalletAddress">
+                                <a href="javascript:;"   (click)="clickCancel(obj)"
+                                    class="asset__btn asset__btn--full asset__btn--clr open-modal">Cancel</a>
+                            </div>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+
         </div>
 
         <!-- end explore -->
@@ -224,7 +300,7 @@
 
 
 
-<div id="modal-transfer" class="zoom-anim-dialog mfp-hide modal modal--form">
+<div id="modal-tran" class="zoom-anim-dialog mfp-hide modal modal--form">
     <button class="modal__close" type="button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <path
                 d="M13.41,12l4.3-4.29a1,1,0,1,0-1.42-1.42L12,10.59,7.71,6.29A1,1,0,0,0,6.29,7.71L10.59,12l-4.3,4.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0L12,13.41l4.29,4.3a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42Z" />
@@ -270,5 +346,44 @@
         <span class="sign__text sign__text--small">This NFT directly send to Collaborator.</span>
 
         <button class="sign__btn" type="button" (click)="onClickSubmitTransfer()">Transfer</button>
+    </form>
+</div>
+
+
+
+<div id="modal-buy" class="zoom-anim-dialog mfp-hide modal modal--form">
+    <button class="modal__close" type="button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path
+                d="M13.41,12l4.3-4.29a1,1,0,1,0-1.42-1.42L12,10.59,7.71,6.29A1,1,0,0,0,6.29,7.71L10.59,12l-4.3,4.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0L12,13.41l4.29,4.3a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42Z" />
+        </svg></button>
+
+    <h4 class="sign__title">Buy now</h4>
+    <form name="buyForm" [formGroup]="buyForm">
+        <div class="sign__group sign__group--row">
+            <label class="sign__label" for="placebid">Quantity</label>
+            <input id="placebid" type="text" class="sign__input" (keyup)="checkBuyBQNT($event)"
+                [ngClass]="{ 'is-invalid': submitted3 && buyForm.controls.nQuantity.errors }"
+                formControlName="nQuantity">
+            <div class="nft-err" *ngIf="submitted3 && buyForm.controls.nQuantity.errors">
+                <span *ngIf="buyForm.controls.nQuantity.errors?.required">This field is
+                    required.</span>
+            </div>
+
+        </div>
+
+        <div class="sign__group sign__group--row">
+            <label class="sign__label" for="placebid">Price</label>
+            <input id="placebid" type="text" class="sign__input" value="{{NFTData.nBasePrice && NFTData.nBasePrice != undefined && NFTData.nBasePrice['$numberDecimal'] != undefined ?
+            NFTData.nBasePrice['$numberDecimal'] :'-' }}"
+                [ngClass]="{ 'is-invalid': submitted3 && buyForm.controls.nBidPrice.errors }"
+                formControlName="nBidPrice" />
+            <div class="nft-err" *ngIf="submitted3 && buyForm.controls.nBidPrice.errors">
+                <span *ngIf="buyForm.controls.nBidPrice.errors?.required">This field is
+                    required.</span>
+            </div>
+        </div>
+        <!-- <span class="sign__text sign__text--small">This Bid can Finalize by Owner.</span> -->
+
+        <button class="sign__btn" type="button" (click)="onClickSubmitBUY()">Buy now</button>
     </form>
 </div>

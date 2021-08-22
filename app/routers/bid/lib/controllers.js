@@ -225,7 +225,7 @@ controllers.getBidHistoryOfItem = async (req, res, next) => {
             '$sort': {
                 '_id': -1
             }
-        }, { $unwind: '$oBidder' }, {
+        }, { $unwind: '$oBidder' },{ $unwind: '$oRecipient' }, {
             '$facet': {
                 'bids': [{
                     "$skip": +0

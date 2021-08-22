@@ -17,3 +17,21 @@
 max-height: 543px;
 max-width: 815px;
 }
+
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #ada5a5;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  color:#bdbdbd;
+  background-color: #222227;
+}

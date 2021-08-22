@@ -69,12 +69,12 @@
                                 <label class="filter__label">Type:</label>
                                 <ul class="filter__checkboxes">
                                     <li>
-                                        <input id="type5" type="checkbox" name="type5" value="Auction"
+                                        <input id="type5" type="radio" name="type5" value="Auction"
                                             (click)="onClickTypeSearch('Auction')">
                                         <label for="type5">Auction</label>
                                     </li>
                                     <li>
-                                        <input id="type6" type="checkbox" name="type6" value="Fixed Sale"
+                                        <input id="type6" type="radio" name="type5" value="Fixed Sale"
                                             (click)="onClickTypeSearch('Fixed Sale')">
                                         <label for="type6">Sale</label>
                                     </li>
@@ -152,10 +152,10 @@
                                         obj.sName : 'UnKnown'}}</a></h3>
                                 <div class="card__author card__author--verified">
 
-                                    <img src="{{obj.oUser && obj.oUser != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.oUser['sProfilePicUrl'] :'assets/img/avatars/avatar9.jpg' }}"
+                                    <img src="{{obj.oUser && obj.oUser != undefined && obj.oUser['sProfilePicUrl']!= undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.oUser['sProfilePicUrl'] :'assets/img/avatars/avatar9.jpg' }}"
                                         alt="">
-                                    <a href="javascript:;">{{obj.oUser && obj.oUser != undefined ?
-                                        obj.oUser['oName']['sFirstname'] : '-'}} {{obj.oUser && obj.oUser != undefined ?
+                                    <a href="javascript:;">{{obj.oUser && obj.oUser != undefined && obj.oUser['oName']!= undefined ?
+                                        obj.oUser['oName']['sFirstname'] : '-'}} {{obj.oUser && obj.oUser != undefined && obj.oUser['oName'] != undefined ?
                                         obj.oUser['oName']['sLastname'] : '-'}}</a>
                                 </div>
                                 <div class="card__info">
