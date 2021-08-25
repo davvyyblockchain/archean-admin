@@ -16,6 +16,7 @@ declare let window: any;
   styleUrls: ['./nft-detail.component.css']
 })
 export class NFTDetailComponent implements OnInit {
+  // console.log('---aNFT------',aNFT.sCollectionDetail)
 
   NFTData: any = {};
   historyData: any = [];

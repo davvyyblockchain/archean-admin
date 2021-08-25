@@ -19,6 +19,7 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { ScriptLoaderService } from './script-loader.service';
 import { AutoFocusDirective } from './auto-focus.directive';
+import { CollectionsComponent } from './collections/collections.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { AutoFocusDirective } from './auto-focus.directive';
     HeaderComponent,
     FooterComponent,
     AutoFocusDirective,
+    CollectionsComponent,
   ],
   imports: [
     FormsModule,

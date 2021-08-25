@@ -606,9 +606,11 @@ controllers.nftID = async (req, res) => {
 
         if (!validators.isValidObjectID(req.params.nNFTId)) res.reply(messages.invalid("NFT ID"));
 
-        const aNFT = await NFT.findById(req.params.nNFTId).populate('oPostedBy oCurrentOwner');
+        let  aNFT = await NFT.findById(req.params.nNFTId).populate('oPostedBy oCurrentOwner');
         if (!aNFT) return res.reply(messages.not_found("NFT"));
-
+        aNFT = aNFT.toObject();
+        aNFT.sCollectionDetail = {};
+        aNFT.sCollectionDetail = await Collection.findOne({ sName: aNFT.sCollection && aNFT.sCollection != undefined ? aNFT.sCollection : '-' })
         var token = req.headers.authorization;
         if (token) {
             token = token.replace('Bearer ', '');
@@ -698,27 +700,6 @@ controllers.landing = async (req, res) => {
                         'as': 'aCurrentOwner'
                     }
                 }, { $unwind: '$aCurrentOwner' }],
-                'mostViewed': [{
-                    '$match': {
-                        'sTransactionStatus': 1,
-                        'eAuctionType': {
-                            '$ne': 'Unlockable'
-                        }
-                    }
-                }, {
-                    '$sort': {
-                        'nView': -1
-                    }
-                }, {
-                    '$limit': 3
-                }, {
-                    '$lookup': {
-                        'from': 'users',
-                        'localField': 'oCurrentOwner',
-                        'foreignField': '_id',
-                        'as': 'aCurrentOwner'
-                    }
-                }, { $unwind: '$aCurrentOwner' }],
                 'onSale': [{
                     '$match': {
                         'sTransactionStatus': {
@@ -767,8 +748,25 @@ controllers.landing = async (req, res) => {
                 }, { $unwind: '$aCurrentOwner' }]
             }
         }]);
-        data[0].users  = [];
-        data[0].users  = await User.find({"sRole" : "user"});
+        data[0].users = [];
+        data[0].users = await User.find({ "sRole": "user" });
+
+
+        let agQuery = [{
+            '$lookup': {
+                'from': 'users',
+                'localField': 'oCreatedBy',
+                'foreignField': '_id',
+                'as': 'oUser'
+            }
+        }, {
+            '$sort': {
+                'sCreated': -1
+            }
+        }, { $unwind: '$oUser' }]
+
+        data[0].collections = [];
+        data[0].collections = await Collection.aggregate(agQuery);
         return res.reply(messages.success(), data[0]);
     } catch (error) {
         return res.reply(messages.server_error());
@@ -803,4 +801,158 @@ controllers.toggleSellingType = async (req, res) => {
         return res.reply(messages.server_error());
     }
 }
+
+
+controllers.allCollectionWiselist = async (req, res) => {
+
+    console.log('------data--------', req.body)
+    //    let agQuery = [ {
+    //         '$lookup': {
+    //             'from': 'users',
+    //             'localField': 'oCreatedBy',
+    //             'foreignField': '_id',
+    //             'as': 'oUser'
+    //         }
+    //     }, {
+    //         '$sort': {
+    //             'sCreated': -1
+    //         }
+    //     }]
+
+    try {
+
+        //         let aCollections = await Collection.aggregate(agQuery);
+
+        //         if (!aCollections) {
+        //             return res.reply(messages.not_found('collection'));
+        //         }
+
+        //         return res.reply(messages.no_prefix('Collection Details'), aCollections);
+
+        //     } catch (error) {
+        //         return res.reply(messages.server_error());
+        //     }
+
+
+
+
+        var nLimit = parseInt(req.body.length);
+        var nOffset = parseInt(req.body.start);
+        let oTypeQuery = {},
+            oSellingTypeQuery = {},
+            oCollectionQuery = {},
+            oSortingOrder = {};
+        let oTtextQuery = {
+            "sName": new RegExp(req.body.sTextsearch, 'i')
+        }
+        if (req.body.eType[0] != 'All' && req.body.eType[0] != "") {
+            oTypeQuery = {
+                "$or": []
+            };
+            req.body.eType.forEach((element) => {
+                oTypeQuery["$or"].push({
+                    "eType": element
+                });
+            });
+        }
+        if (req.body.sCollection != 'All' && req.body.sCollection != "") {
+            oCollectionQuery = {
+                "$or": []
+            };
+            oCollectionQuery["$or"].push({
+                "sCollection": req.body.sCollection
+            });
+
+        }
+
+        if (req.body.sSortingType == "Recently Added") {
+            oSortingOrder["sCreated"] = -1;
+        } else if (req.body.sSortingType == "Most Viewed") {
+            oSortingOrder["nView"] = -1;
+        } else if (req.body.sSortingType == "Price Low to High") {
+            oSortingOrder["nBasePrice"] = 1;
+        } else if (req.body.sSortingType == "Price High to Low") {
+            oSortingOrder["nBasePrice"] = -1;
+        } else {
+            oSortingOrder["_id"] = -1;
+        }
+
+        if (req.body.sSellingType != "") {
+            oSellingTypeQuery = {
+                "$or": [{
+                    "eAuctionType": req.body.sSellingType
+                }]
+            }
+        }
+
+        let data = await NFT.aggregate([{
+            '$match': {
+                '$and': [{
+                    sTransactionStatus: {
+                        $eq: 1
+                    }
+                },
+                {
+                    eAuctionType: {
+                        $ne: "Unlockable"
+                    }
+                },
+                    oTypeQuery, oCollectionQuery, oTtextQuery, oSellingTypeQuery
+                ]
+            }
+        }, {
+            '$sort': oSortingOrder
+        }, {
+            '$project': {
+                '_id': 1,
+                'sName': 1,
+                'eType': 1,
+                'nBasePrice': 1,
+                'sHash': 1,
+                'oCurrentOwner': 1,
+                'eAuctionType': 1,
+                sCollection: 1,
+            }
+        }, {
+            '$lookup': {
+                'from': 'users',
+                'localField': 'oCurrentOwner',
+                'foreignField': '_id',
+                'as': 'oUser'
+            }
+        }, { $unwind: '$oUser' }, {
+            '$facet': {
+                'nfts': [{
+                    "$skip": +nOffset
+                }, {
+                    "$limit": +nLimit
+                }],
+                'totalCount': [{
+                    '$count': 'count'
+                }]
+            }
+        }]);
+        let iFiltered = data[0].nfts.length;
+        if (data[0].totalCount[0] == undefined) {
+            return res.reply(messages.success('Data'), {
+                data: 0,
+                "draw": req.body.draw,
+                "recordsTotal": 0,
+                "recordsFiltered": iFiltered,
+            });
+        } else {
+            return res.reply(messages.no_prefix('NFT Details'), {
+                data: data[0].nfts,
+                "draw": req.body.draw,
+                "recordsTotal": data[0].totalCount[0].count,
+                "recordsFiltered": iFiltered,
+            });
+        }
+    } catch (error) {
+        return res.reply(messages.server_error());
+    }
+
+
+}
+
 module.exports = controllers;

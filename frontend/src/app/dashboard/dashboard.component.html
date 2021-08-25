@@ -48,11 +48,16 @@
                                         *ngIf="obj.eType && obj.eType != undefined && obj.eType != 'Audio'"
                                         src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }} "
                                         alt="">
-                                        <!--   -->
-                                    <audio id="audio" controls  class="sty "
+                                    <!--   -->
+                                    <div class="audioPlayerMain"
                                         *ngIf="obj.eType && obj.eType != undefined && obj.eType == 'Audio'">
-                                        <source src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }}" type="audio/mp3" id="src" />
-                                    </audio>
+
+                                        <audio id="audio" controls controlsList="nodownload"
+                                            src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }}"
+                                            type="audio/mp3" id="src" class="sty ">
+                                            <!-- <source /> -->
+                                        </audio>
+                                    </div>
                                     <span class="card__time">{{obj.eAuctionType && obj.eAuctionType != undefined ?
                                         obj.eAuctionType : '-'}}</span>
                                 </a>
@@ -120,15 +125,17 @@
                             <div class="card" *ngFor="let obj of landingData.onSale;">
                                 <a href="javascript:;" class="card__cover "
                                     routerLink="/NFT-detail/{{obj._id && obj._id != undefined ? obj._id : '-'}}">
-                            
-                                        <img class="sty img-fluid"
+
+                                    <img class="sty img-fluid"
                                         *ngIf="obj.eType && obj.eType != undefined && obj.eType != 'Audio'"
                                         src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }} "
                                         alt="">
-                                        <!--   -->
-                                    <audio id="audio" controls  class="sty "
+                                    <!--   -->
+                                    <audio id="audio" controls class="sty "
                                         *ngIf="obj.eType && obj.eType != undefined && obj.eType == 'Audio'">
-                                        <source src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }}" type="audio/mp3" id="src" />
+                                        <source
+                                            src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }}"
+                                            type="audio/mp3" id="src" />
                                     </audio>
                                     <span class="card__time">{{obj.eAuctionType && obj.eAuctionType != undefined ?
                                         obj.eAuctionType : '-'}}</span>
@@ -196,16 +203,18 @@
                             <div class="card" *ngFor="let obj of landingData.recentlyAdded;">
                                 <a href="javascript:;" class="card__cover "
                                     routerLink="/NFT-detail/{{obj._id && obj._id != undefined ? obj._id : '-'}}">
-                                   
+
                                     <img class="sty img-fluid"
-                                    *ngIf="obj.eType && obj.eType != undefined && obj.eType != 'Audio'"
-                                    src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }} "
-                                    alt="">
+                                        *ngIf="obj.eType && obj.eType != undefined && obj.eType != 'Audio'"
+                                        src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }} "
+                                        alt="">
                                     <!--   -->
-                                <audio id="audio" controls  class="sty "
-                                    *ngIf="obj.eType && obj.eType != undefined && obj.eType == 'Audio'">
-                                    <source src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }}" type="audio/mp3" id="src" />
-                                </audio>
+                                    <audio id="audio" controls class="sty "
+                                        *ngIf="obj.eType && obj.eType != undefined && obj.eType == 'Audio'">
+                                        <source
+                                            src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }}"
+                                            type="audio/mp3" id="src" />
+                                    </audio>
 
                                     <span class="card__time">{{obj.eAuctionType && obj.eAuctionType != undefined ?
                                         obj.eAuctionType : '-'}}</span>
@@ -257,7 +266,7 @@
             <!-- title -->
             <div class="col-12">
                 <div class="main__title">
-                    <h2><a href="javascript:;">Most Viewed</a></h2>
+                    <h2><a href="javascript:;">Collections</a></h2>
                 </div>
             </div>
             <!-- end title -->
@@ -266,47 +275,28 @@
             <div class="col-12">
                 <div class="main__carousel-wrap">
                     <div class="main__carousel main__carousel--live owl-carousel" id="liveM">
-                        <ng-container *ngIf="landingData.mostViewed && landingData.mostViewed.length">
-                            <div class="card" *ngFor="let obj of landingData.mostViewed;">
+                        <ng-container *ngIf="landingData.collections && landingData.collections.length">
+                            <div class="card" *ngFor="let obj of landingData.collections;">
                                 <a href="javascript:;" class="card__cover "
-                                    routerLink="/NFT-detail/{{obj._id && obj._id != undefined ? obj._id : '-'}}">
-                                   
-                                        <img class="sty img-fluid"
-                                        *ngIf="obj.eType && obj.eType != undefined && obj.eType != 'Audio'"
+                                    routerLink="/collections/{{obj.sName && obj.sName != undefined ? obj.sName : '-'}}">
+
+                                    <img class="sty img-fluid"
                                         src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }} "
                                         alt="">
-                                        <!--   -->
-                                    <audio id="audio" controls  class="sty "
-                                        *ngIf="obj.eType && obj.eType != undefined && obj.eType == 'Audio'">
-                                        <source src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }}" type="audio/mp3" id="src" />
-                                    </audio>
-                                    
-                                    <span class="card__time">{{obj.eAuctionType && obj.eAuctionType != undefined ?
-                                        obj.eAuctionType : '-'}}</span>
+
                                 </a>
                                 <h3 class="card__title"><a href="javascript:;">{{obj.sName && obj.sName != undefined ?
                                         obj.sName : 'UnKnown'}}</a></h3>
                                 <div class="card__author card__author--verified">
-                                    <img src="{{obj.aCurrentOwner && obj.aCurrentOwner != undefined && obj.aCurrentOwner['sProfilePicUrl']!= undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.aCurrentOwner['sProfilePicUrl'] :'assets/img/avatars/avatar5.jpg' }}"
+                                    <img src="{{obj.oUser && obj.oUser != undefined && obj.oUser['sProfilePicUrl']!= undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.oUser['sProfilePicUrl'] :'assets/img/avatars/avatar5.jpg' }}"
                                         alt="">
-                                    <a href="javascript:;">{{obj.aCurrentOwner && obj.aCurrentOwner != undefined &&
-                                        obj.aCurrentOwner['oName'] != undefined?
-                                        obj.aCurrentOwner['oName']['sFirstname'] : '-'}} {{obj.aCurrentOwner &&
-                                        obj.aCurrentOwner != undefined && obj.aCurrentOwner['oName']!= undefined ?
-                                        obj.aCurrentOwner['oName']['sLastname'] : '-'}}</a>
+                                    <a href="javascript:;">{{obj.oUser && obj.oUser != undefined &&
+                                        obj.oUser['oName'] != undefined?
+                                        obj.oUser['oName']['sFirstname'] : '-'}} {{obj.oUser &&
+                                        obj.oUser != undefined && obj.oUser['oName']!= undefined ?
+                                        obj.oUser['oName']['sLastname'] : '-'}}</a>
                                 </div>
-                                <div class="card__info">
-                                    <div class="card__price">
-                                        <span>Current price</span>
-                                        <span>{{obj.nBasePrice && obj.nBasePrice != undefined ?
-                                            obj.nBasePrice['$numberDecimal'] : 0}} BNB</span>
-                                    </div>
 
-                                    <button class="card__likes" type="button">
-
-                                        <span>{{obj.eType && obj.eType != undefined ? obj.eType : '-'}}</span>
-                                    </button>
-                                </div>
                             </div>
                         </ng-container>
                     </div>
@@ -344,13 +334,15 @@
                 <ul class="sellers-list">
                     <ng-container *ngIf="landingData.users && landingData.users.length">
 
-                        <li  *ngFor="let obj of landingData.users;let i = index;">
+                        <li *ngFor="let obj of landingData.users;let i = index;">
                             <span class="sellers-list__number">{{i+1}}</span>
                             <div class="sellers-list__author sellers-list__author--verified">
-                                <img src="{{obj && obj != undefined && obj['sProfilePicUrl']!= undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj['sProfilePicUrl'] :'assets/img/avatars/avatar.jpg' }}" alt="">
-                                <span class="fontCls">{{obj.sWalletAddress ? (obj.sWalletAddress| slice:0:6) :'-'}}...{{obj.sWalletAddress ? (obj.sWalletAddress| slice:-4) :'-'}}</span>
+                                <img src="{{obj && obj != undefined && obj['sProfilePicUrl']!= undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj['sProfilePicUrl'] :'assets/img/avatars/avatar.jpg' }}"
+                                    alt="">
+                                <span class="fontCls">{{obj.sWalletAddress ? (obj.sWalletAddress| slice:0:6)
+                                    :'-'}}...{{obj.sWalletAddress ? (obj.sWalletAddress| slice:-4) :'-'}}</span>
                                 <span>{{obj.sUserName && obj.sUserName != undefined ? obj.sUserName : '-'}}</span>
-    
+
                                 <!--  -->
                             </div>
                         </li>
