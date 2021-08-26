@@ -16,10 +16,11 @@ declare let $: any;
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
   landingData: any = {
-    mostViewed: [],
+    collections: [],
     onAuction: [],
     onSale: [],
     recentlyAdded: [],
+    users:[]
   };
 
   constructor(

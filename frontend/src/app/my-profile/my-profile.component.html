@@ -78,15 +78,30 @@
                 <!-- content tabs -->
                 <div class="tab-content">
                     <!-- SALE -->
-                  
+
                     <!-- CREATED -->
                     <div class="tab-pane fade show active" id="tab-2" role="tabpanel">
                         <div class="row row--grid">
                             <div class="col-12 col-sm-6 col-lg-4" *ngFor="let obj of listData;">
                                 <div class="card">
-                                    <a href="javascript:;" class="card__cover" routerLink="/NFT-detail/{{obj._id && obj._id != undefined ? obj._id : '-'}}">
-                                        <img src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover8.jpg' }} "
+                                    <a href="javascript:;" class="card__cover"
+                                        routerLink="/NFT-detail/{{obj._id && obj._id != undefined ? obj._id : '-'}}">
+                                        <!-- <img src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover8.jpg' }}"
+                                            alt=""> -->
+
+
+                                        <img class="sty img-fluid"
+                                            *ngIf="obj.eType && obj.eType != undefined && obj.eType != 'Audio'"
+                                            src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover8.jpg' }}"
                                             alt="">
+                                        <!--   -->
+                                        <audio id="audio" controls class="sty "
+                                            *ngIf="obj.eType && obj.eType != undefined && obj.eType == 'Audio'">
+                                            <source
+                                                src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover8.jpg' }}"
+                                                type="audio/mp3" id="src" />
+                                        </audio>
+
                                         <span class="card__time card__time--clock">
                                             {{obj.eAuctionType && obj.eAuctionType != undefined ? obj.eAuctionType :
                                             '-'}}
@@ -100,13 +115,16 @@
                                         <img src="{{obj.oUser && obj.oUser != undefined && obj.oUser['sProfilePicUrl'] != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.oUser['sProfilePicUrl'] :'assets/img/avatars/avatar5.jpg' }}"
                                             alt="">
                                         <a href="javascript:;">{{obj.oUser && obj.oUser != undefined &&
-                                            obj.oUser['oName']  && obj.oUser['oName']!=undefined && obj.oUser['oName']['sFirstname'] ? obj.oUser['oName']['sFirstname'] : '-'}} {{obj.oUser && obj.oUser != undefined  && obj.oUser['oName'] != undefined ?
+                                            obj.oUser['oName'] && obj.oUser['oName']!=undefined &&
+                                            obj.oUser['oName']['sFirstname'] ? obj.oUser['oName']['sFirstname'] : '-'}}
+                                            {{obj.oUser && obj.oUser != undefined && obj.oUser['oName'] != undefined ?
                                             obj.oUser['oName']['sLastname'] : '-'}}</a>
                                     </div>
                                     <div class="card__info">
                                         <div class="card__price">
                                             <span>Was sold for</span>
-                                            <span>{{obj.nBasePrice && obj.nBasePrice != undefined  &&  obj.nBasePrice['$numberDecimal']!= undefined?
+                                            <span>{{obj.nBasePrice && obj.nBasePrice != undefined &&
+                                                obj.nBasePrice['$numberDecimal']!= undefined?
                                                 obj.nBasePrice['$numberDecimal'] : 0}} BNB</span>
                                         </div>
 
@@ -119,10 +137,11 @@
                             </div>
 
                         </div>
-                        <div class="row row--grid" *ngIf="listData && listData.length && filterData['recordsFiltered'] < filterData['recordsTotal']">
+                        <div class="row row--grid"
+                            *ngIf="listData && listData.length && filterData['recordsFiltered'] < filterData['recordsTotal']">
                             <div class="col-12">
                                 <button class="main__load" type="button" data-toggle="collapse"
-                                    data-target="#collapsemore" aria-expanded="false" aria-controls="collapsemore" >Load
+                                    data-target="#collapsemore" aria-expanded="false" aria-controls="collapsemore">Load
                                     more</button>
                             </div>
                         </div>

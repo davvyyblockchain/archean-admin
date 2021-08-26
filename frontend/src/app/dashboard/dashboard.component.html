@@ -45,14 +45,19 @@
                                 <a href="javascript:;" class="card__cover "
                                     routerLink="/NFT-detail/{{obj._id && obj._id != undefined ? obj._id : '-'}}">
                                     <img class="sty img-fluid"
-                                        *ngIf="obj.eType && obj.eType != undefined && obj.eType == 'Image'"
+                                        *ngIf="obj.eType && obj.eType != undefined && obj.eType != 'Audio'"
                                         src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }} "
                                         alt="">
-                                        <!--   -->
-                                    <audio id="audio" controls  class="sty "
+                                    <!--   -->
+                                    <div class="audioPlayerMain"
                                         *ngIf="obj.eType && obj.eType != undefined && obj.eType == 'Audio'">
-                                        <source src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }}" type="audio/mp3" id="src" />
-                                    </audio>
+
+                                        <audio id="audio" controls controlsList="nodownload"
+                                            src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }}"
+                                            type="audio/mp3" id="src" class="sty ">
+                                            <!-- <source /> -->
+                                        </audio>
+                                    </div>
                                     <span class="card__time">{{obj.eAuctionType && obj.eAuctionType != undefined ?
                                         obj.eAuctionType : '-'}}</span>
                                 </a>
@@ -120,9 +125,18 @@
                             <div class="card" *ngFor="let obj of landingData.onSale;">
                                 <a href="javascript:;" class="card__cover "
                                     routerLink="/NFT-detail/{{obj._id && obj._id != undefined ? obj._id : '-'}}">
+
                                     <img class="sty img-fluid"
+                                        *ngIf="obj.eType && obj.eType != undefined && obj.eType != 'Audio'"
                                         src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }} "
                                         alt="">
+                                    <!--   -->
+                                    <audio id="audio" controls class="sty "
+                                        *ngIf="obj.eType && obj.eType != undefined && obj.eType == 'Audio'">
+                                        <source
+                                            src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }}"
+                                            type="audio/mp3" id="src" />
+                                    </audio>
                                     <span class="card__time">{{obj.eAuctionType && obj.eAuctionType != undefined ?
                                         obj.eAuctionType : '-'}}</span>
                                 </a>
@@ -189,9 +203,19 @@
                             <div class="card" *ngFor="let obj of landingData.recentlyAdded;">
                                 <a href="javascript:;" class="card__cover "
                                     routerLink="/NFT-detail/{{obj._id && obj._id != undefined ? obj._id : '-'}}">
+
                                     <img class="sty img-fluid"
+                                        *ngIf="obj.eType && obj.eType != undefined && obj.eType != 'Audio'"
                                         src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }} "
                                         alt="">
+                                    <!--   -->
+                                    <audio id="audio" controls class="sty "
+                                        *ngIf="obj.eType && obj.eType != undefined && obj.eType == 'Audio'">
+                                        <source
+                                            src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }}"
+                                            type="audio/mp3" id="src" />
+                                    </audio>
+
                                     <span class="card__time">{{obj.eAuctionType && obj.eAuctionType != undefined ?
                                         obj.eAuctionType : '-'}}</span>
                                 </a>
@@ -242,7 +266,7 @@
             <!-- title -->
             <div class="col-12">
                 <div class="main__title">
-                    <h2><a href="javascript:;">Most Viewed</a></h2>
+                    <h2><a href="javascript:;">Collections</a></h2>
                 </div>
             </div>
             <!-- end title -->
@@ -251,39 +275,28 @@
             <div class="col-12">
                 <div class="main__carousel-wrap">
                     <div class="main__carousel main__carousel--live owl-carousel" id="liveM">
-                        <ng-container *ngIf="landingData.mostViewed && landingData.mostViewed.length">
-                            <div class="card" *ngFor="let obj of landingData.mostViewed;">
+                        <ng-container *ngIf="landingData.collections && landingData.collections.length">
+                            <div class="card" *ngFor="let obj of landingData.collections;">
                                 <a href="javascript:;" class="card__cover "
-                                    routerLink="/NFT-detail/{{obj._id && obj._id != undefined ? obj._id : '-'}}">
+                                    routerLink="/collections/{{obj.sName && obj.sName != undefined ? obj.sName : '-'}}">
+
                                     <img class="sty img-fluid"
                                         src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }} "
                                         alt="">
-                                    <span class="card__time">{{obj.eAuctionType && obj.eAuctionType != undefined ?
-                                        obj.eAuctionType : '-'}}</span>
+
                                 </a>
                                 <h3 class="card__title"><a href="javascript:;">{{obj.sName && obj.sName != undefined ?
                                         obj.sName : 'UnKnown'}}</a></h3>
                                 <div class="card__author card__author--verified">
-                                    <img src="{{obj.aCurrentOwner && obj.aCurrentOwner != undefined && obj.aCurrentOwner['sProfilePicUrl']!= undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.aCurrentOwner['sProfilePicUrl'] :'assets/img/avatars/avatar5.jpg' }}"
+                                    <img src="{{obj.oUser && obj.oUser != undefined && obj.oUser['sProfilePicUrl']!= undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.oUser['sProfilePicUrl'] :'assets/img/avatars/avatar5.jpg' }}"
                                         alt="">
-                                    <a href="javascript:;">{{obj.aCurrentOwner && obj.aCurrentOwner != undefined &&
-                                        obj.aCurrentOwner['oName'] != undefined?
-                                        obj.aCurrentOwner['oName']['sFirstname'] : '-'}} {{obj.aCurrentOwner &&
-                                        obj.aCurrentOwner != undefined && obj.aCurrentOwner['oName']!= undefined ?
-                                        obj.aCurrentOwner['oName']['sLastname'] : '-'}}</a>
+                                    <a href="javascript:;">{{obj.oUser && obj.oUser != undefined &&
+                                        obj.oUser['oName'] != undefined?
+                                        obj.oUser['oName']['sFirstname'] : '-'}} {{obj.oUser &&
+                                        obj.oUser != undefined && obj.oUser['oName']!= undefined ?
+                                        obj.oUser['oName']['sLastname'] : '-'}}</a>
                                 </div>
-                                <div class="card__info">
-                                    <div class="card__price">
-                                        <span>Current price</span>
-                                        <span>{{obj.nBasePrice && obj.nBasePrice != undefined ?
-                                            obj.nBasePrice['$numberDecimal'] : 0}} BNB</span>
-                                    </div>
 
-                                    <button class="card__likes" type="button">
-
-                                        <span>{{obj.eType && obj.eType != undefined ? obj.eType : '-'}}</span>
-                                    </button>
-                                </div>
                             </div>
                         </ng-container>
                     </div>
@@ -309,7 +322,7 @@
             <!-- title -->
             <div class="col-12">
                 <div class="main__title">
-                    <h2>Top sellers</h2>
+                    <h2>Users</h2>
 
                     <!-- <a href="authors.html" class="main__link">View all </a> -->
                 </div>
@@ -319,140 +332,23 @@
             <!-- sellers list -->
             <div class="col-12">
                 <ul class="sellers-list">
-                    <li>
-                        <span class="sellers-list__number">1</span>
-                        <div class="sellers-list__author sellers-list__author--verified">
-                            <img src="assets/img/avatars/avatar.jpg" alt="">
-                            <a href="javascript:;">@miriuuu</a>
-                            <span>214.22 ETH</span>
-                        </div>
-                    </li>
+                    <ng-container *ngIf="landingData.users && landingData.users.length">
 
-                    <li>
-                        <span class="sellers-list__number">2</span>
-                        <div class="sellers-list__author sellers-list__author--verified">
-                            <img src="assets/img/avatars/avatar2.jpg" alt="">
-                            <a href="javascript:;">@sc00ty</a>
-                            <span>205.8 ETH</span>
-                        </div>
-                    </li>
+                        <li *ngFor="let obj of landingData.users;let i = index;">
+                            <span class="sellers-list__number">{{i+1}}</span>
+                            <div class="sellers-list__author sellers-list__author--verified">
+                                <img src="{{obj && obj != undefined && obj['sProfilePicUrl']!= undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj['sProfilePicUrl'] :'assets/img/avatars/avatar.jpg' }}"
+                                    alt="">
+                                <span class="fontCls">{{obj.sWalletAddress ? (obj.sWalletAddress| slice:0:6)
+                                    :'-'}}...{{obj.sWalletAddress ? (obj.sWalletAddress| slice:-4) :'-'}}</span>
+                                <span>{{obj.sUserName && obj.sUserName != undefined ? obj.sUserName : '-'}}</span>
 
-                    <li>
-                        <span class="sellers-list__number">3</span>
-                        <div class="sellers-list__author sellers-list__author--verified">
-                            <img src="assets/img/avatars/avatar3.jpg" alt="">
-                            <a href="javascript:;">@redalert</a>
-                            <span>137.65 ETH</span>
-                        </div>
-                    </li>
+                                <!--  -->
+                            </div>
+                        </li>
 
-                    <li>
-                        <span class="sellers-list__number">4</span>
-                        <div class="sellers-list__author sellers-list__author--verified">
-                            <img src="assets/img/avatars/avatar4.jpg" alt="">
-                            <a href="javascript:;">@1one</a>
-                            <span>129.301 ETH</span>
-                        </div>
-                    </li>
+                    </ng-container>
 
-                    <li>
-                        <span class="sellers-list__number">5</span>
-                        <div class="sellers-list__author sellers-list__author--verified">
-                            <img src="assets/img/avatars/avatar5.jpg" alt="">
-                            <a href="javascript:;">@kateblank</a>
-                            <span>112.3 ETH</span>
-                        </div>
-                    </li>
-
-                    <li>
-                        <span class="sellers-list__number">6</span>
-                        <div class="sellers-list__author sellers-list__author--verified">
-                            <img src="assets/img/avatars/avatar6.jpg" alt="">
-                            <a href="javascript:;">@johndoe</a>
-                            <span>108.88 ETH</span>
-                        </div>
-                    </li>
-
-                    <li>
-                        <span class="sellers-list__number">7</span>
-                        <div class="sellers-list__author sellers-list__author--verified">
-                            <img src="assets/img/avatars/avatar7.jpg" alt="">
-                            <a href="javascript:;">@nickname</a>
-                            <span>88.58 ETH</span>
-                        </div>
-                    </li>
-
-                    <li>
-                        <span class="sellers-list__number">8</span>
-                        <div class="sellers-list__author sellers-list__author--verified">
-                            <img src="assets/img/avatars/avatar8.jpg" alt="">
-                            <a href="javascript:;">@lllily</a>
-                            <span>73.207 ETH</span>
-                        </div>
-                    </li>
-
-                    <li>
-                        <span class="sellers-list__number">9</span>
-                        <div class="sellers-list__author sellers-list__author--verified">
-                            <img src="assets/img/avatars/avatar9.jpg" alt="">
-                            <a href="javascript:;">@fantraingle</a>
-                            <span>71.076 ETH</span>
-                        </div>
-                    </li>
-
-                    <li>
-                        <span class="sellers-list__number">10</span>
-                        <div class="sellers-list__author sellers-list__author--verified">
-                            <img src="assets/img/avatars/avatar10.jpg" alt="">
-                            <a href="javascript:;">@oxyoxyoxy</a>
-                            <span>57.041 ETH</span>
-                        </div>
-                    </li>
-
-                    <li>
-                        <span class="sellers-list__number">11</span>
-                        <div class="sellers-list__author sellers-list__author--verified">
-                            <img src="assets/img/avatars/avatar11.jpg" alt="">
-                            <a href="javascript:;">@vandam</a>
-                            <span>50.261 ETH</span>
-                        </div>
-                    </li>
-
-                    <li>
-                        <span class="sellers-list__number">12</span>
-                        <div class="sellers-list__author sellers-list__author--verified">
-                            <img src="assets/img/avatars/avatar12.jpg" alt="">
-                            <a href="javascript:;">@dididi</a>
-                            <span>44.79 ETH</span>
-                        </div>
-                    </li>
-
-                    <li>
-                        <span class="sellers-list__number">13</span>
-                        <div class="sellers-list__author sellers-list__author--verified">
-                            <img src="assets/img/avatars/avatar13.jpg" alt="">
-                            <a href="javascript:;">@lyzzy</a>
-                            <span>43.24 ETH</span>
-                        </div>
-                    </li>
-
-                    <li>
-                        <span class="sellers-list__number">14</span>
-                        <div class="sellers-list__author sellers-list__author--verified">
-                            <img src="assets/img/avatars/avatar14.jpg" alt="">
-                            <a href="javascript:;">@oceanu</a>
-                            <span>41.221 ETH</span>
-                        </div>
-                    </li>
-
-                    <li>
-                        <span class="sellers-list__number">15</span>
-                        <div class="sellers-list__author sellers-list__author--verified">
-                            <img src="assets/img/avatars/avatar15.jpg" alt="">
-                            <a href="javascript:;">@justart</a>
-                            <span>40.195 ETH</span>
-                        </div>
-                    </li>
                 </ul>
             </div>
             <!-- end sellers list -->

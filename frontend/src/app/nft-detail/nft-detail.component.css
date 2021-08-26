@@ -26,9 +26,12 @@ table {
 }
 
 td, th {
-  border: 1px solid #ada5a5;
+  border-bottom: 1px solid #222227;
   text-align: left;
   padding: 8px;
+  color: #fff;
+  padding: 7px 15px;
+
 }
 
 tr:nth-child(even) {

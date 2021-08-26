@@ -285,7 +285,10 @@ export class ApiService {
   getCollectionList() {
     return this.http.get(this.URL + '/nft/collectionlist', { headers: { 'Authorization': this.getHeaders() } });
   }
-
+  allCollectionWiseList(data: any) {
+    return this.http.post(this.URL + '/nft/allCollectionWiseList',data, { headers: { 'Authorization': '' } });
+  }
+  
   getCategories() {
     return this.http.get(this.URL + '/user/categories', { headers: { 'Authorization': this.getHeaders() } });
   }

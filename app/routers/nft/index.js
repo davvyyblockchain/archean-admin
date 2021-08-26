@@ -14,5 +14,6 @@ router.get('/landing', nftController.landing);
 router.put('/toggleSellingType', nftMiddleware.verifyToken, nftController.toggleSellingType);
 
 router.get("/deleteNFT/:nNFTId", nftMiddleware.verifyToken, nftController.deleteNFT);
+router.post('/allCollectionWiseList', nftController.allCollectionWiselist);
 
 module.exports = router;
