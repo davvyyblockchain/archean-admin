@@ -59,9 +59,9 @@ controllers.create = async (req, res) => {
 
             // Update The bid
             Bid.findOneAndUpdate({
-                oBidder: req.userId ,
-                oNFTId:   req.body.oNFTId,
-                eBidStatus:"Bid"
+                oBidder: req.userId,
+                oNFTId: req.body.oNFTId,
+                eBidStatus: "Bid"
             }, {
                 nBidPrice: req.body.nBidPrice,
                 sTransactionHash: req.body.sTransactionHash,
@@ -194,7 +194,7 @@ controllers.getBidHistoryOfItem = async (req, res, next) => {
         let data = await Bid.aggregate([{
             '$match': {
                 'oNFTId': mongoose.Types.ObjectId(req.params.nNFTId),
-                "sTransactionStatus":   1
+                "sTransactionStatus": 1
             }
         }, {
             '$project': {
@@ -225,7 +225,7 @@ controllers.getBidHistoryOfItem = async (req, res, next) => {
             '$sort': {
                 '_id': -1
             }
-        }, { $unwind: '$oBidder' },{ $unwind: '$oRecipient' }, {
+        }, { $unwind: '$oBidder' }, { $unwind: '$oRecipient' }, {
             '$facet': {
                 'bids': [{
                     "$skip": +0
@@ -235,7 +235,7 @@ controllers.getBidHistoryOfItem = async (req, res, next) => {
                 }]
             }
         }]);
-console.log('-------------data',data)
+        console.log('-------------data', data)
         let iFiltered = data[0].bids.length;
         if (data[0].totalCount[0] == undefined) {
             return res.reply(messages.no_prefix('Bid Details'), {
@@ -391,8 +391,9 @@ controllers.bidByUser = async (req, res, next) => {
     try {
         if (!req.userId) return res.reply(messages.unauthorized());
 
-        var nLimit = parseInt(req.body.length);
-        var nOffset = parseInt(req.body.start);
+        var nLimit = req.body.length && req.body.length != undefined ? parseInt(req.body.length) : 5000;
+        var nOffset = req.body.start && req.body.start!= undefined ? parseInt(req.body.start) : 0;
+
         let data = await Bid.aggregate([{
             '$match': {
                 $and: [{
@@ -413,7 +414,8 @@ controllers.bidByUser = async (req, res, next) => {
                 'eBidStatus': 1,
                 'oRecipient': 1,
                 'oNFTId': 1,
-                "sTransactionStatus": 1
+                "sTransactionStatus": 1,
+                nBidPrice:1
             }
         }, {
             '$lookup': {
@@ -429,7 +431,7 @@ controllers.bidByUser = async (req, res, next) => {
                 'foreignField': '_id',
                 'as': 'oNFT'
             }
-        }, {
+        },{$unwind:'$oNFT'},{$unwind:'$oRecipient'}, {
             '$sort': {
                 '_id': -1
             }
@@ -445,6 +447,8 @@ controllers.bidByUser = async (req, res, next) => {
                 }]
             }
         }]);
+        console.log(data[0].nfts)
+
         let iFiltered = data[0].nfts.length;
         if (data[0].totalCount[0] == undefined) {
             return res.reply(messages.not_found('Data'))

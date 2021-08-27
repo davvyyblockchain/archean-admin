@@ -451,6 +451,7 @@ export class CreateNFTComponent implements OnInit {
                     this.spinner.hide();
                     if (transData && transData['data']) {
                       this.toaster.success('NFT created successfully');
+                      this.router.navigate(['/NFT-marketplace']);
                       this.onClickRefresh();
                     } else {
                       this.toaster.success(transData['message']);

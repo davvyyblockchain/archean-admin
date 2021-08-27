@@ -54,12 +54,12 @@ export class NFTListComponent implements OnInit {
 
     })
 
-    if (localStorage.getItem('Authorization') && localStorage.getItem('Authorization') != null) {
+    // if (localStorage.getItem('Authorization') && localStorage.getItem('Authorization') != null) {
       await this.getNFTListingData(this.searchData);
-    } else {
-      this.toaster.info('Please login first.')
-      this.router.navigate([''])
-    }
+    // } else {
+    //   this.toaster.info('Please login first.')
+    //   this.router.navigate([''])
+    // }
   }
 
   // api/v1/nft/nftListing  POST
@@ -68,6 +68,7 @@ export class NFTListComponent implements OnInit {
   getNFTListingData(obj: any) {
 
     this.apiService.nftListing(obj).subscribe(async (data: any) => {
+      
       if (data && data['data']) {
         let res = await data['data'];
         this.filterData = res;

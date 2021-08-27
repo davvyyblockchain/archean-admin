@@ -193,7 +193,7 @@ export class ApiService {
   // 
   getHeaders() {
     let t: any = localStorage.getItem('Authorization');
-    return t;
+    return t && t!= undefined ? t : '';
   }
   checkuseraddress(address: any) {
     return this.http.post(this.URL + '/auth/checkuseraddress', { sWalletAddress: address });
@@ -322,8 +322,9 @@ export class ApiService {
   bidHistory(id: any, data: any) {
     return this.http.post(this.URL + '/bid/history/' + id, data, { headers: { 'Authorization': this.getHeaders() } });
   }
-
-
+  bidByUser(data: any) {
+    return this.http.post(this.URL + '/bid/bidByUser' , data, { headers: { 'Authorization': this.getHeaders() } });
+  }
   landingPage() {
     return this.http.get(this.URL + '/nft/landing');
   }

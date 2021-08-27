@@ -360,6 +360,7 @@ export class NFTDetailComponent implements OnInit {
               this.spinner.hide();
               if (transData && transData['data']) {
                 this.toaster.success('NFT transfered successfully');
+                this.router.navigate(['/']);
                 this.onClickRefresh();
               } else {
                 this.toaster.success(transData['message']);
