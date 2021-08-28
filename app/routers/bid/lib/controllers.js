@@ -7,6 +7,7 @@ const validators = require("./validators");
 const mongoose = require('mongoose');
 const controllers = {};
 
+const nodemailer= require('../../../utils/lib/nodemailer');
 controllers.create = async (req, res) => {
     try {
         if (!req.userId) return res.reply(messages.unauthorized());
@@ -67,6 +68,20 @@ controllers.create = async (req, res) => {
                 sTransactionHash: req.body.sTransactionHash,
                 nQuantity: req.body.nQuantity
             }, (err, bid) => {
+
+                if (req.body.eBidStatus == "Bid" && req.body.sOwnerEmail != '') {
+                    nodemailer.send('Bid_Place.html', {
+                        SITE_NAME: 'Blockchain Australia Solutions',
+                        USERNAME: req.body.sOwnerEmail,
+                        ACTIVELINK: `${process.env.URL}:${process.env.PORT}/viewNFT/${req.body.oNFTId}`,
+                        TEXT: 'Someone Placed Bid on your NFT.'
+                    }, {
+                        from: process.env.SMTP_USERNAME,
+                        to: req.body.sOwnerEmail,
+                        subject: 'Bid Place'
+                    });
+                }
+  
                 if (err) return res.reply(messages.server_error());
                 return res.reply(messages.successfully("Bid Placed"));
             });
@@ -164,7 +179,19 @@ controllers.create = async (req, res) => {
                             return res.reply(messages.bad_request("Invalid Quantity"));
                         }
                     }
+                    if (req.body.eBidStatus == "Bid") {
+                        nodemailer.send('Bid_Place.html', {
+                            SITE_NAME: 'Blockchain Australia Solutions',
+                            USERNAME: req.body.sOwnerEmail,
+                            ACTIVELINK: `${process.env.BASE_URL}:${process.env.PORT}/viewNFT/${req.body.oNFTId}`,
+                            TEXT: 'Someone Placed Bid on your NFT.'
+                        }, {
+                            from: process.env.SMTP_USERNAME,
+                            to: req.body.sOwnerEmail,
+                            subject: 'Bid Place'
+                        })
 
+                    }
                     // if (req.body.eBidStatus == "Sold")
                     //     await NFT.findByIdAndUpdate(req.body.oNFTId, {
                     //         oCurrentOwner: req.userId
