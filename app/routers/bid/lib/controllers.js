@@ -317,7 +317,8 @@ controllers.toggleBidStatus = async (req, res, next) => {
                 if (error) throw error;
             });
             if (req.body.sCurrentUserEmail != 'undefined') {
-                nodemailer.send('Bid_Place.html', {
+                console.log('----------------------------------send 1')
+                let a = await nodemailer.send('Bid_Place.html', {
                     SITE_NAME: 'Blockchain Australia Solutions',
                     USERNAME: req.body.sCurrentUserEmail,
                     ACTIVELINK: `${process.env.URL}/NFT-detail/${req.body.oNFTId}`, // `${process.env.URL}:${process.env.PORT}/viewNFT/${req.body.oNFTId}`,
@@ -327,6 +328,7 @@ controllers.toggleBidStatus = async (req, res, next) => {
                     to: req.body.sCurrentUserEmail,
                     subject: 'Bid Accepted'
                 });
+                console.log('----------------------------------send 3', a);
             }
             console.log('====================================');
             console.log();

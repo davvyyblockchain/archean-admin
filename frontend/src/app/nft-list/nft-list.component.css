@@ -1,0 +1,11 @@
+.audioPlayerMain{
+    
+    height :260px;
+    width :260px;
+    background:url('https://image.shutterstock.com/image-vector/minimal-podcast-sound-wave-icon-260nw-1720134202.jpg');
+}
+.sty{
+    height :260px;
+    width :260px;
+    object-fit: cover;
+}

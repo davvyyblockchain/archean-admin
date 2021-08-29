@@ -14,7 +14,7 @@
                         </p>
 
                         <div class="home__btns">
-                            <a href="javascript:;" routerLink="/NFT-marketplace"
+                            <a href="javascript:;" routerLink="/marketplace"
                                 class="home__btn home__btn--clr">Explore</a>
                             <a href="javascript:;" routerLink="/create-NFT" class="home__btn">Create</a>
                         </div>
@@ -125,18 +125,33 @@
                             <div class="card" *ngFor="let obj of landingData.onSale;">
                                 <a href="javascript:;" class="card__cover "
                                     routerLink="/NFT-detail/{{obj._id && obj._id != undefined ? obj._id : '-'}}">
+                                    <!-- 
+                                    <img class="sty img-fluid"
+                                        *ngIf="obj.eType && obj.eType != undefined && obj.eType != 'Audio'"
+                                        src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }} "
+                                        alt="">
+                                    <audio id="audio" controls class="sty "
+                                        *ngIf="obj.eType && obj.eType != undefined && obj.eType == 'Audio'">
+                                        <source
+                                            src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }}"
+                                            type="audio/mp3" id="src" />
+                                    </audio> -->
 
                                     <img class="sty img-fluid"
                                         *ngIf="obj.eType && obj.eType != undefined && obj.eType != 'Audio'"
                                         src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }} "
                                         alt="">
                                     <!--   -->
-                                    <audio id="audio" controls class="sty "
+                                    <div class="audioPlayerMain"
                                         *ngIf="obj.eType && obj.eType != undefined && obj.eType == 'Audio'">
-                                        <source
+
+                                        <audio id="audio" controls controlsList="nodownload"
                                             src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }}"
-                                            type="audio/mp3" id="src" />
-                                    </audio>
+                                            type="audio/mp3" id="src" class="sty ">
+                                            <!-- <source /> -->
+                                        </audio>
+                                    </div>
+
                                     <span class="card__time">{{obj.eAuctionType && obj.eAuctionType != undefined ?
                                         obj.eAuctionType : '-'}}</span>
                                 </a>
@@ -203,18 +218,34 @@
                             <div class="card" *ngFor="let obj of landingData.recentlyAdded;">
                                 <a href="javascript:;" class="card__cover "
                                     routerLink="/NFT-detail/{{obj._id && obj._id != undefined ? obj._id : '-'}}">
+                                    <!--                                     
+                                    <img class="sty img-fluid"
+                                        *ngIf="obj.eType && obj.eType != undefined && obj.eType != 'Audio'"
+                                        src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }} "
+                                        alt="">
+                                    <audio id="audio" controls class="sty "
+                                        *ngIf="obj.eType && obj.eType != undefined && obj.eType == 'Audio'">
+                                        <source
+                                            src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }}"
+                                            type="audio/mp3" id="src" />
+                                    </audio> -->
 
                                     <img class="sty img-fluid"
                                         *ngIf="obj.eType && obj.eType != undefined && obj.eType != 'Audio'"
                                         src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }} "
                                         alt="">
                                     <!--   -->
-                                    <audio id="audio" controls class="sty "
+                                    <div class="audioPlayerMain"
                                         *ngIf="obj.eType && obj.eType != undefined && obj.eType == 'Audio'">
-                                        <source
+
+                                        <audio id="audio" controls controlsList="nodownload"
                                             src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }}"
-                                            type="audio/mp3" id="src" />
-                                    </audio>
+                                            type="audio/mp3" id="src" class="sty ">
+                                            <!-- <source /> -->
+                                        </audio>
+                                    </div>
+
+
 
                                     <span class="card__time">{{obj.eAuctionType && obj.eAuctionType != undefined ?
                                         obj.eAuctionType : '-'}}</span>

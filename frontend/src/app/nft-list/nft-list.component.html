@@ -5,7 +5,7 @@
             <!-- breadcrumb -->
             <div class="col-12">
                 <ul class="breadcrumb">
-                    <li class="breadcrumb__item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb__item"><a href="javascript:;" routerLink="">Home</a></li>
                     <li class="breadcrumb__item breadcrumb__item--active">Explore</li>
                 </ul>
             </div>
@@ -141,12 +141,24 @@
                                 <a href="javascript:;" class="card__cover"
                                     routerLink="/NFT-detail/{{obj._id && obj._id != undefined ? obj._id : '-'}}">
 
+                                    <img class="sty img-fluid"
+                                        *ngIf="obj.eType && obj.eType != undefined && obj.eType != 'Audio'"
+                                        src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }} "
+                                        alt="">
+                                    <div class="audioPlayerMain"
+                                        *ngIf="obj.eType && obj.eType != undefined && obj.eType == 'Audio'">
 
-
+                                        <audio id="audio" controls controlsList="nodownload"
+                                            src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }}"
+                                            type="audio/mp3" id="src" class="sty ">
+                                            <!-- <source /> -->
+                                        </audio>
+                                    </div>
+                                    <!-- 
                                     <img class="sty img-fluid"
                                         *ngIf="obj.eType && obj.eType != undefined && obj.eType != 'Audio'"
                                         src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover5.jpg' }} "
-                                        alt="">
+                                        alt=""> -->
                                     <!--   -->
                                     <audio id="audio" controls class="sty "
                                         *ngIf="obj.eType && obj.eType != undefined && obj.eType == 'Audio'">

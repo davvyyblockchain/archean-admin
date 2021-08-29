@@ -208,6 +208,7 @@ export class MyProfileComponent implements OnInit {
         this.spinner.hide();
 
         if (updateData && updateData['data']) {
+          this.toaster.success('Profile updted successfully.')
           this.onClickRefresh();
         } else {
 

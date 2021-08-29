@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: "create-NFT", component: CreateNFTComponent },
   { path: "my-profile", component: MyProfileComponent },
   { path: "NFT-detail/:id", component: NFTDetailComponent },
-  { path: "NFT-marketplace", component: NFTListComponent },
+  { path: "marketplace", component: NFTListComponent },
   { path: "users", component: UsersComponent },
   { path: "collections/:name", component: CollectionsComponent },
 

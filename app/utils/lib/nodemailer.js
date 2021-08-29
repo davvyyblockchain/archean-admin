@@ -16,6 +16,7 @@ const transporter = nodemailer.createTransport({
 const services = {};
 
 services.send = function (templateName, data, mailOption) {
+    console.log('----------------------------------send 2')
     const emailTemplatePath = path.join(__dirname, 'dir', 'email_templates');
     let template = fs.readFileSync(emailTemplatePath + '/' + templateName, {
         encoding: 'utf-8'

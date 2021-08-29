@@ -16,7 +16,7 @@ export class FooterComponent implements OnInit {
     show: 'metamask',
     network_name: '',
   };
-
+  collectionList: any = [];
   constructor(private router: Router,
     private _route: ActivatedRoute,
     private spinner: NgxSpinnerService,
@@ -29,6 +29,21 @@ export class FooterComponent implements OnInit {
 
   async ngOnInit() {
   
+    if (localStorage.getItem('Authorization') && localStorage.getItem('Authorization') != null) {
+      await this.getCollectionList();
+    } else {
+      this.router.navigate([''])
+
+    }
+  }
+
+  getCollectionList() {
+    this.apiService.getCollectionList().subscribe((res: any) => {
+      if (res && res['data']) {
+        this.collectionList = res['data'];
+      }
+    }, (err: any) => {
+    });
   }
 
   connectToMetaMask() {

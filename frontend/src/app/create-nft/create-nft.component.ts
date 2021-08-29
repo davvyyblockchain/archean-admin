@@ -77,6 +77,7 @@ export class CreateNFTComponent implements OnInit {
       await this.getColoboraterList();
 
     } else {
+      this.toaster.success('Please signin first.');
       this.router.navigate([''])
     }
 
@@ -444,15 +445,15 @@ export class CreateNFTComponent implements OnInit {
                     nNFTId: returnData._id,
                     sTransactionHash: hash
                   };
-
+const that = this;
                   console.log(oDataToPass);
                   this.spinner.show();
                   await this.apiService.setTransactionHash(oDataToPass).subscribe(async (transData: any) => {
                     this.spinner.hide();
                     if (transData && transData['data']) {
-                      this.toaster.success('NFT created successfully');
-                      this.router.navigate(['/NFT-marketplace']);
-                      this.onClickRefresh();
+                      that.toaster.success('NFT created successfully');
+                      that.router.navigate(['/marketplace']);
+                      that.onClickRefresh();
                     } else {
                       this.toaster.success(transData['message']);
                     }
