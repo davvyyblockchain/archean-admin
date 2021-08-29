@@ -1,0 +1,236 @@
+<script src="../assets/js/jquery-3.5.1.min.js"></script>
+<!-- Toastr -->
+<link rel="stylesheet" href="../assets/vendor/toastr/css/toastr.min.css">
+<!-- Toastr -->
+<script src="../assets/vendor/toastr/js/toastr.min.js"></script>
+<header>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg pl-0 pr-0">
+            <a class="navbar-brand" href="/">
+                <img src="../assets/images/bas-tm-logo-1.png" alt="Blockchain Australia" width="201px" height="46px">
+            </a>
+            <a href="tel:1300 462 562" class="phoneformobile"><span class="iconify"
+                    data-icon="clarity:phone-handset-solid" data-inline="false"></span> </a>
+            <button class="custom-toggler navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mx-auto" id="menu">
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="/listing">Listing</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link text-center" href="/">All</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="/">Arts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="/">Music</a>
+                    </li> -->
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="/mynft">My NFT</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="/manageBid">Manage Bids</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="/createOption">Create</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center flex-column flex-lg-row">
+                    <span class="form-inline my-2 my-lg-0">
+                        <div class="form-group">
+                            <div class="field-holder" style="max-width: 191px;">
+                                <input type="text" class="form-control bas-field"
+                                    style="max-width: 100%; padding-right: 50px;" placeholder="Search" id="searchNFT" />
+                                <button type="button" class="sbmitbtn" id="btnSearch">
+                                    <span class="iconify" data-icon="bx:bxs-search-alt-2" data-inline="false"
+                                        data-width="18" data-height="18"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </span>
+                    <div class="usermnnn pl-3">
+                        <img src="../assets/images/user-avatar.svg"
+                            class="img-fluid mx-auto d-table togglesubmenu c-pointer"
+                            style="height: 50px;width: 50px;border-radius: 50%;" id="menu-userProfilePicture">
+                        <div class="user-menu"></div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<!-- Modal -->
+<div class="modal fade" id="connetcwallet" tabindex="-1" aria-labelledby="connetcwalletModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="connetcwalletModalLabel">Connect Wallet</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!-- <a href="#" class="close-modal" data-dismiss="modal" aria-label="Close">
+             <span class="iconify" data-icon="carbon:close-filled" data-inline="false" style="color: #090928;"
+                 data-width="20" data-height="20"></span>
+         </a> -->
+            <div class="modal-body">
+                <div style="padding: 20px 40px;">
+                    <div class="row">
+                        <button class="col" id="metamaskConnet">
+                            <a class="btn mx-auto with-icon">
+                                <img src="../assets/images/metamask.png" size="5"
+                                    style="position: absolute; left: 15px;" />MetaMask
+                            </a>
+                        </button>
+                    </div>
+                    <div class="row text-center pt-3 pb-3 mb-4 mt-4">
+                        <a class="col font-family-bs-regular mb-0 donthave" data-toggle="modal"
+                            data-target="#downloadwallet">I don't have a wallet</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="downloadwallet" tabindex="-1" aria-labelledby="downloadwalletModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="downloadwalletModalLabel">Get a wallet</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div style="padding: 20px 40px;">
+                    <div class="row">
+                        <p>Your wallet is the gateway to all things Ethereum, the technology that makes it
+                            possible to collect, create, and curate on Blockchain Australia.</p>
+                        <p>Blockchain Australia is compatible with any Ethereum wallet. Here are some that we
+                            recommend.</p>
+                        <button class="col">
+                            <a class="btn mx-auto with-icon" href="https://metamask.io/index.html" target="_blank">
+                                <img src="../assets/images/metamask.png" size="5"
+                                    style="position: absolute; left: 15px;" />MetaMask
+                            </a>
+                        </button>
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col text-right">
+                            <a class="btn btn-primary btn-peach mx-auto" data-dismiss="modal">
+                                <span>Continue</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="signinModel" tabindex="-1" aria-labelledby="signinModellLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="signinModellLabel">Connect Wallet</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div style="padding: 20px 40px;">
+                    <div class="row align-items-center">
+                        <div class="col-md-2">
+                            <img src="../assets/images/metamask.png" size="5" style="padding-right: 10px;" />
+                        </div>
+                        <div class="col" id="metamask-Address">
+                            Address
+                        </div>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col text-right" id="loginbtn">
+                            <button class="btn btn-primary btn-peach mx-auto" id="signupbtn" style="display: none;"
+                                data-normal-text="Sign Up"> Sign Up</button>
+                            <button class="btn btn-primary btn-peach mx-auto" id="signinbtn" style="display: none;"
+                                data-normal-text="Sign In"> Sign In</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MyEarning Modal -->
+<div class="modal fade show" id="myearnings" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered">
+        <div class="modal-content">
+            <!-- <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div> -->
+            <a href="#" class="close-modal" data-dismiss="modal" aria-label="Close">
+                <span class="iconify text-brick-red rounded-circle" data-icon="carbon:close-filled" data-inline="false"
+                    style="background-color: #fff;" data-width="20" data-height="20"></span>
+            </a>
+            <div class="modal-body">
+                <div class="content-sec">
+                    <div class="row">
+                        <div class="col">
+                            <img src="../assets/images/salary.svg" class="img-fluid mx-auto mb-4 mt-4 d-table" />
+                            <h6 class="font-family-infra-semibold text-capitalize text-center mb-0">My Earnings</h6>
+                        </div>
+                    </div>
+                    <div class="row align-items-center bg-light-purple pt-3 pb-3 mb-4 mt-4">
+                        <div class="col-md-4">
+                            <h5 class="font-family-bs-regular text-capitalize mb-0 text-center text-md-left">Earnings
+                            </h5>
+                        </div>
+                        <div class="col-md-8">
+                            <p class="font-family-bs-semibold earning-sum mb-0 text-center text-md-right">
+                                <span id="txtRedeemablePoints"></span>
+                                BNB
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row text-center">
+                        <div class="col bas-form" style="padding: 0;">
+                            <input class="form-control" type="number" name="redeemPoints" id="redeemPoints"
+                                placeholder="Amount To Redeem (BNB)">
+                            <label for="AmountError" id="lblAmountError" class="text-danger d-none"></label>
+                        </div>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col text-center">
+                            <button class="btn btn-primary btn-peach with-icon mx-auto" id="btnRedeem">
+                                <span>Redeem</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+
+<script src="https://cdn.jsdelivr.net/gh/ethereumjs/browser-builds/dist/ethereumjs-abi/ethereumjs-abi-0.6.4.min.js">
+</script>
+<script src="../assets/vendor/web3/web3.min.js"></script>
+<script src="../User/js/abi.js"></script>
+<script src="../User/js/header.js"></script>

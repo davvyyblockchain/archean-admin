@@ -1,0 +1,29 @@
+<svg width="128" height="128" xmlns="http://www.w3.org/2000/svg">
+
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="402" width="582" y="-1" x="-1"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <path stroke-miterlimit="10" stroke-linejoin="round" stroke-linecap="round" stroke-width="4" stroke="#0436ed" fill="none" id="svg_1" d="m51,55l-4.588,0c-2.373,0 -4.51,1.733 -4.716,4.097c-0.232,2.667 1.864,4.903 4.483,4.903l2.338,0c2.373,0 4.51,1.733 4.716,4.097c0.231,2.667 -1.865,4.903 -4.483,4.903l-5.75,0" class="st13"/>
+  <path stroke-miterlimit="10" stroke-linejoin="round" stroke-linecap="round" stroke-width="4" stroke="#0436ed" fill="none" id="svg_2" d="m77,60c0,-2.761 2.239,-5 5,-5s5,2.239 5,5l0,8c0,2.761 -2.239,5 -5,5s-5,-2.239 -5,-5l0,-8z" class="st13"/>
+  <polyline stroke-miterlimit="10" stroke-linejoin="round" stroke-linecap="round" stroke-width="4" stroke="#0436ed" fill="none" id="svg_3" points="70,73 61,73 61,55 70,55 " class="st13"/>
+  <line stroke-miterlimit="10" stroke-linejoin="round" stroke-linecap="round" stroke-width="4" stroke="#dadee7" fill="none" id="svg_4" y2="64" y1="64" x2="114" x1="102" class="st2"/>
+  <line stroke-miterlimit="10" stroke-linejoin="round" stroke-linecap="round" stroke-width="4" stroke="#dadee7" fill="none" id="svg_5" y2="64" y1="64" x2="26" x1="14" class="st2"/>
+  <line stroke-miterlimit="10" stroke-linejoin="round" stroke-linecap="round" stroke-width="4" stroke="#dadee7" fill="none" id="svg_6" y2="21.132" y1="31.524" x2="89.25" x1="83.25" class="st2"/>
+  <line stroke-miterlimit="10" stroke-linejoin="round" stroke-linecap="round" stroke-width="4" stroke="#dadee7" fill="none" id="svg_7" y2="96.476" y1="106.868" x2="45.75" x1="39.75" class="st2"/>
+  <line stroke-miterlimit="10" stroke-linejoin="round" stroke-linecap="round" stroke-width="4" stroke="#dadee7" fill="none" id="svg_8" y2="21.132" y1="31.524" x2="39.75" x1="45.75" class="st2"/>
+  <line stroke-miterlimit="10" stroke-linejoin="round" stroke-linecap="round" stroke-width="4" stroke="#dadee7" fill="none" id="svg_9" y2="96.476" y1="106.868" x2="83.25" x1="89.25" class="st2"/>
+  <circle stroke-miterlimit="10" stroke-linejoin="round" stroke-linecap="round" stroke-width="4" stroke="#0436ed" fill="none" id="svg_12" r="5" cy="64" cx="119" class="st2"/>
+  <circle stroke-miterlimit="10" stroke-linejoin="round" stroke-linecap="round" stroke-width="4" stroke="#0436ed" fill="none" id="svg_13" r="5" cy="64" cx="9" class="st2"/>
+  <circle stroke-miterlimit="10" stroke-linejoin="round" stroke-linecap="round" stroke-width="4" stroke="#0436ed" fill="none" id="svg_14" r="5" cy="16.369" cx="91.5" class="st2"/>
+  <circle stroke-miterlimit="10" stroke-linejoin="round" stroke-linecap="round" stroke-width="4" stroke="#0436ed" fill="none" id="svg_15" r="5" cy="111.631" cx="36.5" class="st2"/>
+  <circle stroke-miterlimit="10" stroke-linejoin="round" stroke-linecap="round" stroke-width="4" stroke="#0436ed" fill="none" id="svg_16" r="5" cy="16.369" cx="36.5" class="st2"/>
+  <circle stroke-miterlimit="10" stroke-linejoin="round" stroke-linecap="round" stroke-width="4" stroke="#0436ed" fill="none" id="svg_17" r="5" cy="111.442321" cx="91.5" class="st2"/>
+  <polygon stroke="#547cec" stroke-miterlimit="10" stroke-linejoin="round" stroke-linecap="round" stroke-width="4" fill="none" id="svg_11" points="83.38316323832987,31.754710569894087 45.937601949270174,31.754710569894087 27.215769460060983,64.47167443848957 45.937601949270174,97.18868255615234 83.38316323832987,97.18868255615234 102.10499572753906,64.47167443848957 " class="st1"/>
+  <circle stroke="#0436ed" fill="#dadee7" clip-rule="evenodd" fill-rule="evenodd" id="svg_19" r="2" cy="64" cx="26" class="st0"/>
+  <circle stroke="#0436ed" fill="#dadee7" clip-rule="evenodd" fill-rule="evenodd" id="svg_21" r="2" cy="64" cx="102" class="st0"/>
+  <line stroke-miterlimit="10" stroke-linejoin="round" stroke-linecap="round" stroke-width="4" stroke="#0436ed" fill="none" id="svg_10" y2="64" y1="64" x2="61" x1="67" class="st13"/>
+ </g>
+</svg>

@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="en" class="no-js">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" type="image/x-icon" sizes="16x16" href="/assets/images/favicon/favicon.ico">
+    <script>
+        document.documentElement.classList.remove("no-js");
+    </script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/responsive.css">
+    <link rel="stylesheet" href="./assets/css/slick.css">
+    <link rel="stylesheet" href="./assets/css/slick-theme.css">
+    <link rel="stylesheet" href="./assets/sass/main.css">
+
+    <!-- For Confirmation DialogBox -->
+    <link rel="stylesheet" href="../assets/css/msc-style.css">
+
+    <title>Create NFT | Blockchain Australia Solutions</title>
+    <meta name="robots" content="noindex, nofollow">
+</head>
+
+<body>
+    <div class="overlay"></div>
+    <%- include('header'); -%>
+    <section class="inner-hero">
+        <div class="container">
+            <div class="row">
+                <div class="col text-center">
+                    <h1 class="font-family-infra-extra-bold font-size-42 text-dark-blue">Create</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="inner-content sec-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h2 class="text-center text-dark-blue font-size-32 font-family-infra-semibold mb-4">Create NFT</h2>
+                    <p class="text-center font-family-bs-regular font-size-24 text-dark-blue">Lorem ipsum dolor sit
+                        amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+                        aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+                </div>
+            </div>
+            <div class="row mt-4 mt-md-5">
+                <div class="col">
+                    <form class="bas-form" action="">
+                        <div class="form-row">
+                            <div class="col-md-6 mb-4 mb-md-0 pr-md-3">
+                                <div class="form-group">
+                                    <!-- <label for="collection-name" class="mb-3">NFT File Type</label>
+                                    <div class="form-bar-cnt">
+                                        <div class="radio-btn-cnt mr-3">
+                                            <label>
+                                                <input type="radio" value="Image" name="nft-type" id="img-type" />
+                                                <span class="radio-illus"></span>
+                                                <span>Image</span>
+                                            </label>
+                                        </div>
+                                        <div class="radio-btn-cnt">
+                                            <label>
+                                                <input type="radio" value="Audio" name="nft-type" id="music-type" />
+                                                <span class="radio-illus"></span>
+                                                <span>Music</span>
+                                            </label>
+                                        </div>
+                                    </div> -->
+                                    <div class="form-group">
+                                        <label for="category-name" class="mb-3">Set Category</label>
+                                        <select name="nftCategory" id="nftCategory" class="form-control">
+                                            <option value="">Select Category</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 pl-md-3">
+                                <div class="form-group">
+                                    <label for="collection-name" class="mb-3">NFT Title/ Name * </label>
+                                    <input type="text" class="form-control" id="nftName" name="nftName"
+                                        placeholder="Enter NFT name">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6 mb-4 mb-md-0 pr-md-3">
+                                <div class="form-group">
+                                    <label for="collection-name" class="mb-3">Set Collection</label>
+                                    <select name="nftcollection" id="nftcollection" class="form-control">
+                                        <option value="">Select Collection</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6 pl-md-3">
+                                <div class="form-group">
+                                    <label for="collection-name" class="mb-3">NFT Quantity</label>
+                                    <input type="number" class="form-control" id="nftQuantity" name="nftQuantity"
+                                        placeholder="Enter NFT Quantity" min="0">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6 mb-4 mb-md-0 pr-md-3">
+                                <div class="form-group">
+                                    <label for="collection-name" class="mb-3">Royalty Percentage</label>
+                                    <input type="number" class="form-control" id="royalty-percentage"
+                                        name="royalty-percentage" value="0" step="0.1" min="0" disabled />
+                                </div>
+                            </div>
+                            <div class="col-md-6 pl-md-3">
+                                <div class="form-group">
+                                    <label for="collection-name" class="mb-3">Set Royalty Percentage</label>
+                                    <div class="form-bar-cnt">
+                                        <div class="checkbox-cnt">
+                                            <label for="set-royality-percentage">
+                                                On/Off
+                                                <input type="checkbox" id="set-royality-percentage" value="true"
+                                                    name="set-royality-percentage" />
+                                                <span class="check-illus"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row appendmore position-relative" id="collaborator_row" style="display: none;">
+                            <div class="col">
+                                <a href="#" class="appendit">
+                                    <span class="iconify" data-icon="ei:plus" data-inline="false"
+                                        style="color: #010101;" data-width="45" data-height="45"></span>
+                                </a>
+                                <div class="row">
+                                    <div class="col-md-6 mb-4 mb-md-0 pr-md-3">
+                                        <div class="form-group">
+                                            <label for="collection-name" class="mb-3">Select Collaborator</label>
+                                            <select name="collaborator" id="collaborator" class="form-control">
+                                                <option value="0x0000000000000000000000000000000000000000"> Select
+                                                    Collaborator</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 pl-md-3">
+                                        <div class="form-group">
+                                            <label for="collection-name" class="mb-3">Collaborator %</label>
+                                            <input type="number" class="form-control" id="collaborator-percentage"
+                                                name="collaborator-percentage" value="0" min="0" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- row to clone -->
+                                <div class="d-none">
+                                    <div class="row toclone position-relative">
+                                        <a href="#" class="appendit to-remove">
+                                            <span class="iconify" data-icon="ei:minus" data-inline="false"
+                                                style="color: #010101;" data-width="45" data-height="45"></span>
+                                        </a>
+                                        <div class="col-md-6 mb-4 mb-md-0 pr-md-3">
+                                            <div class="form-group">
+                                                <label for="collection-name" class="mb-3">Select Collaborator</label>
+                                                <select name="collaborator" id="collaborator" class="form-control">
+                                                    <option value="0x0000000000000000000000000000000000000000"> Select
+                                                        Collaborator</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 pl-md-3">
+                                            <div class="form-group">
+                                                <label for="collection-name" class="mb-3">Collaborator %</label>
+                                                <input type="number" class="form-control" id="collaborator-percentage"
+                                                    name="collaborator-percentage" value="0" min="0" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- row to clone -->
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="collection-name" class="mb-3 label-with-instructions">
+                                        <span>NFT Description</span>
+                                        <small class="instructions font-family-infra-medium font-size-14 ml-auto">Up to
+                                            1000 characters</small>
+                                    </label>
+                                    <textarea id="nftdescription" name="nftdescription" class="form-control" row="50"
+                                        maxlength="1000" placeholder="Description of NFT"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6 mb-4 mb-md-0 pr-md-3">
+                                <div class="">
+                                    <label for="Selling-type" class="mb-3">Selling Type</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-4 mb-4 mb-md-0">
+                                <div class="form-group">
+                                    <div class="form-bar-cnt">
+                                        <div class="radio-btn-cnt">
+                                            <label for="start-auction" class="mb-0">
+                                                <input type="radio" value="Auction" id="start-auction"
+                                                    name="auction-type" />
+                                                <span class="radio-illus"></span>
+                                                Start Auction
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-4 mb-md-0">
+                                <div class="form-group">
+                                    <div class="form-bar-cnt">
+                                        <div class="radio-btn-cnt">
+                                            <label for="start-auction1" class="mb-0">
+                                                <input type="radio" value="Fixed Sale" id="start-auction1"
+                                                    name="auction-type" />
+                                                <span class="radio-illus"></span>
+                                                Fixed Sale
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div class="form-bar-cnt">
+                                        <div class="radio-btn-cnt">
+                                            <label for="start-auction2" class="mb-0">
+                                                <input type="radio" value="Unlockable" id="start-auction2"
+                                                    name="auction-type" />
+                                                <span class="radio-illus"></span>
+                                                Unlockable Content
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row" id="basPrice">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="collection-name" class="mb-3">Base Price (BNB)</label>
+                                    <input type="number" class="form-control" id="basePrice" name="basePrice" value="0"
+                                        min="0" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row d-none" id="imageUpload">
+                            <div class="col-md-6 mb-4 mb-md-0 pr-md-3">
+                                <div class="form-group">
+                                    <label for="collection-name" class="mb-3 label-with-instructions">
+                                        <span>Image *</span>
+                                        <small class="instructions font-family-infra-medium font-size-14 ml-auto">(JPG,
+                                            PNG, GIF)</small>
+                                    </label>
+                                    <div class="uploadbox">
+                                        <img src="./assets/images/file-upload-icon.svg"
+                                            class="img-fluid mx-auto d-table" />
+                                        <p>Upload JPG, PNG</p>
+                                    </div>
+                                    <input type="file" class="d-none" id="uploadicon"
+                                        accept=".png, .jpg, .jpeg, .gif" />
+                                </div>
+                            </div>
+                            <div class="col-md-6 pl-md-3">
+                                <div class="form-group">
+                                    <label class="mb-3 label-with-instructions"><span>Preview</span></label>
+                                    <div class="previewbox">
+                                        <img id="imagePreview" src="" style="max-height: 315px;
+                                        max-width: 100%;
+                                        height: auto;
+                                        width: auto;display: none;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row d-none" id="fileUpload">
+                            <div class="col-md-6 mb-4 mb-md-0 pr-md-3">
+                                <div class="form-group">
+                                    <label for="collection-name" class="mb-3 label-with-instructions">
+                                        <span>File *</span>
+                                        <small
+                                            class="instructions font-family-infra-medium font-size-14 ml-auto">(Any)</small>
+                                    </label>
+                                    <div class="uploadbox">
+                                        <img src="./assets/images/file-upload-icon.svg"
+                                            class="img-fluid mx-auto d-table" />
+                                        <p>Upload File</p>
+                                    </div>
+                                    <input type="file" class="d-none" id="uploadicon" accept=".png, .jpg, .jpeg" />
+                                </div>
+                            </div>
+                            <div class="col-md-6 pl-md-3">
+                                <div class="form-group">
+                                    <label class="mb-3 label-with-instructions"><span>Preview</span></label>
+                                    <div class="previewbox">
+                                        <img id="filePreview" src="" style="height: 315px;
+                                        width: auto; display: none;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row d-none" id="audioUpload">
+                            <div class="col-md-6 mb-4 mb-md-0 pr-md-3">
+                                <div class="form-group">
+                                    <label for="collection-name" class="mb-3 label-with-instructions">
+                                        <span>Audio *</span>
+                                        <small class="instructions font-family-infra-medium font-size-14 ml-auto">(MP3,
+                                            MPEG)</small>
+                                        <!-- <small class="instructions font-family-infra-medium font-size-14 ml-auto">(350 x 350 recommended)</small> -->
+                                    </label>
+                                    <div class="uploadAudioBox">
+                                        <img src="./assets/images/file-upload-icon.svg"
+                                            class="img-fluid mx-auto d-table" />
+                                        <p>Upload audio here</p>
+                                        <audio id="audio" controls class="d-none">
+                                            <source src="" id="src" />
+                                        </audio>
+                                    </div>
+                                    <input type="file" class="d-none" id="nft-audio" accept=".mp3,audio/*" />
+                                </div>
+                            </div>
+                            <div class="col-md-6 pl-md-3">
+                                <div class="form-group">
+                                    <label for="collection-name" class="mb-3 label-with-instructions">
+                                        <span>Preview Audio</span>
+                                        <!-- <small class="instructions font-family-infra-medium font-size-14 ml-auto">(350 x 350 recommended)</small> -->
+                                    </label>
+                                    <div class="audio-player" style="height: 318px;">
+                                        <div class="preview-thumb" style="height: 285px;">
+                                            <img src="../assets/images/audio-preview.png" class="img-fluid" />
+                                        </div>
+                                        <div class="timeline">
+                                            <div class="progress"></div>
+                                        </div>
+                                        <div class="controls">
+                                            <div class="play-container">
+                                                <div class="toggle-play play">
+                                                </div>
+                                            </div>
+                                            <div class="time">
+                                                <div class="current d-inline">0:00</div>
+                                                <div class="divider d-inline">/</div>
+                                                <div class="length d-inline"></div>
+                                            </div>
+                                            <!-- <div class="name">Audio</div> -->
+                                            <!--     credit for icon to https://saeedalipoor.github.io/icono/ -->
+                                            <div class="volume-container">
+                                                <div class="volume-button">
+                                                    <div class="volume icono-volumeMedium"></div>
+                                                </div>
+
+                                                <div class="volume-slider">
+                                                    <div class="volume-percentage"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <div class="form-row mt-md-4">
+                <div class="col text-center">
+                    <button type="button" id="createNFT" data-normal-text="Create NFT" class="btn btn-primary btn-peach text-uppercase">Create
+                        NFT</button>
+                </div>
+            </div>
+            </form>
+        </div>
+        </div>
+        </div>
+    </section>
+    <%- include('footer'); -%>
+
+    <div class="modal fade" id="buyitnow" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <!-- <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div> -->
+                <a href="#" class="close-modal" data-dismiss="modal" aria-label="Close">
+                    <span class="iconify" data-icon="carbon:close-filled" data-inline="false" style="color: #090928;"
+                        data-width="20" data-height="20"></span>
+                </a>
+                <div class="modal-body">
+                    <div class="content-sec">
+                        <div class="row">
+                            <div class="col">
+                                <img src="./assets/images/buy-button.svg" class="img-fluid mx-auto mb-4 mt-4 d-table" />
+                                <h6 class="font-family-infra-semibold text-capitalize text-center mb-0">Buy Now</h6>
+                            </div>
+                        </div>
+                        <div class="row align-items-center pt-3 pb-3 mt-4">
+                            <div class="col">
+                                <div class="table-responsive">
+                                    <table class="table cart-table">
+                                        <thead>
+                                            <th class="font-famly-infra-bold text-color-peach">Item</th>
+                                            <th class="font-famly-infra-bold text-color-peach">Subtotal</th>
+                                            <th></th>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="cart-item d-flex align-items-center">
+                                                        <div class="cart-item-thumb">
+                                                            <img src="./assets/top-girl-nft-thumb.jpg" class="rounded"
+                                                                width="100" height="100" />
+                                                        </div>
+                                                        <div class="cart-item-body pl-3">
+                                                            <h4
+                                                                class="font-family-bs-semibold font-size-24 text-color-body">
+                                                                Top Girl</h4>
+                                                            <h5 class="font-family-bs-regular">@mjfellowactuary</h6>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <span class="font-family-bs-semibold font-size-24 text-color-body">Ξ
+                                                        1.50 ($121.39)</span>
+                                                </td>
+                                                <td>
+                                                    <a href="#" class="remove-cart-item">X</a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="cart-item d-flex align-items-center">
+                                                        <div class="cart-item-thumb">
+                                                            <img src="./assets/top-girl-nft-thumb.jpg" class="rounded"
+                                                                width="100" height="100" />
+                                                        </div>
+                                                        <div class="cart-item-body pl-3">
+                                                            <h4
+                                                                class="font-family-bs-semibold font-size-24 text-color-body">
+                                                                Top Girl</h4>
+                                                            <h5 class="font-family-bs-regular">@mjfellowactuary</h6>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <span class="font-family-bs-semibold font-size-24 text-color-body">Ξ
+                                                        1.50 ($121.39)</span>
+                                                </td>
+                                                <td>
+                                                    <a href="#" class="remove-cart-item">X</a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-color-body">Total</td>
+                                                <td class="text-color-body">Ξ 3.0 ($250.50)</td>
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col text-center">
+                                <a href="#" class="btn btn-primary btn-peach with-icon mx-auto">
+                                    <span>Checkout</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="success-nft" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md modal-dialog-centered">
+            <div class="modal-content">
+                <!-- <a href="/createNFT" class="close-modal" data-dismiss="modal" aria-label="Close">
+                    <span class="iconify" data-icon="carbon:close-filled" data-inline="false" style="color: #090928;"
+                        data-width="20" data-height="20"></span>
+                </a> -->
+                <div class="modal-body">
+                    <div class="content-sec">
+                        <div class="row">
+                            <div class="col text-center">
+                                <img src="./assets/images/sucess-icon.svg"
+                                    class="img-fluid mx-auto mb-4 mt-4 d-table" />
+                                <h6
+                                    class="font-family-infra-semibold text-capitalize text-center mb-0 text-color-success-pink mb-4">
+                                    Congratulations..!!</h6>
+                                <p class="text-dark-blue font-family-bs-semibold font-size-20">NFT Added in your NFT
+                                    account</p>
+                                <p class="text-dark-blue font-family-bs-regular font-size-16">Lorem ipsum dolor sit
+                                    amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                                    dolore magna aliqua. Ut enim ad minim veniam, quis.</p>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col text-center">
+                                <a href="/createNFT" class="btn btn-primary btn-peach with-icon mx-auto">
+                                    <span>Create more</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.0/jquery.min.js"
+        integrity="sha512-0nVWK03Ud0k6o8wDkri8jxX9zQIn00ZHVud3iqBTwd2bGFwJDQShGVb3+vX1adCRxQckKQrIQMFmIA3tfWe+Mg=="
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous">
+    </script>
+
+    <!-- Option 2: jQuery, Popper.js, and Bootstrap JS
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
+    -->
+    <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
+    <script type="text/javascript" src="./assets/js/slick.min.js"></script>
+    <script type="text/javascript" src="./assets/js/modernizr-custom.js"></script>
+    <script type="text/javascript" src="./assets/js/main.js"></script>
+    <script src="../User/js/abi.js"></script>
+
+    <!-- For Confirmation -->
+    <script src="../assets/js/msc-script.js"></script>
+
+    <script src="../User/js/createNFT.js"></script>
+</body>
+
+</html>

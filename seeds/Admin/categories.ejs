@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- xhtml/index.html08:17:22 -->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Manage Categories | Blockchain Australia Solutions</title>
+
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/x-icon" sizes="16x16" href="/assets/images/favicon/favicon.ico">
+
+    <!-- TODO: Check if this is required or not! -->
+    <link rel="stylesheet" href="../assets/vendor/datatables/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="../assets/vendor/datatables/css/responsive.dataTables.min.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css">
+
+    <!-- <link href="css/style.css" rel="stylesheet"> -->
+    <link href="../assets/css/admin-style.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="sk-three-bounce">
+            <div class="sk-child sk-bounce1"></div>
+            <div class="sk-child sk-bounce2"></div>
+            <div class="sk-child sk-bounce3"></div>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+
+        <!-- Include Header -->
+        <%- include('header'); -%>
+
+        <!-- Include Sidebar -->
+        <%- include('sidebar'); -%>
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body">
+            <!-- row -->
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Categories</h4>
+                                <button class="btn btn-primary rounded-sm" id="btnAddNewCategory">Add New</button>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="categoriesTable" class="display">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Edit</th>
+                                                <th>Activate/Deactivate</th>
+                                                <th>Delete</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="userList"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    <!--**********************************
+            Content body end
+        ***********************************-->
+
+    <!--**********************************
+            Footer start
+        ***********************************-->
+
+    <%- include('footer'); -%>
+
+    <!--**********************************
+            Footer end
+        ***********************************-->
+
+    <!-- Category Modal -->
+    <div class="modal fade show" id="categoryModel" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-md modal-dialog-centered">
+            <div class="modal-content">
+                <a href="#" class="close-modal" data-dismiss="modal" aria-label="Close">
+                    <span class="iconify text-brick-red rounded-circle" data-icon="carbon:close-filled"
+                        data-inline="false" style="background-color: #fff;" data-width="20" data-height="20"></span>
+                </a>
+                <div class="modal-body">
+                    <div class="content-sec">
+                        <div class="row">
+                            <div class="col">
+                                <h6 class="font-family-infra-semibold text-capitalize text-center mb-4" id="modelTitle">
+                                    Category</h6>
+                            </div>
+                        </div>
+                        <div class="row text-center">
+                            <div class="col bas-form" style="padding: 0;">
+                                <input class="form-control" type="text" id="categoryName" placeholder="Category">
+                                <label for="CategoryName" id="lblCategoryName" class="text-danger d-none"></label>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col text-center">
+                                <button class="btn btn-primary with-icon mx-auto rounded-sm" id="btnSubmitCategory">
+                                    <span>Submit</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <!-- Required vendors -->
+
+    <script src="../assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+    <script src="../assets/js/custom.min.js"></script>
+    <script src="../assets/js/deznav-init.js"></script>
+
+    <script src="../assets/vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="../assets/vendor/datatables/js/dataTables.responsive.min.js"></script>
+
+    <script src="../Admin/js/categories.js"></script>
+
+</body>
+
+<!-- xhtml/index.html08:18:50 -->
+
+</html>

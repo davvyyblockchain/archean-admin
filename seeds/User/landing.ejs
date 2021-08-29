@@ -1,0 +1,564 @@
+<!doctype html>
+<html lang="en" class="no-js">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" type="image/x-icon" sizes="16x16" href="/assets/images/favicon/favicon.ico">
+    <script>
+        document.documentElement.classList.remove("no-js");
+    </script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/responsive.css">
+    <link rel="stylesheet" href="./assets/css/slick.css">
+    <link rel="stylesheet" href="./assets/css/slick-theme.css">
+    <link rel="stylesheet" href="./assets/sass/main.css">
+    <title>Blockchain Australia Solutions</title>
+    <meta name="robots" content="noindex, nofollow">
+</head>
+
+<body>
+    <div class="overlay"></div>
+    <%- include('header'); -%>
+    <section class="hero sec-padding">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-left mb-4 mb-md-0">
+                    <h1 class="mb-0">The largest Blockchain NFT</h1>
+                    <p class="mt-3 mb-3 mt-md-4 mb-md-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+                        do eiusmod tempor incididunt ut labore et dolore magna. Ad minim veniam, quis nostrud
+                        exercitation ullamco ut aliquip ex ea commodo consequat.</p>
+                    <a href="#" class="btn btn-primary btn-peach with-icon"><span>View Our Services</span> <span
+                            class="iconify" data-icon="carbon:chevron-right" data-inline="false"></span></a>
+                </div>
+                <div class="col-md-6">
+                    <img src="./assets/images/header-nft-illus.svg" class="img-fluid mx-auto" />
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="simple-section simple-sec-padding bg-white">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h2
+                        class="text-uppercase font-size-sec-heading mb-4 mb-md-5 text-center font-family-infra-bold text-dark-blue">
+                        On Sale</h2>
+                </div>
+            </div>
+            <div class="row" id="onSaleNFTs"></div>
+
+            <h4 id="onSaleNFTNoNFTData" style="display: none;">No Data Available</h4>
+            <div id="onSaleNFTLoader" class="loader">Loading...</div>
+
+            <!-- <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
+                    <div class="nft-card">
+                        <div class="nft-card-head">
+                            <a href="#" class="d-flex align-items-center">
+                                <img src="./assets/images/user-dummy-avatar.svg" class="img-fluid mr-3">
+                                <span>@handle</span>
+                            </a>
+                        </div>
+                        <div class="nft-card-body">
+                            <a href="#">
+                                <img src="./assets/images/Bitmap.jpg" class="img-fluid w-100" />
+                            </a>
+                        </div>
+                        <div class="nft-card-footer">
+                            <div class="row">
+                                <div class="col">
+                                    <a href="#">
+                                        <h3 class="font-family-infra-semibold mb-3">Color ribbon study #1</h3>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <p class="mb-0 meta-price font-family-bs-regular">Base Price:- 1.0ETH</p>
+                                </div>
+                                <div class="col">
+                                    <p class="mb-0 text-capitalize font-family-bs-regular meta-cat text-right">
+                                        Category:- Art Work</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
+                    <div class="nft-card">
+                        <div class="nft-card-head">
+                            <a href="#" class="d-flex align-items-center">
+                                <img src="./assets/images/user-dummy-avatar.svg" class="img-fluid mr-3">
+                                <span>@handle</span>
+                            </a>
+                        </div>
+                        <div class="nft-card-body">
+                            <a href="#">
+                                <img src="./assets/images/nft-2.jpg" class="img-fluid w-100" />
+                            </a>
+                        </div>
+                        <div class="nft-card-footer">
+                            <div class="row">
+                                <div class="col">
+                                    <a href="#">
+                                        <h3 class="font-family-infra-semibold mb-3">Color ribbon study #1</h3>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <p class="mb-0 meta-price font-family-bs-regular">Base Price:- 1.0ETH</p>
+                                </div>
+                                <div class="col">
+                                    <p class="mb-0 text-capitalize font-family-bs-regular meta-cat text-right">
+                                        Category:- Art Work</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
+                    <div class="nft-card">
+                        <div class="nft-card-head">
+                            <a href="#" class="d-flex align-items-center">
+                                <img src="./assets/images/user-dummy-avatar.svg" class="img-fluid mr-3">
+                                <span>@handle</span>
+                            </a>
+                        </div>
+                        <div class="nft-card-body">
+                            <a href="#">
+                                <img src="./assets/images/nft-3.jpg" class="img-fluid w-100" />
+                            </a>
+                        </div>
+                        <div class="nft-card-footer">
+                            <div class="row">
+                                <div class="col">
+                                    <a href="#">
+                                        <h3 class="font-family-infra-semibold mb-3">Color ribbon study #1</h3>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <p class="mb-0 meta-price font-family-bs-regular">Base Price:- 1.0ETH</p>
+                                </div>
+                                <div class="col">
+                                    <p class="mb-0 text-capitalize font-family-bs-regular meta-cat text-right">
+                                        Category:- Art Work</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+
+            <div class="row mt-4 mt-md-5">
+                <div class="col text-center">
+                    <a href="listing?filter=sale" class="btn btn-primary btn-peach with-icon mx-auto">
+                        <span>View all on Sale</span>
+                        <span class="iconify" data-icon="carbon:chevron-right" data-inline="false"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="simple-section simple-sec-padding bg-light-purple">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h2
+                        class="text-uppercase font-size-sec-heading mb-4 mb-md-5 text-center font-family-infra-bold text-dark-blue">
+                        On Auction</h2>
+                </div>
+            </div>
+            <div class="row" id="onAuctionNFTs"> </div>
+
+            <h4 id="onAuctionNFTNoNFTData" style="display: none;">No Data Available</h4>
+            <div id="onAuctionNFTLoader" class="loader">Loading...</div>
+            <!-- <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
+                    <div class="nft-card">
+                        <div class="nft-card-head">
+                            <a href="#" class="d-flex align-items-center">
+                                <img src="./assets/images/user-dummy-avatar.svg" class="img-fluid mr-3">
+                                <span>@handle</span>
+                            </a>
+                        </div>
+                        <div class="nft-card-body">
+                            <a href="#">
+                                <img src="./assets/images/ted-williams.jpg" class="img-fluid w-100" />
+                            </a>
+                        </div>
+                        <div class="nft-card-footer">
+                            <div class="row">
+                                <div class="col">
+                                    <a href="#">
+                                        <h3 class="font-family-infra-semibold mb-3">Color ribbon study #1</h3>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <p class="mb-0 meta-price font-family-bs-regular">Base Price:- 1.0ETH</p>
+                                </div>
+                                <div class="col">
+                                    <p class="mb-0 text-capitalize font-family-bs-regular meta-cat text-right">
+                                        Category:- Art Work</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
+                    <div class="nft-card">
+                        <div class="nft-card-head">
+                            <a href="#" class="d-flex align-items-center">
+                                <img src="./assets/images/user-dummy-avatar.svg" class="img-fluid mr-3">
+                                <span>@handle</span>
+                            </a>
+                        </div>
+                        <div class="nft-card-body">
+                            <a href="#">
+                                <img src="./assets/images/ted-williams-2.jpg" class="img-fluid w-100" />
+                            </a>
+                        </div>
+                        <div class="nft-card-footer">
+                            <div class="row">
+                                <div class="col">
+                                    <a href="#">
+                                        <h3 class="font-family-infra-semibold mb-3">Color ribbon study #1</h3>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <p class="mb-0 meta-price font-family-bs-regular">Base Price:- 1.0ETH</p>
+                                </div>
+                                <div class="col">
+                                    <p class="mb-0 text-capitalize font-family-bs-regular meta-cat text-right">
+                                        Category:- Art Work</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
+                    <div class="nft-card">
+                        <div class="nft-card-head">
+                            <a href="#" class="d-flex align-items-center">
+                                <img src="./assets/images/user-dummy-avatar.svg" class="img-fluid mr-3">
+                                <span>@handle</span>
+                            </a>
+                        </div>
+                        <div class="nft-card-body">
+                            <a href="#">
+                                <img src="./assets/images/teddy-bellgame.jpg" class="img-fluid w-100" />
+                            </a>
+                        </div>
+                        <div class="nft-card-footer">
+                            <div class="row">
+                                <div class="col">
+                                    <a href="#">
+                                        <h3 class="font-family-infra-semibold mb-3">Color ribbon study #1</h3>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <p class="mb-0 meta-price font-family-bs-regular">Base Price:- 1.0ETH</p>
+                                </div>
+                                <div class="col">
+                                    <p class="mb-0 text-capitalize font-family-bs-regular meta-cat text-right">
+                                        Category:- Art Work</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+
+            <div class="row mt-4 mt-md-5">
+                <div class="col text-center">
+                    <a href="listing?filter=auction" class="btn btn-primary btn-peach with-icon mx-auto">
+                        <span>View all on auction</span>
+                        <span class="iconify" data-icon="carbon:chevron-right" data-inline="false"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="simple-section simple-sec-padding bg-white">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h2
+                        class="text-uppercase font-size-sec-heading mb-4 mb-md-5 text-center font-family-infra-bold text-dark-blue">
+                        Recently Added</h2>
+                </div>
+            </div>
+            <div class="row" id="recentlyAddedNFTs"></div>
+            <!-- <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
+                    <div class="nft-card">
+                        <div class="nft-card-head">
+                            <a href="#" class="d-flex align-items-center">
+                                <img src="./assets/images/user-dummy-avatar.svg" class="img-fluid mr-3">
+                                <span>@handle</span>
+                            </a>
+                        </div>
+                        <div class="nft-card-body">
+                            <a href="#">
+                                <img src="./assets/images/take-muffin.jpg" class="img-fluid w-100" />
+                            </a>
+                        </div>
+                        <div class="nft-card-footer">
+                            <div class="row">
+                                <div class="col">
+                                    <a href="#">
+                                        <h3 class="font-family-infra-semibold mb-3">Color ribbon study #1</h3>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <p class="mb-0 meta-price font-family-bs-regular">Base Price:- 1.0ETH</p>
+                                </div>
+                                <div class="col">
+                                    <p class="mb-0 text-capitalize font-family-bs-regular meta-cat text-right">
+                                        Category:- Art Work</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
+                    <div class="nft-card">
+                        <div class="nft-card-head">
+                            <a href="#" class="d-flex align-items-center">
+                                <img src="./assets/images/user-dummy-avatar.svg" class="img-fluid mr-3">
+                                <span>@handle</span>
+                            </a>
+                        </div>
+                        <div class="nft-card-body">
+                            <a href="#">
+                                <img src="./assets/images/take-muffin-2.jpg" class="img-fluid w-100" />
+                            </a>
+                        </div>
+                        <div class="nft-card-footer">
+                            <div class="row">
+                                <div class="col">
+                                    <a href="#">
+                                        <h3 class="font-family-infra-semibold mb-3">Color ribbon study #1</h3>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <p class="mb-0 meta-price font-family-bs-regular">Base Price:- 1.0ETH</p>
+                                </div>
+                                <div class="col">
+                                    <p class="mb-0 text-capitalize font-family-bs-regular meta-cat text-right">
+                                        Category:- Art Work</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
+                    <div class="nft-card">
+                        <div class="nft-card-head">
+                            <a href="#" class="d-flex align-items-center">
+                                <img src="./assets/images/user-dummy-avatar.svg" class="img-fluid mr-3">
+                                <span>@handle</span>
+                            </a>
+                        </div>
+                        <div class="nft-card-body">
+                            <a href="#">
+                                <img src="./assets/images/take-muffin-3.jpg" class="img-fluid w-100" />
+                            </a>
+                        </div>
+                        <div class="nft-card-footer">
+                            <div class="row">
+                                <div class="col">
+                                    <a href="#">
+                                        <h3 class="font-family-infra-semibold mb-3">Color ribbon study #1</h3>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <p class="mb-0 meta-price font-family-bs-regular">Base Price:- 1.0ETH</p>
+                                </div>
+                                <div class="col">
+                                    <p class="mb-0 text-capitalize font-family-bs-regular meta-cat text-right">
+                                        Category:- Art Work</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+
+            <h4 id="recentlyAddedNFTNoNFTData" style="display: none;">No Data Available</h4>
+            <div id="recentlyAddedNFTLoader" class="loader">Loading...</div>
+
+            <div class="row mt-4 mt-md-5">
+                <div class="col text-center">
+                    <a href="listing?sort=Recently Added" class="btn btn-primary btn-peach with-icon mx-auto">
+                        <span>View recently added</span>
+                        <span class="iconify" data-icon="carbon:chevron-right" data-inline="false"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="simple-section simple-sec-padding bg-light-purple">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h2
+                        class="text-uppercase font-size-sec-heading mb-4 mb-md-5 text-center font-family-infra-bold text-dark-blue">
+                        Most Viewed</h2>
+                </div>
+            </div>
+            <div class="row" id="nftlist"> </div>
+            <h4 id="MostViewedNFTNoNFTData" style="display: none;">No Data Available</h4>
+            <div id="MostViewedNFTLoader" class="loader">Loading...</div>
+            <!-- <button onclick="loadData()" id="loadMoreBtn" start='0' type="button" id="loadmore"
+                class="btn btn-outline-cta-peach mx-auto color-white-on-hover" style="display: none;">Load
+                More</button> -->
+            <!-- <div class="row">
+                <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
+                    <div class="nft-card">
+                        <div class="nft-card-head">
+                            <a href="#" class="d-flex align-items-center">
+                                <img src="./assets/images/user-dummy-avatar.svg" class="img-fluid mr-3">
+                                <span>@handle</span>
+                            </a>
+                        </div>
+                        <div class="nft-card-body">
+                            <a href="#">
+                                <img src="./assets/images/most-viewed-1.jpg" class="img-fluid w-100" />
+                            </a>
+                        </div>
+                        <div class="nft-card-footer">
+                            <div class="row">
+                                <div class="col">
+                                    <a href="#">
+                                        <h3 class="font-family-infra-semibold mb-3">Color ribbon study #1</h3>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <p class="mb-0 meta-price font-family-bs-regular">Base Price:- 1.0ETH</p>
+                                </div>
+                                <div class="col">
+                                    <p class="mb-0 text-capitalize font-family-bs-regular meta-cat text-right">
+                                        Category:- Art Work</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
+                    <div class="nft-card">
+                        <div class="nft-card-head">
+                            <a href="#" class="d-flex align-items-center">
+                                <img src="./assets/images/user-dummy-avatar.svg" class="img-fluid mr-3">
+                                <span>@handle</span>
+                            </a>
+                        </div>
+                        <div class="nft-card-body">
+                            <a href="#">
+                                <img src="./assets/images/most-viewed-2.jpg" class="img-fluid w-100" />
+                            </a>
+                        </div>
+                        <div class="nft-card-footer">
+                            <div class="row">
+                                <div class="col">
+                                    <a href="#">
+                                        <h3 class="font-family-infra-semibold mb-3">Color ribbon study #1</h3>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <p class="mb-0 meta-price font-family-bs-regular">Base Price:- 1.0ETH</p>
+                                </div>
+                                <div class="col">
+                                    <p class="mb-0 text-capitalize font-family-bs-regular meta-cat text-right">
+                                        Category:- Art Work</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
+                    <div class="nft-card">
+                        <div class="nft-card-head">
+                            <a href="#" class="d-flex align-items-center">
+                                <img src="./assets/images/user-dummy-avatar.svg" class="img-fluid mr-3">
+                                <span>@handle</span>
+                            </a>
+                        </div>
+                        <div class="nft-card-body">
+                            <a href="#">
+                                <img src="./assets/images/most-viewed-3.jpg" class="img-fluid w-100" />
+                            </a>
+                        </div>
+                        <div class="nft-card-footer">
+                            <div class="row">
+                                <div class="col">
+                                    <a href="#">
+                                        <h3 class="font-family-infra-semibold mb-3">Color ribbon study #1</h3>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <p class="mb-0 meta-price font-family-bs-regular">Base Price:- 1.0ETH</p>
+                                </div>
+                                <div class="col">
+                                    <p class="mb-0 text-capitalize font-family-bs-regular meta-cat text-right">
+                                        Category:- Art Work</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <div class="row mt-4 mt-md-5">
+                <div class="col text-center">
+                    <a href="listing?sort=Most Viewed" class="btn btn-primary btn-peach with-icon mx-auto">
+                        <span>View most viewed</span>
+                        <span class="iconify" data-icon="carbon:chevron-right" data-inline="false"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <%- include('footer'); -%>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.0/jquery.min.js"
+        integrity="sha512-0nVWK03Ud0k6o8wDkri8jxX9zQIn00ZHVud3iqBTwd2bGFwJDQShGVb3+vX1adCRxQckKQrIQMFmIA3tfWe+Mg=="
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous">
+    </script>
+
+    <!-- Option 2: jQuery, Popper.js, and Bootstrap JS
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
+    -->
+    <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
+    <script type="text/javascript" src="./assets/js/slick.min.js"></script>
+    <script type="text/javascript" src="./assets/js/modernizr-custom.js"></script>
+    <script type="text/javascript" src="./assets/js/main.js"></script>
+    <script src="../User/js/landing.js"></script>
+</body>
+
+</html>
