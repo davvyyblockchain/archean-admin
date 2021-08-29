@@ -53,10 +53,10 @@ Router.prototype.setupMiddleware = function () {
     this.app.engine('html', require('ejs').renderFile);
     this.app.use(bodyParser.json({ limit: '16mb' }));
     this.app.use(bodyParser.urlencoded({ limit: '16mb', extended: true, parameterLimit: 50000 }));
-    // this.app.set('views', './seeds');
+    this.app.set('views', './seeds');
     this.app.set('view engine', 'ejs');
     // if (process.env.NODE_ENV !== 'prod') this.app.use(morgan('dev', { skip: (req) => req.path === '/ping' || req.path === '/favicon.ico' }));
-    // this.app.use(express.static('./seeds'));
+    this.app.use(express.static('./seeds'));
     this.app.use(this.routeConfig);
     this.app.use('/api/v1', routes);
     this.app.use('/', htmlRender);

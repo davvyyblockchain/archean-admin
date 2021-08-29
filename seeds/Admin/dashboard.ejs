@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- xhtml/index.html08:17:22 -->
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>Home | Blockchain Australia Solutions</title>
+
+	<!-- Favicon icon -->
+    <link rel="icon" type="image/x-icon" sizes="16x16" href="/assets/images/favicon/favicon.ico">
+
+	<link rel="stylesheet" href="../assets/vendor/chartist/css/chartist.min.css">
+
+	<!-- <link href="css/style.css" rel="stylesheet"> -->
+	<link href="../assets/css/admin-style.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+	<!--*******************
+        Preloader start
+    ********************-->
+	<div id="preloader">
+		<div class="sk-three-bounce">
+			<div class="sk-child sk-bounce1"></div>
+			<div class="sk-child sk-bounce2"></div>
+			<div class="sk-child sk-bounce3"></div>
+		</div>
+	</div>
+	<!--*******************
+        Preloader end
+    ********************-->
+
+	<!--**********************************
+        Main wrapper start
+    ***********************************-->
+	<div id="main-wrapper">
+
+		<!-- Include Header -->
+		<%- include('header'); -%>
+
+		<!-- Include Sidebar -->
+		<%- include('sidebar'); -%>
+
+		<!--**********************************
+            Content body start
+        ***********************************-->
+		<div class="content-body">
+			<!-- row -->
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-xl-6 col-xxl-6 col-lg-6 col-sm-6">
+						<div class="card overflow-hidden">
+							<div class="card-header border-0 pb-0">
+								<div class="mr-auto">
+									<h2>Number of NFTs on Sale</h2>
+									<h3 id="numberOfNFTsOnSale" class="text-black mb-2 font-w600">0</h3>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-6 col-xxl-6 col-lg-6 col-sm-6">
+						<div class="card overflow-hidden">
+							<div class="card-header border-0 pb-0">
+								<div class="mr-auto">
+									<h2>Number of NFTs on Auction</h2>
+									<h3 id="numberOfNFTsOnAuction" class="text-black mb-2 font-w600">0</h3>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-6 col-xxl-6 col-lg-6 col-sm-6">
+						<div class="card overflow-hidden">
+							<div class="card-header border-0 pb-0">
+								<div class="mr-auto">
+									<h2>Number of Users</h2>
+									<h3 id="numberOfUsers" class="text-black mb-2 font-w600">0</h3>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-6 col-xxl-6 col-lg-6 col-sm-6">
+						<div class="card overflow-hidden">
+							<div class="card-header border-0 pb-0">
+								<div class="mr-auto">
+									<h2>Number of NFTs Sold</h2>
+									<h3 id="numberOfNFTsSold" class="text-black mb-2 font-w600">0</h3>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-xl-12 col-xxl-12 col-lg-12">
+						<div class="card">
+							<div class="card-header d-sm-flex d-block pb-0 border-0">
+								<div>
+									<h4 class="text-black fs-20">Total User</h4>
+								</div>
+							</div>
+							<div class="card-body" id="user-activity">
+
+								<div class="tab-content" id="myTabContent">
+									<div class="tab-pane fade show active" id="user" role="tabpanel">
+										<canvas id="activityLine" height="350"></canvas>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<!--**********************************
+            Content body end
+        ***********************************-->
+
+		<!--**********************************
+            Footer start
+        ***********************************-->
+		
+		<%- include('footer'); -%>
+
+		<!--**********************************
+            Footer end
+        ***********************************-->
+
+	</div>
+	<!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+	<!--**********************************
+        Scripts
+    ***********************************-->
+	<!-- Required vendors -->
+
+	<script src="../assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+	<script src="../assets/js/custom.min.js"></script>
+	<script src="../assets/js/deznav-init.js"></script>
+	<script src="../assets/vendor/chart.js/Chart.bundle.min.js"></script>
+	<script src="../assets/vendor/peity/jquery.peity.min.js"></script>
+
+	<script src="../Admin/js/dashboard.js"></script>
+
+
+
+</body>
+
+<!-- xhtml/index.html08:18:50 -->
+
+</html>

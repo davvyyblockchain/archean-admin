@@ -7,6 +7,7 @@ const validators = require("./validators");
 const mongoose = require('mongoose');
 const controllers = {};
 
+const nodemailer = require('../../../utils/lib/nodemailer');
 controllers.create = async (req, res) => {
     try {
         if (!req.userId) return res.reply(messages.unauthorized());
@@ -59,14 +60,28 @@ controllers.create = async (req, res) => {
 
             // Update The bid
             Bid.findOneAndUpdate({
-                oBidder: req.userId ,
-                oNFTId:   req.body.oNFTId,
-                eBidStatus:"Bid"
+                oBidder: req.userId,
+                oNFTId: req.body.oNFTId,
+                eBidStatus: "Bid"
             }, {
                 nBidPrice: req.body.nBidPrice,
                 sTransactionHash: req.body.sTransactionHash,
                 nQuantity: req.body.nQuantity
             }, (err, bid) => {
+
+                if (req.body.eBidStatus == "Bid" && req.body.sOwnerEmail != '') {
+                    nodemailer.send('Bid_Place.html', {
+                        SITE_NAME: 'Blockchain Australia Solutions',
+                        USERNAME: req.body.sOwnerEmail,
+                        ACTIVELINK: `${process.env.URL}/NFT-detail/${req.body.oNFTId}`, //`${process.env.URL}:${process.env.PORT}/viewNFT/${req.body.oNFTId}`,
+                        TEXT: 'Someone Placed Bid on your NFT.'
+                    }, {
+                        from: process.env.SMTP_USERNAME,
+                        to: req.body.sOwnerEmail,
+                        subject: 'Bid Place'
+                    });
+                }
+
                 if (err) return res.reply(messages.server_error());
                 return res.reply(messages.successfully("Bid Placed"));
             });
@@ -164,7 +179,19 @@ controllers.create = async (req, res) => {
                             return res.reply(messages.bad_request("Invalid Quantity"));
                         }
                     }
+                    if (req.body.eBidStatus == "Bid") {
+                        nodemailer.send('Bid_Place.html', {
+                            SITE_NAME: 'Blockchain Australia Solutions',
+                            USERNAME: req.body.sOwnerEmail,
+                            ACTIVELINK: `${process.env.URL}/NFT-detail/${req.body.oNFTId}`,// `${process.env.URL}:${process.env.PORT}/viewNFT/${req.body.oNFTId}`,
+                            TEXT: 'Someone Placed Bid on your NFT.'
+                        }, {
+                            from: process.env.SMTP_USERNAME,
+                            to: req.body.sOwnerEmail,
+                            subject: 'Bid Place'
+                        })
 
+                    }
                     // if (req.body.eBidStatus == "Sold")
                     //     await NFT.findByIdAndUpdate(req.body.oNFTId, {
                     //         oCurrentOwner: req.userId
@@ -194,7 +221,7 @@ controllers.getBidHistoryOfItem = async (req, res, next) => {
         let data = await Bid.aggregate([{
             '$match': {
                 'oNFTId': mongoose.Types.ObjectId(req.params.nNFTId),
-                "sTransactionStatus":   1
+                "sTransactionStatus": 1
             }
         }, {
             '$project': {
@@ -225,7 +252,7 @@ controllers.getBidHistoryOfItem = async (req, res, next) => {
             '$sort': {
                 '_id': -1
             }
-        }, { $unwind: '$oBidder' },{ $unwind: '$oRecipient' }, {
+        }, { $unwind: '$oBidder' }, { $unwind: '$oRecipient' }, {
             '$facet': {
                 'bids': [{
                     "$skip": +0
@@ -235,7 +262,7 @@ controllers.getBidHistoryOfItem = async (req, res, next) => {
                 }]
             }
         }]);
-console.log('-------------data',data)
+        console.log('-------------data', data)
         let iFiltered = data[0].bids.length;
         if (data[0].totalCount[0] == undefined) {
             return res.reply(messages.no_prefix('Bid Details'), {
@@ -289,6 +316,21 @@ controllers.toggleBidStatus = async (req, res, next) => {
             }, (error) => {
                 if (error) throw error;
             });
+            if (req.body.sCurrentUserEmail != 'undefined') {
+                nodemailer.send('Bid_Place.html', {
+                    SITE_NAME: 'Blockchain Australia Solutions',
+                    USERNAME: req.body.sCurrentUserEmail,
+                    ACTIVELINK: `${process.env.URL}/NFT-detail/${req.body.oNFTId}`, // `${process.env.URL}:${process.env.PORT}/viewNFT/${req.body.oNFTId}`,
+                    TEXT: 'Your Bid Has Been Accepted on NFT.'
+                }, {
+                    from: process.env.SMTP_USERNAME,
+                    to: req.body.sCurrentUserEmail,
+                    subject: 'Bid Accepted'
+                });
+            }
+            console.log('====================================');
+            console.log();
+            console.log('====================================');
 
             if (oBid.nQuantity == oNFT.nQuantity) {
                 // add quantity or transfer owner
@@ -366,6 +408,24 @@ controllers.toggleBidStatus = async (req, res, next) => {
                 }
                 if (!bid) return res.reply(messages.not_found('Bid'));
 
+                if (req.body.eBidStatus == "Rejected") {
+
+                    if (req.body.sCurrentUserEmail != 'undefined') {
+
+                        nodemailer.send('Bid_Place.html', {
+                            SITE_NAME: 'Blockchain Australia Solutions',
+                            USERNAME: req.body.sCurrentUserEmail,
+                            ACTIVELINK: `${process.env.URL}/NFT-detail/${req.body.oNFTId}`,// `${process.env.URL}:${process.env.PORT}/viewNFT/${req.body.oNFTId}`,
+                            TEXT: 'Your Bid Has Been Rejected on NFT.'
+                        }, {
+                            from: process.env.SMTP_USERNAME,
+                            to: req.body.sCurrentUserEmail,
+                            subject: 'Bid Rejected'
+                        });
+
+                    }
+                }
+
                 // Reject all other bids if any one Bid is accepted
                 if (req.body.eBidStatus == "Accepted") {
                     Bid.updateMany({
@@ -391,8 +451,9 @@ controllers.bidByUser = async (req, res, next) => {
     try {
         if (!req.userId) return res.reply(messages.unauthorized());
 
-        var nLimit = parseInt(req.body.length);
-        var nOffset = parseInt(req.body.start);
+        var nLimit = req.body.length && req.body.length != undefined ? parseInt(req.body.length) : 5000;
+        var nOffset = req.body.start && req.body.start != undefined ? parseInt(req.body.start) : 0;
+
         let data = await Bid.aggregate([{
             '$match': {
                 $and: [{
@@ -413,7 +474,8 @@ controllers.bidByUser = async (req, res, next) => {
                 'eBidStatus': 1,
                 'oRecipient': 1,
                 'oNFTId': 1,
-                "sTransactionStatus": 1
+                "sTransactionStatus": 1,
+                nBidPrice: 1
             }
         }, {
             '$lookup': {
@@ -429,7 +491,7 @@ controllers.bidByUser = async (req, res, next) => {
                 'foreignField': '_id',
                 'as': 'oNFT'
             }
-        }, {
+        }, { $unwind: '$oNFT' }, { $unwind: '$oRecipient' }, {
             '$sort': {
                 '_id': -1
             }
@@ -445,6 +507,8 @@ controllers.bidByUser = async (req, res, next) => {
                 }]
             }
         }]);
+        console.log(data[0].nfts)
+
         let iFiltered = data[0].nfts.length;
         if (data[0].totalCount[0] == undefined) {
             return res.reply(messages.not_found('Data'))

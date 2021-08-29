@@ -1,0 +1,112 @@
+@font-face {
+    font-family: 'Basier Square';
+    src: url('BasierSquare-SemiBoldItalic.eot');
+    src: local('Basier Square SemiBold Italic'), local('BasierSquare-SemiBoldItalic'),
+        url('BasierSquare-SemiBoldItalic.eot?#iefix') format('embedded-opentype'),
+        url('BasierSquare-SemiBoldItalic.woff2') format('woff2'),
+        url('BasierSquare-SemiBoldItalic.woff') format('woff'),
+        url('BasierSquare-SemiBoldItalic.ttf') format('truetype'),
+        url('BasierSquare-SemiBoldItalic.svg#BasierSquare-SemiBoldItalic') format('svg');
+    font-weight: 600;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Basier Square';
+    src: url('BasierSquare-Bold.eot');
+    src: local('Basier Square Bold'), local('BasierSquare-Bold'),
+        url('BasierSquare-Bold.eot?#iefix') format('embedded-opentype'),
+        url('BasierSquare-Bold.woff2') format('woff2'),
+        url('BasierSquare-Bold.woff') format('woff'),
+        url('BasierSquare-Bold.ttf') format('truetype'),
+        url('BasierSquare-Bold.svg#BasierSquare-Bold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Basier Square';
+    src: url('BasierSquare-Medium.eot');
+    src: local('Basier Square Medium'), local('BasierSquare-Medium'),
+        url('BasierSquare-Medium.eot?#iefix') format('embedded-opentype'),
+        url('BasierSquare-Medium.woff2') format('woff2'),
+        url('BasierSquare-Medium.woff') format('woff'),
+        url('BasierSquare-Medium.ttf') format('truetype'),
+        url('BasierSquare-Medium.svg#BasierSquare-Medium') format('svg');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Basier Square';
+    src: url('BasierSquare-Regular.eot');
+    src: local('Basier Square Regular'), local('BasierSquare-Regular'),
+        url('BasierSquare-Regular.eot?#iefix') format('embedded-opentype'),
+        url('BasierSquare-Regular.woff2') format('woff2'),
+        url('BasierSquare-Regular.woff') format('woff'),
+        url('BasierSquare-Regular.ttf') format('truetype'),
+        url('BasierSquare-Regular.svg#BasierSquare-Regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Basier Square';
+    src: url('BasierSquare-SemiBold.eot');
+    src: local('Basier Square SemiBold'), local('BasierSquare-SemiBold'),
+        url('BasierSquare-SemiBold.eot?#iefix') format('embedded-opentype'),
+        url('BasierSquare-SemiBold.woff2') format('woff2'),
+        url('BasierSquare-SemiBold.woff') format('woff'),
+        url('BasierSquare-SemiBold.ttf') format('truetype'),
+        url('BasierSquare-SemiBold.svg#BasierSquare-SemiBold') format('svg');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Basier Square';
+    src: url('BasierSquare-BoldItalic.eot');
+    src: local('Basier Square Bold Italic'), local('BasierSquare-BoldItalic'),
+        url('BasierSquare-BoldItalic.eot?#iefix') format('embedded-opentype'),
+        url('BasierSquare-BoldItalic.woff2') format('woff2'),
+        url('BasierSquare-BoldItalic.woff') format('woff'),
+        url('BasierSquare-BoldItalic.ttf') format('truetype'),
+        url('BasierSquare-BoldItalic.svg#BasierSquare-BoldItalic') format('svg');
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Basier Square';
+    src: url('BasierSquare-MediumItalic.eot');
+    src: local('Basier Square Medium Italic'), local('BasierSquare-MediumItalic'),
+        url('BasierSquare-MediumItalic.eot?#iefix') format('embedded-opentype'),
+        url('BasierSquare-MediumItalic.woff2') format('woff2'),
+        url('BasierSquare-MediumItalic.woff') format('woff'),
+        url('BasierSquare-MediumItalic.ttf') format('truetype'),
+        url('BasierSquare-MediumItalic.svg#BasierSquare-MediumItalic') format('svg');
+    font-weight: 500;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Basier Square';
+    src: url('BasierSquare-RegularItalic.eot');
+    src: local('Basier Square Regular Italic'), local('BasierSquare-RegularItalic'),
+        url('BasierSquare-RegularItalic.eot?#iefix') format('embedded-opentype'),
+        url('BasierSquare-RegularItalic.woff2') format('woff2'),
+        url('BasierSquare-RegularItalic.woff') format('woff'),
+        url('BasierSquare-RegularItalic.ttf') format('truetype'),
+        url('BasierSquare-RegularItalic.svg#BasierSquare-RegularItalic') format('svg');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+

@@ -1,0 +1,22 @@
+<svg width="64" height="64" xmlns="http://www.w3.org/2000/svg">
+
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="402" width="582" y="-1" x="-1"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <path fill="#dadee7" id="svg_1" d="m9,21l46,0l0,28c0,1.105 -0.895,2 -2,2l-42,0c-1.105,0 -2,-0.895 -2,-2l0,-28z" class="st1"/>
+  <path fill="#547cec" id="svg_2" d="m9,21l46,0l0,-6c0,-1.105 -0.895,-2 -2,-2l-42,0c-1.105,0 -2,0.895 -2,2l0,6z" class="st0"/>
+  <line stroke-dasharray="2,2" stroke-miterlimit="10" stroke-width="2" stroke="#dadee7" fill="none" id="svg_3" y2="17" y1="17" x2="23" x1="13" class="st26"/>
+  <rect fill="#ffffff" id="svg_4" y="27" x="15" width="12" height="12" class="st7"/>
+  <line stroke-miterlimit="10" stroke-linecap="square" stroke-width="2" stroke="#ffffff" fill="none" id="svg_5" y2="28" y1="28" x2="48" x1="32" class="st32"/>
+  <line stroke-miterlimit="10" stroke-linecap="square" stroke-width="2" stroke="#ffffff" fill="none" id="svg_6" y2="33" y1="33" x2="48" x1="32" class="st32"/>
+  <line stroke-miterlimit="10" stroke-linecap="square" stroke-width="2" stroke="#ffffff" fill="none" id="svg_7" y2="38" y1="38" x2="48" x1="32" class="st32"/>
+  <line stroke-miterlimit="10" stroke-linecap="square" stroke-width="2" stroke="#ffffff" fill="none" id="svg_8" y2="43" y1="43" x2="48" x1="32" class="st32"/>
+  <line stroke-miterlimit="10" stroke-linecap="square" stroke-width="2" stroke="#ffffff" fill="none" id="svg_9" y2="43" y1="43" x2="26" x1="16" class="st32"/>
+  <path fill="#0436ed" id="svg_10" d="m46.247,40.922l-7.974,13.811c-0.77,1.333 0.192,3 1.732,3l15.948,0c1.54,0 2.502,-1.667 1.732,-3l-7.974,-13.811c-0.77,-1.334 -2.695,-1.334 -3.464,0z" class="st2"/>
+  <circle fill="#ffffff" id="svg_11" r="1" cy="54" cx="48" class="st7"/>
+  <path fill="#ffffff" id="svg_13" d="m47.557,51l-0.55,-5c-0.06,-0.549 0.336,-1.042 0.884,-1.103c0.549,-0.06 1.042,0.335 1.103,0.884c0.008,0.072 0.007,0.149 0,0.219l-0.55,5c-0.027,0.245 -0.247,0.421 -0.492,0.394c-0.212,-0.023 -0.373,-0.191 -0.395,-0.394z" class="st7"/>
+ </g>
+</svg>

@@ -42,6 +42,7 @@ export class MyProfileComponent implements OnInit {
   };
   listData: any = [];
   filterData: any = [];
+  bidHistoryData: any = [];
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -89,7 +90,10 @@ export class MyProfileComponent implements OnInit {
 
       });
 
+
       await this.myNFTList(this.searchData);
+      await this.myBIDList();
+
 
     } else {
       this.router.navigate([''])
@@ -118,7 +122,27 @@ export class MyProfileComponent implements OnInit {
     });
   }
 
-  async onClickSearch(type:any){
+  async myBIDList() {
+  
+    await this.apiService.bidByUser({}).subscribe((res: any) => {
+
+      if (res && res['data'] && res['data']) {
+        this.bidHistoryData = res['data'];
+
+        if (this.bidHistoryData['data'].length) {
+          this.bidHistoryData = this.bidHistoryData['data'];
+        } else {
+          this.bidHistoryData = [];
+        }
+
+      }
+
+    }, (err: any) => {
+
+    });
+  }
+
+  async onClickSearch(type: any) {
     this.searchData['sSellingType'] = type;
     // }
     await this.myNFTList(this.searchData);
@@ -138,7 +162,7 @@ export class MyProfileComponent implements OnInit {
       sFirstname: ['', [Validators.required]],
       // userProfile: ['', [Validators.required]],
       sBio: ['', [Validators.required]],
-      sWebsite: ['', [Validators.required]],
+      sWebsite: ['', []],
       sEmail: ['', [Validators.required]],
     });
   }
@@ -173,7 +197,7 @@ export class MyProfileComponent implements OnInit {
       fd.append('sUserName', res.sUserName);
       fd.append('sWalletAddress', res.sWalletAddress);
       fd.append('sBio', res.sBio);
-      fd.append('sWebsite', res.sWebsite);
+      fd.append('sWebsite', res.sWebsite && res.sWebsite != undefined ? res.sWebsite : '');
       fd.append('sEmail', res.sEmail);
 
       if (this.file && this.file != undefined) {

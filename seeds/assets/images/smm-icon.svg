@@ -1,0 +1,31 @@
+<svg width="128" height="128" xmlns="http://www.w3.org/2000/svg">
+
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="402" width="582" y="-1" x="-1"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <path stroke-miterlimit="10" stroke-linejoin="round" stroke-linecap="round" stroke-width="4" stroke="#0436ed" fill="none" clip-rule="evenodd" fill-rule="evenodd" id="svg_1" d="m73,119l34.333,0l-5.001,-13.502c-2.782,-7.512 -9.946,-12.498 -17.956,-12.498l-40.752,0c-8.011,0 -15.175,4.986 -17.957,12.498l-5,13.502l34.333,0" class="st21"/>
+  <polygon stroke-miterlimit="10" stroke-linejoin="round" stroke-linecap="round" stroke-width="4" stroke="#547cec" fill="none" clip-rule="evenodd" fill-rule="evenodd" id="svg_2" points="69,104 59,104 57,93 71,93 " class="st25"/>
+  <path stroke-miterlimit="10" stroke-linejoin="round" stroke-linecap="round" stroke-width="4" stroke="#e7e5ea" fill="none" clip-rule="evenodd" fill-rule="evenodd" id="svg_3" d="m45.649,62.809c0,0 20.742,0.558 23.601,-6.72c2.339,6.758 13.256,6.498 13.256,6.498" class="st20"/>
+  <polyline stroke-miterlimit="10" stroke-linejoin="round" stroke-linecap="round" stroke-width="4" stroke="#547cec" fill="none" clip-rule="evenodd" fill-rule="evenodd" id="svg_4" points="55.383,122.191 59.213,104 68.787,104 72.617,122.191 " class="st25"/>
+  <path stroke-miterlimit="10" stroke-linejoin="round" stroke-linecap="round" stroke-width="4" stroke="#0436ed" fill="none" clip-rule="evenodd" fill-rule="evenodd" id="svg_5" d="m83.149,58.979c0,10.047 -4.309,27.766 -19.149,27.766s-19.149,-17.719 -19.149,-27.766s9.102,-19.149 19.149,-19.149s19.149,9.102 19.149,19.149z" class="st21"/>
+  <polyline stroke-miterlimit="10" stroke-linejoin="round" stroke-linecap="round" stroke-width="4" stroke="#547cec" fill="none" clip-rule="evenodd" fill-rule="evenodd" id="svg_6" points="104.82144165039062,81.99999779462814 104.82144165039062,34.54900139570236 63.82143783569336,10.87699955701828 22.821439743041992,34.54900139570236 22.821439743041992,81.99999779462814 " class="st20"/>
+  <circle stroke-miterlimit="10" stroke-linejoin="round" stroke-linecap="round" stroke-width="4" stroke="#0436ed" fill="none" clip-rule="evenodd" fill-rule="evenodd" id="svg_7" r="5" cy="11" cx="64" class="st25"/>
+  <circle stroke-miterlimit="10" stroke-linejoin="round" stroke-linecap="round" stroke-width="4" stroke="#0436ed" fill="none" clip-rule="evenodd" fill-rule="evenodd" id="svg_8" r="5" cy="35" cx="23" class="st25"/>
+  <circle stroke-miterlimit="10" stroke-linejoin="round" stroke-linecap="round" stroke-width="4" stroke="#0436ed" fill="none" clip-rule="evenodd" fill-rule="evenodd" id="svg_9" r="5" cy="35" cx="105" class="st25"/>
+  <circle stroke-miterlimit="10" stroke-linejoin="round" stroke-linecap="round" stroke-width="4" stroke="#0436ed" fill="none" clip-rule="evenodd" fill-rule="evenodd" id="svg_10" r="5" cy="82" cx="23" class="st25"/>
+  <circle stroke-miterlimit="10" stroke-linejoin="round" stroke-linecap="round" stroke-width="4" stroke="#0436ed" fill="none" clip-rule="evenodd" fill-rule="evenodd" id="svg_11" r="5" cy="82" cx="105" class="st25"/>
+  <line stroke-linejoin="round" stroke-linecap="round" stroke-width="4" stroke="#547cec" fill="none" id="svg_14" y2="24.05" y1="24" x2="64" x1="64" class="st6"/>
+  <line stroke-linejoin="round" stroke-linecap="round" stroke-width="4" stroke="#547cec" fill="none" id="svg_15" y2="32" y1="31.95" x2="64" x1="64" class="st6"/>
+  <line stroke-linejoin="round" stroke-linecap="round" stroke-width="4" stroke="#547cec" fill="none" id="svg_18" y2="41.24" y1="41.215" x2="34.104" x1="34.061" class="st6"/>
+  <line stroke-linejoin="round" stroke-linecap="round" stroke-width="4" stroke="#547cec" fill="none" id="svg_19" y2="45.25" y1="45.225" x2="41.05" x1="41.007" class="st6"/>
+  <line stroke-linejoin="round" stroke-linecap="round" stroke-width="4" stroke="#547cec" fill="none" id="svg_22" y2="71.775" y1="71.75" x2="86.993" x1="86.95" class="st6"/>
+  <line stroke-linejoin="round" stroke-linecap="round" stroke-width="4" stroke="#547cec" fill="none" id="svg_23" y2="75.574439" y1="75.549439" x2="93.883" x1="93.84" class="st6"/>
+  <line stroke-linejoin="round" stroke-linecap="round" stroke-width="4" stroke="#547cec" fill="none" id="svg_26" y2="75.726" y1="75.751" x2="34.163" x1="34.12" class="st6"/>
+  <line stroke-linejoin="round" stroke-linecap="round" stroke-width="4" stroke="#547cec" fill="none" id="svg_27" y2="71.75" y1="71.775" x2="41.05" x1="41.007" class="st6"/>
+  <line stroke-linejoin="round" stroke-linecap="round" stroke-width="4" stroke="#547cec" fill="none" id="svg_30" y2="45.225" y1="45.25" x2="86.993" x1="86.95" class="st6"/>
+  <line stroke-linejoin="round" stroke-linecap="round" stroke-width="4" stroke="#547cec" fill="none" id="svg_31" y2="41.332" y1="41.357" x2="93.736" x1="93.693" class="st6"/>
+ </g>
+</svg>

@@ -299,7 +299,7 @@ export class NFTDetailComponent implements OnInit {
               })
             })
             .catch((error: any) => {
-              
+
               this.toaster["error"]((error.code == 4001) ? "You Denied MetaMask Transaction Signature" : "Something Went Wrong!");
             });
 
@@ -360,6 +360,7 @@ export class NFTDetailComponent implements OnInit {
               this.spinner.hide();
               if (transData && transData['data']) {
                 this.toaster.success('NFT transfered successfully');
+                this.router.navigate(['/']);
                 this.onClickRefresh();
               } else {
                 this.toaster.success(transData['message']);
@@ -367,7 +368,7 @@ export class NFTDetailComponent implements OnInit {
             })
           })
           .catch((error: any) => {
-            
+
             this.toaster["error"]((error.code == 4001) ? "You Denied MetaMask Transaction Signature" : "Something Went Wrong!");
           });
 
@@ -431,7 +432,7 @@ export class NFTDetailComponent implements OnInit {
               })
             })
             .catch((error: any) => {
-              
+
               this.toaster["error"]((error.code == 4001) ? "You Denied MetaMask Transaction Signature" : "Something Went Wrong!");
             });
 
@@ -460,7 +461,8 @@ export class NFTDetailComponent implements OnInit {
       oBidderId: obj.oBidder._id,
       oNFTId: this.NFTData['_id'],
       eBidStatus: 'Accepted',
-      sTransactionHash: ''
+      sTransactionHash: '',
+      sCurrentUserEmail: obj.oBidder && obj.oBidder['sEmail'] && obj.oBidder['sEmail'] != undefined ? obj.oBidder['sEmail'] : '-',
     }
 
     this.spinner.show();
@@ -478,8 +480,8 @@ export class NFTDetailComponent implements OnInit {
           await this.sendData(oOptions);
         }).catch((error: any) => {
           this.spinner.hide();
-          
-          if(error && error.code  == 4001){
+
+          if (error && error.code == 4001) {
             this.toaster.error(error['message'])
           }
         });
@@ -498,7 +500,8 @@ export class NFTDetailComponent implements OnInit {
       oBidderId: obj.oBidder._id,
       oNFTId: this.NFTData['_id'],
       eBidStatus: 'Rejected',
-      sTransactionHash: ''
+      sTransactionHash: '',
+      sCurrentUserEmail: obj.oBidder && obj.oBidder['sEmail'] && obj.oBidder['sEmail'] != undefined ? obj.oBidder['sEmail'] : '-',
     }
 
     this.spinner.show();
@@ -513,10 +516,10 @@ export class NFTDetailComponent implements OnInit {
           await this.sendData(oOptions);
         }).catch((error: any) => {
           this.spinner.hide();
-          if(error && error.code  == 4001){
+          if (error && error.code == 4001) {
             this.toaster.error(error['message'])
           }
-          
+
         });
     } else {
       this.spinner.hide();
@@ -549,10 +552,10 @@ export class NFTDetailComponent implements OnInit {
           await this.sendData(oOptions);
         }).catch((error: any) => {
           this.spinner.hide();
-          if(error && error.code  == 4001){
+          if (error && error.code == 4001) {
             this.toaster.error(error['message'])
           }
-          
+
         });
     } else {
       this.spinner.hide();

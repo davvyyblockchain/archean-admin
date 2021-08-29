@@ -1,0 +1,27 @@
+<svg width="64" height="64" xmlns="http://www.w3.org/2000/svg">
+
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="402" width="582" y="-1" x="-1"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <path fill="#0436ed" id="svg_14" d="m31,18l-1,0l0,4l1,0c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2z"/>
+  <path fill="#0436ed" id="svg_15" d="m22,18l-1,0l0,4l1,0c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2z"/>
+  <path fill="#547cec" stroke="#0436ed" id="svg_16" d="m32,6.178571c-8.8,0 -16,7.2 -16,16c0,8.5 6.6,15.4 15,15.9l0,3.1l2,0l0,-3.1c8.4,-0.5 15,-7.5 15,-15.9c0,-8.8 -7.2,-16 -16,-16zm-10,18l-1,0l0,4l-2,0l0,-12l3,0c2.2,0 4,1.8 4,4s-1.8,4 -4,4zm9,0l-1,0l0,4l-2,0l0,-12l3,0c2.2,0 4,1.8 4,4s-1.8,4 -4,4zm11,-6l-2,0c-0.6,0 -1,0.4 -1,1l0,6c0,0.6 0.4,1 1,1l2,0c0.6,0 1,-0.4 1,-1l0,-1l2,0l0,1c0,1.7 -1.3,3 -3,3l-2,0c-1.7,0 -3,-1.3 -3,-3l0,-6c0,-1.7 1.3,-3 3,-3l2,0c1.7,0 3,1.3 3,3l0,1l-2,0l0,-1c0,-0.6 -0.4,-1 -1,-1z"/>
+  <rect fill="#0436ed" id="svg_17" y="2" x="31" width="2" height="2"/>
+  <rect fill="#0436ed" id="svg_18" y="4.5" x="21.5" width="2" transform="matrix(0.866,-0.5,0.5,0.866,0.2417,11.993) " height="2"/>
+  <rect fill="#0436ed" id="svg_19" y="11.5" x="14.5" width="2" transform="matrix(0.5,-0.866,0.866,0.5,-3.0526,19.7128) " height="2"/>
+  <rect fill="#0436ed" id="svg_20" y="21" x="11.910714" width="2" height="2"/>
+  <rect fill="#0436ed" id="svg_21" y="30.5" x="14.5" width="2" transform="matrix(-0.5,-0.866,0.866,-0.5,-3.9615,60.7128) " height="2"/>
+  <rect fill="#0436ed" id="svg_22" y="37.5" x="21.5" width="2" transform="matrix(-0.866,-0.5,0.5,-0.866,22.7583,83.007) " height="2"/>
+  <rect fill="#0436ed" id="svg_23" y="37.5" x="40.5" width="2" transform="matrix(-0.866,0.5,-0.5,-0.866,96.6673,51.007) " height="2"/>
+  <rect fill="#0436ed" id="svg_24" y="30.5" x="47.5" width="2" transform="matrix(-0.5,0.866,-0.866,-0.5,99.9615,5.2872) " height="2"/>
+  <rect fill="#0436ed" id="svg_25" y="21" x="50" width="2" height="2"/>
+  <rect fill="#0436ed" id="svg_26" y="11.5" x="47.5" width="2" transform="matrix(0.5,0.866,-0.866,0.5,35.0526,-35.7128) " height="2"/>
+  <rect fill="#0436ed" id="svg_27" y="4.5" x="40.5" width="2" transform="matrix(0.866,0.5,-0.5,0.866,8.3327,-20.007) " height="2"/>
+  <path fill="#0436ed" id="svg_28" d="m32,62l0,0c-3.3,0 -6,-2.7 -6,-6l0,-3l12,0l0,3c0,3.3 -2.7,6 -6,6z"/>
+  <path fill="#547cec" id="svg_30" d="m31,43c-2.8,0 -5,2.2 -5,5l0,3l5,0l0,-8z"/>
+  <path fill="#547cec" id="svg_31" d="m33,43l0,8l5,0l0,-3c0,-2.8 -2.2,-5 -5,-5z"/>
+ </g>
+</svg>
