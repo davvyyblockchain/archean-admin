@@ -309,6 +309,18 @@ $(document).ready(function () {
 		$.magnificPopup.close();
 	});
 
+	$('.open-tran-modal').magnificPopup({
+		fixedContentPos: true,
+		fixedBgPos: true,
+		overflowY: 'auto',
+		type: 'inline',
+		preloader: false,
+		focus: '#username',
+		modal: false,
+		removalDelay: 300,
+		mainClass: 'my-mfp-zoom-in',
+	});
+
 	/*==============================
 	Select
 	==============================*/

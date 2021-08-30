@@ -24,7 +24,8 @@ import { ScriptLoaderService } from '../script-loader.service';
   styleUrls: ['./my-profile.component.css']
 })
 export class MyProfileComponent implements OnInit {
-
+  tab = 'profile'; //'bid' 'created' 'sale'
+  
   editProfileform: any;
 
   submitted1: Boolean = false;
@@ -52,10 +53,20 @@ export class MyProfileComponent implements OnInit {
     private _route: ActivatedRoute,
     private toaster: ToastrService,
     private apiService: ApiService,
-  ) { }
+  ) {
+    
+   }
 
   async ngOnInit() {
     this.buildCreateForm1();
+    this._route.queryParams.subscribe(async params => {
+      if (params) {
+        if (params['tab'] && params['tab']!= undefined) {
+          this.tab = params['tab'];
+        }
+     
+      }
+    });
     let scripts = [];
     scripts = [
       "../../assets/js/jquery-3.5.1.min.js",

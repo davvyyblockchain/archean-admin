@@ -28,10 +28,23 @@
             <!-- content -->
             <div class="col-12 col-xl-8">
                 <div class="asset__item">
-                    <a class="asset__img " href="assets/img/cover/cover-big.jpg"><img class="styl image-fluid"
+                    <a class="asset__img "
+                        *ngIf="NFTData.eType && NFTData.eType != undefined && NFTData.eType != 'Audio'"
+                        href="assets/img/cover/cover-big.jpg">
+                        <img class="styl image-fluid"
                             src="{{NFTData && NFTData.sHash && NFTData.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+ NFTData.sHash :'assets/img/cover/cover-big.jpg' }}"
-                            alt=""></a>
+                            alt="">
+                    </a>
+                    <div class="audioPlayerMain"
+                        *ngIf="NFTData.eType && NFTData.eType != undefined && NFTData.eType == 'Audio'">
 
+                        <audio id="audio" controls controlsList="nodownload" style="margin: 500px 0px 0px 250px"
+                            src="{{NFTData.sHash && NFTData.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+NFTData.sHash :'assets/img/cover/cover-big.jpg' }}"
+                            type="audio/mp3" id="src" class="sty ">
+                        </audio>
+                    </div>
+
+                    <!-- eType -->
                     <!-- share -->
                     <!-- <div class="share share--asset">
                         <a href="#" class="share__link share__link--fb"><svg width="9" height="17" viewBox="0 0 9 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.56341 16.8197V8.65888H7.81615L8.11468 5.84663H5.56341L5.56724 4.43907C5.56724 3.70559 5.63693 3.31257 6.69042 3.31257H8.09873V0.5H5.84568C3.1394 0.5 2.18686 1.86425 2.18686 4.15848V5.84695H0.499939V8.6592H2.18686V16.8197H5.56341Z"/></svg> <span>share</span></a>
@@ -53,6 +66,18 @@
             <!-- sidebar -->
             <div class="col-12 col-xl-4">
                 <div class="asset__info">
+                    <div class="d-flex mb-3">
+                        <div class="asset__desc" style="width: 190px;">
+                            <h2>Quantity</h2>
+                            <p>{{NFTData.nQuantity && NFTData.nQuantity != undefined ? NFTData.nQuantity
+                                :'-' }}</p>
+                        </div>
+                        <div class="asset__desc">
+                            <h2>Name</h2>
+                            <p>{{NFTData.sName && NFTData.sName != undefined ? NFTData.sName
+                                :'-' }}</p>
+                        </div>
+                    </div>
                     <div class="asset__desc">
                         <h2>Descriptions</h2>
                         <p>{{NFTData.sNftdescription && NFTData.sNftdescription != undefined ? NFTData.sNftdescription
@@ -83,7 +108,8 @@
                             <span>Collection</span>
                             <div class="asset__author ">
 
-                                <img src="{{NFTData && NFTData.sCollectionDetail && NFTData.sCollectionDetail != undefined  && NFTData.sCollectionDetail.sHash != undefined? 'https://decryptnft.mypinata.cloud/ipfs/'+ NFTData.sCollectionDetail.sHash :'assets/img/avatars/avatar9.jpg' }}" alt="assets/img/avatars/avatar9.jpg">
+                                <img src="{{NFTData && NFTData.sCollectionDetail && NFTData.sCollectionDetail != undefined  && NFTData.sCollectionDetail.sHash != undefined? 'https://decryptnft.mypinata.cloud/ipfs/'+ NFTData.sCollectionDetail.sHash :'assets/img/avatars/avatar9.jpg' }}"
+                                    alt="assets/img/avatars/avatar9.jpg">
                                 <a href="javascript:;">{{NFTData.sCollection && NFTData.sCollection != undefined ?
                                     NFTData.sCollection :'-' }}</a>
                             </div>
@@ -184,10 +210,11 @@
                             bid</a>
                     </div>
                     <div class="asset__btns">
-
-                        <a href="#modal-tran" *ngIf="showObj.showTransferCurrent == 'show'"
-                            class="asset__btn asset__btn--full asset__btn--clr open-modal">Transfer
-                            NFT</a>
+                        <ng-container *ngIf="showObj.showTransferCurrent == 'show'">
+                            <a href="javascript:;" (click)="clickOpen()"
+                                class="asset__btn asset__btn--full asset__btn--clr">Transfer
+                                NFT</a>
+                        </ng-container>
                     </div>
                     <div class="asset__btns">
                         <a href="#modal-buy" *ngIf="showObj.showBuyCurrent == 'show'"
@@ -220,7 +247,7 @@
                     </tr>
                 </thead>
                 <tbody>
-  
+
                     <tr *ngFor="let obj of historyData;">
                         <td>{{obj && obj.eBidStatus &&
                             obj.eBidStatus != undefined ?
@@ -241,14 +268,17 @@
                             obj.sCreated != undefined ?
                             (obj.sCreated | date: 'medium'):0}} </td>
                         <td>
-                            <div class="d-flex" *ngIf="obj.eBidStatus && obj.eBidStatus == 'Bid' && showObj.wallet_address == obj.oRecipient.sWalletAddress">
+                            <div class="d-flex"
+                                *ngIf="obj.eBidStatus && obj.eBidStatus == 'Bid' && showObj.wallet_address == obj.oRecipient.sWalletAddress">
                                 <a href="javascript:;" (click)="clickAccept(obj)"
                                     class="asset__btn asset__btn--full asset__btn--clr open-modal">Accept</a> <a
-                                    href="javascript:;" (click)="clickReject(obj)" style="background: rgba(235,87,87,0.25) ;color: #eb5757 ;"
+                                    href="javascript:;" (click)="clickReject(obj)"
+                                    style="background: rgba(235,87,87,0.25) ;color: #eb5757 ;"
                                     class="asset__btn asset__btn--full asset__btn--clr open-modal">Reject</a>
                             </div>
-                            <div class="d-flex" *ngIf="obj.eBidStatus && obj.eBidStatus == 'Bid' && showObj.wallet_address == obj.oBidder.sWalletAddress">
-                                <a href="javascript:;"   (click)="clickCancel(obj)"
+                            <div class="d-flex"
+                                *ngIf="obj.eBidStatus && obj.eBidStatus == 'Bid' && showObj.wallet_address == obj.oBidder.sWalletAddress">
+                                <a href="javascript:;" (click)="clickCancel(obj)"
                                     class="asset__btn asset__btn--full asset__btn--clr open-modal">Cancel</a>
                             </div>
                         </td>
@@ -264,6 +294,7 @@
 </main>
 
 <app-footer></app-footer>
+
 <div id="modal-bid" class="zoom-anim-dialog mfp-hide modal modal--form">
     <button class="modal__close" type="button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <path

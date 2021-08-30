@@ -28,7 +28,7 @@ export class HeaderComponent implements OnInit {
   }
 
   async ngOnInit() {
-  
+
     this.type = 'hide';
     this.spinner.show();
     const that = this;
@@ -62,7 +62,15 @@ export class HeaderComponent implements OnInit {
       that.spinner.hide();
     }
   }
-
+  async clicktoProfile() {
+    // routerLink="/my-profile?tab='profile'"
+    await this.router.navigate(['/my-profile'], {
+      relativeTo: this._route,
+      queryParams: {
+        tab: 'profile'
+      },
+    });
+  }
   connectToMetaMask() {
     this.spinner.show();
     this.apiService.connect().then((data: any) => {
@@ -102,8 +110,8 @@ export class HeaderComponent implements OnInit {
   onClickRefresh() {
     window.location.reload();
   }
-  
-  onsignout(){
+
+  onsignout() {
     if (localStorage.removeItem('Authorization') != null) {
     }
     this.onClickRefresh()

@@ -412,31 +412,31 @@ export class CreateNFTComponent implements OnInit {
                   value: nAdminCommission,
                   gas: nEstimatedGasLimit
                 })
-            //     .then(async (successData: any) => {
-            //       // 
+                //     .then(async (successData: any) => {
+                //       // 
 
-            //       this.spinner.hide();
-            //       console.log(successData);
-            //       let oDataToPass = {
-            //         nNFTId: returnData._id,
-            //         sTransactionHash: successData['transactionHash'],
-            //         nTokenID: successData && successData.events && successData.events.TokenCounter && successData.events.TokenCounter.returnValues['0']
-            //       };
+                //       this.spinner.hide();
+                //       console.log(successData);
+                //       let oDataToPass = {
+                //         nNFTId: returnData._id,
+                //         sTransactionHash: successData['transactionHash'],
+                //         nTokenID: successData && successData.events && successData.events.TokenCounter && successData.events.TokenCounter.returnValues['0']
+                //       };
 
-            //       console.log(oDataToPass);
-            //       this.spinner.show();
-            //       await this.apiService.setTransactionHash(oDataToPass).subscribe(async (transData: any) => {
-            //         this.spinner.hide();
-            //         if (transData && transData['data']) {
-            //           this.toaster.success('NFT created successfully');
-            //           this.onClickRefresh();
-            //         } else {
-            //           this.toaster.success(transData['message']);
-            //         }
+                //       console.log(oDataToPass);
+                //       this.spinner.show();
+                //       await this.apiService.setTransactionHash(oDataToPass).subscribe(async (transData: any) => {
+                //         this.spinner.hide();
+                //         if (transData && transData['data']) {
+                //           this.toaster.success('NFT created successfully');
+                //           this.onClickRefresh();
+                //         } else {
+                //           this.toaster.success(transData['message']);
+                //         }
 
-            //       })
-                  
-            // })
+                //       })
+
+                // })
 
                 .on('transactionHash', async (hash: any) => {
                   this.spinner.hide();
@@ -445,15 +445,21 @@ export class CreateNFTComponent implements OnInit {
                     nNFTId: returnData._id,
                     sTransactionHash: hash
                   };
-const that = this;
+                  const that = this;
                   console.log(oDataToPass);
                   this.spinner.show();
                   await this.apiService.setTransactionHash(oDataToPass).subscribe(async (transData: any) => {
                     this.spinner.hide();
                     if (transData && transData['data']) {
-                      that.toaster.success('NFT created successfully');
-                      that.router.navigate(['/marketplace']);
-                      that.onClickRefresh();
+                      that.toaster.success('NFT created successfully. it will be Reflected Once Transaction is mined.');
+                      // that.router.navigate(['/marketplace']);
+                      await this.router.navigate(['/my-profile'], {
+                        relativeTo: this._route,
+                        queryParams: {
+                          tab: 'created'
+                        },
+                      });
+                      // that.onClickRefresh();
                     } else {
                       this.toaster.success(transData['message']);
                     }
@@ -484,10 +490,10 @@ const that = this;
           if (error && error['message']) {
             error = error['error'];
             this.toaster.error(error['message'])
-  
+
           }
         })
-      
+
       }
     } else {
       this.toaster.warning('Please select image.')

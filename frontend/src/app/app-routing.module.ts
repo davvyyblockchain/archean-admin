@@ -10,7 +10,7 @@ import { UsersComponent } from './users/users.component';
 
 const routes: Routes = [
   { path: "", component: DashboardComponent },
-  { path: "create-NFT", component: CreateNFTComponent },
+  { path: "create", component: CreateNFTComponent },
   { path: "my-profile", component: MyProfileComponent },
   { path: "NFT-detail/:id", component: NFTDetailComponent },
   { path: "marketplace", component: NFTListComponent },

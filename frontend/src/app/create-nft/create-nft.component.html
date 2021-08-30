@@ -136,6 +136,43 @@
                                 Collaborator</button>
                         </div>
                     </div>
+
+                    <div class="row mt-5">
+                    
+                        <div class="col-12">
+                            <h4 class="sign__title">Collaborator List</h4>
+                        </div>
+
+                        <div class="col-12">
+                            <table class="table text-white mt-5">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Sr No.</th>
+
+                                        <th scope="col">Full name</th>
+                                        <th scope="col">address</th>
+                                     
+                
+                                    </tr>
+                                </thead>
+                                <tbody>
+                  
+                                    <tr *ngFor="let obj of collaboratorList;let i = index;">
+                                        <td>{{i+1}}</td>
+                                        <td>{{obj && obj.sFullname && obj.sFullname &&
+                                            obj.sFullname!= undefined ?
+                                            obj.sFullname:'-'}}</td>
+                                        <td>{{obj && obj.sAddress && obj.sAddress &&
+                                            obj.sAddress != undefined ?
+                                            obj.sAddress :0}}</td>
+                                      
+                                    </tr>
+                
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
                 </form>
 
                 <!-- end form COLLABORATOR-->

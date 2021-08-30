@@ -13,3 +13,24 @@
     left: 0;
 }
 
+
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border-bottom: 1px solid #222227;
+  text-align: left;
+  padding: 8px;
+  color: #fff;
+  padding: 7px 15px;
+
+}
+
+tr:nth-child(even) {
+  color:#bdbdbd;
+  background-color: #222227;
+}

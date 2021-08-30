@@ -60,19 +60,19 @@
                     <!-- tabs nav -->
                     <ul class="nav nav-tabs profile__tabs" id="profile__tabs" role="tablist">
                         <li class="nav-item" (click)="onClickSearch('Fixed Sale')">
-                            <a class="nav-link " data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-2"
+                            <a class="nav-link " data-toggle="tab" href="#tab-2"  [ngClass]="{ 'active': tab && tab == 'sale' }" role="tab" aria-controls="tab-2"
                                 aria-selected="true">On Sale</a>
                         </li>
                         <li class="nav-item" (click)="onClickSearch('')">
-                            <a class="nav-link " data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-2"
+                            <a class="nav-link " [ngClass]="{ 'active': tab && tab == 'created' }" data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-2"
                                 aria-selected="false">Created</a>
                         </li>
                         <li class="nav-item" (click)="onClickTab('profile')">
-                            <a class="nav-link active" data-toggle="tab" href="#tab-4" role="tab" aria-controls="tab-4"
+                            <a class="nav-link " [ngClass]="{ 'active': tab && tab == 'profile' }" data-toggle="tab" href="#tab-4" role="tab" aria-controls="tab-4"
                                 aria-selected="false">Profile</a>
                         </li>
                         <li class="nav-item" (click)="onClickTab('')">
-                            <a class="nav-link" data-toggle="tab" href="#tab-5" role="tab" aria-controls="tab-4"
+                            <a class="nav-link" data-toggle="tab"  [ngClass]="{ 'active': tab && tab == 'bid' }" href="#tab-5" role="tab" aria-controls="tab-4"
                                 aria-selected="false">Bids</a>
                         </li>
                     </ul>
@@ -84,7 +84,7 @@
                     <!-- SALE -->
 
                     <!-- CREATED -->
-                    <div class="tab-pane fade " id="tab-2" role="tabpanel">
+                    <div class="tab-pane fade " id="tab-2" role="tabpanel" [ngClass]="{ 'show active':  tab == 'created' || tab == 'sale' }">
                         <div class="row row--grid">
                             <div class="col-12 col-sm-6 col-lg-4" *ngFor="let obj of listData;">
                                 <div class="card">
@@ -179,7 +179,7 @@
                         <!-- end paginator -->
                     </div>
 
-                    <div class="tab-pane fade show active" id="tab-4" role="tabpanel">
+                    <div class="tab-pane fade " id="tab-4" role="tabpanel" [ngClass]="{ 'show active': tab && tab == 'profile' }">
                         <div class="row row--grid">
 
                             <!-- <div class="col-12 col-lg-2 text-align-center">
@@ -344,7 +344,7 @@
                         </div>
                     </div>
                     <!-- BID HiSTory -->
-                    <div class="tab-pane fade show " id="tab-5" role="tabpanel">
+                    <div class="tab-pane fade  " id="tab-5" role="tabpanel" [ngClass]="{ 'show active': tab && tab == 'bid' }">
                         <div class="row row--grid" *ngIf="bidHistoryData && bidHistoryData.length">
                             <div class="row row--grid">
                                 <div class="col-12 col-sm-6 col-lg-4" *ngFor="let obj of bidHistoryData;">

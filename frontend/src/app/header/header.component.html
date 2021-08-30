@@ -32,7 +32,7 @@
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Marketplace</a>
                 </li>
                 <li class="header__nav-item">
-                    <a class="header__nav-link" routerLink="/create-NFT" routerLinkActive="active" role="button"
+                    <a class="header__nav-link" routerLink="/create" routerLinkActive="active" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Create</a>
                 </li>
             </ul>
@@ -65,7 +65,7 @@
 
 
                 <ul class="dropdown-menu header__profile-menu"  [ngClass]="{'show': type === 'show'}" aria-labelledby="dropdownMenuProfile">
-                    <li><a href="javascript:;" routerLink="/my-profile"><svg xmlns="http://www.w3.org/2000/svg"
+                    <li><a href="javascript:;" (click)="clicktoProfile()"><svg xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 24 24">
                                 <path
                                     d="M15.71,12.71a6,6,0,1,0-7.42,0,10,10,0,0,0-6.22,8.18,1,1,0,0,0,2,.22,8,8,0,0,1,15.9,0,1,1,0,0,0,1,.89h.11a1,1,0,0,0,.88-1.1A10,10,0,0,0,15.71,12.71ZM12,12a4,4,0,1,1,4-4A4,4,0,0,1,12,12Z" />
@@ -79,7 +79,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="javascript:;" routerLink="/create-NFT"><svg xmlns="http://www.w3.org/2000/svg"
+                        <a href="javascript:;" routerLink="/create"><svg xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 24 24">
                                 <path
                                     d="M10,13H4a1,1,0,0,0-1,1v6a1,1,0,0,0,1,1h6a1,1,0,0,0,1-1V14A1,1,0,0,0,10,13ZM9,19H5V15H9ZM20,3H14a1,1,0,0,0-1,1v6a1,1,0,0,0,1,1h6a1,1,0,0,0,1-1V4A1,1,0,0,0,20,3ZM19,9H15V5h4Zm1,7H18V14a1,1,0,0,0-2,0v2H14a1,1,0,0,0,0,2h2v2a1,1,0,0,0,2,0V18h2a1,1,0,0,0,0-2ZM10,3H4A1,1,0,0,0,3,4v6a1,1,0,0,0,1,1h6a1,1,0,0,0,1-1V4A1,1,0,0,0,10,3ZM9,9H5V5H9Z" />
@@ -98,7 +98,7 @@
             </div>
 
             <div class="header__action header__action--signin">
-                <!-- <a href="javascript:;" routerLink="/create-NFT"  class=" home__btn" style="margin: 0 20px 0 0 ; height: 40px;min-width:100px;">I don't have a wallet</a> -->
+                <!-- <a href="javascript:;" routerLink="/create"  class=" home__btn" style="margin: 0 20px 0 0 ; height: 40px;min-width:100px;">I don't have a wallet</a> -->
 
                 <a class="header__action-btn header__action-btn--signin" href="javascript:;"
                     (click)="connectToMetaMask()" *ngIf="showObj.show == 'metamask'">

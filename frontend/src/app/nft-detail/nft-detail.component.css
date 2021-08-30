@@ -38,3 +38,11 @@ tr:nth-child(even) {
   color:#bdbdbd;
   background-color: #222227;
 }
+.audioPlayerMain{
+
+  height :543px;
+  width :814px;
+  background:url('https://image.shutterstock.com/image-vector/minimal-podcast-sound-wave-icon-260nw-1720134202.jpg');
+  background-repeat: no-repeat	;
+
+}

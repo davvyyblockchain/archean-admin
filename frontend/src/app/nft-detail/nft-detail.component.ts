@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { error } from 'jquery';
@@ -9,13 +9,15 @@ import { environment } from 'src/environments/environment';
 import { ApiService } from '../api.service';
 import { ScriptLoaderService } from '../script-loader.service';
 declare let window: any;
+declare let $: any;
+
 
 @Component({
   selector: 'app-nft-detail',
   templateUrl: './nft-detail.component.html',
   styleUrls: ['./nft-detail.component.css']
 })
-export class NFTDetailComponent implements OnInit {
+export class NFTDetailComponent implements OnInit, OnDestroy {
   // console.log('---aNFT------',aNFT.sCollectionDetail)
 
   NFTData: any = {};
@@ -49,7 +51,14 @@ export class NFTDetailComponent implements OnInit {
     private apiService: ApiService,
   ) { }
 
+  ngOnDestroy() {
+    var magnificPopup = $.magnificPopup.instance;
+    // save instance in magnificPopup variable
+    magnificPopup.close();
+  }
+
   async ngOnInit() {
+    
     let scripts = [];
     scripts = [
       "../../assets/js/jquery-3.5.1.min.js",
@@ -165,24 +174,7 @@ export class NFTDetailComponent implements OnInit {
       }
     })
   }
-  // eBidStatus: "Bid"
-  // nBidPrice: {$numberDecimal: "0.50000000"}
-  // nQuantity: 1
-  // oBidder: [{…}]
-  // oNFTId: "61129d701bf84242a9127486"
-  // oRecipient: [{…}]
-  // sCreated: "2021-08-10T15:51:36.697Z"
-  // _id: "6112a0881bf84242a91274e6"
-  //     aCollaborators: []
-  // oName: {sFirstname: "devX", sLastname: "devX"}
-  // sBio: "devXdevXdevXdevXdevXdevX"
-  // sCreated: "2021-08-10T15:47:52.307Z"
-  // sEmail: "devX@gmail.com"
-  // sRole: "user"
-  // sStatus: "active"
-  // sUserName: "devX"
-  // sWalletAddress: "0x79647CC2A785B63c2A7A5D324b2D15c0CA17115D"
-  // sWebsite: "www.devX.com"
+
 
   getBidHistory(id: any) {
     this.apiService.bidHistory(id, {}).subscribe(async (data: any) => {
@@ -292,7 +284,18 @@ export class NFTDetailComponent implements OnInit {
                 this.spinner.hide();
                 if (transData && transData['data']) {
                   this.toaster.success('Bid created successfully');
-                  this.onClickRefresh();
+                  var magnificPopup = $.magnificPopup.instance;
+                  // save instance in magnificPopup variable
+                  magnificPopup.close();
+                  // this.router.navigate(['/my-profile'])
+                  await this.router.navigate(['/my-profile'], {
+                    relativeTo: this._route,
+                    queryParams: {
+                      tab:'bid'
+                    },
+                  });
+            
+                  // this.onClickRefresh();
                 } else {
                   this.toaster.success(transData['message']);
                 }
@@ -570,7 +573,8 @@ export class NFTDetailComponent implements OnInit {
     await this.apiService.toggleBidStatus(opt).subscribe(async (transData: any) => {
       this.spinner.hide();
       if (transData && transData['data']) {
-        this.toaster.success(transData['message']);
+        this.toaster.success('Bid status updated. it will be Reflected once Transaction is mined.');
+
         this.onClickRefresh();
       } else {
         this.toaster.success(transData['message']);
@@ -578,5 +582,40 @@ export class NFTDetailComponent implements OnInit {
     })
   }
 
+  clickClose(){
+ var magnificPopup = $.magnificPopup.instance;
+    // save instance in magnificPopup variable
+    magnificPopup.close();
+  }
+
+  clickOpen() {
+ 
+    $.magnificPopup.open({
+      items: {
+        src: '#modal-tran',
+        type: 'inline',
+        fixedContentPos: true,
+        fixedBgPos: true,
+        overflowY: 'auto',
+        preloader: false,
+        focus: '#username',
+        modal: false,
+        removalDelay: 300,
+        mainClass: 'my-mfp-zoom-in',
+        callbacks: {
+          beforeOpen: function () {
+              if ($(window).width() < 700) {
+                  // this.st.focus = false;
+              } else {
+                  // this.st.focus = '#name';
+              }
+          }
+        }
+      }
+    });
+
+    // $('#modal-tran').magnificPopup('open');
+
+  }
 
 }

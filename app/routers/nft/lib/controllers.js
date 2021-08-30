@@ -691,7 +691,7 @@ controllers.landing = async (req, res) => {
                         '_id': -1
                     }
                 }, {
-                    '$limit': 3
+                    '$limit': 10
                 }, {
                     '$lookup': {
                         'from': 'users',
@@ -714,7 +714,7 @@ controllers.landing = async (req, res) => {
                         '_id': -1
                     }
                 }, {
-                    '$limit': 3
+                    '$limit': 10
                 }, {
                     '$lookup': {
                         'from': 'users',
@@ -737,7 +737,7 @@ controllers.landing = async (req, res) => {
                         '_id': -1
                     }
                 }, {
-                    '$limit': 3
+                    '$limit':  10
                 }, {
                     '$lookup': {
                         'from': 'users',
