@@ -3,8 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from 'src/environments/environment';
 import { ApiService } from '../api.service';
 import { ScriptLoaderService } from '../script-loader.service';
+declare let window: any;
 
 // {_id: "61129d701bf84242a9127486", sTransactionStatus: 1, sName: "Artist NFT",…}
 // eType: "Image"
@@ -24,11 +26,14 @@ import { ScriptLoaderService } from '../script-loader.service';
   styleUrls: ['./my-profile.component.css']
 })
 export class MyProfileComponent implements OnInit {
-  tab = 'profile'; //'bid' 'created' 'sale'
-  
-  editProfileform: any;
+  tab = 'profile'; //'bid' 'created' 'sale' 'redeem'
 
+  editProfileform: any;
   submitted1: Boolean = false;
+
+  redeemForm: any;
+  submitted2: Boolean = false;
+
   file: any;
   profileData: any;
   searchData: any = {
@@ -54,17 +59,19 @@ export class MyProfileComponent implements OnInit {
     private toaster: ToastrService,
     private apiService: ApiService,
   ) {
-    
-   }
+
+  }
 
   async ngOnInit() {
     this.buildCreateForm1();
+    this.buildRedeemForm();
+
     this._route.queryParams.subscribe(async params => {
       if (params) {
-        if (params['tab'] && params['tab']!= undefined) {
+        if (params['tab'] && params['tab'] != undefined) {
           this.tab = params['tab'];
         }
-     
+
       }
     });
     let scripts = [];
@@ -105,7 +112,18 @@ export class MyProfileComponent implements OnInit {
       await this.myNFTList(this.searchData);
       await this.myBIDList();
 
+      var NFTinstance = await this.apiService.exportInstance(environment.NFTaddress, environment.NFTabi);
+      if (NFTinstance && NFTinstance != undefined) {
+        let nUserEarnings = await NFTinstance.methods.getUsersRedeemablePoints().call({
+          from: localStorage.getItem('sWalletAddress')
+        });
+        let nAmountInEther = 0;
+        nAmountInEther = window.web3.utils.fromWei(nUserEarnings, 'ether');
 
+        if (nAmountInEther && nAmountInEther != undefined) {
+          this.redeemForm.patchValue({ 'earnings': nAmountInEther && nAmountInEther != undefined ? nAmountInEther : 0 });
+        }
+      }
     } else {
       this.router.navigate([''])
 
@@ -134,7 +152,7 @@ export class MyProfileComponent implements OnInit {
   }
 
   async myBIDList() {
-  
+
     await this.apiService.bidByUser({}).subscribe((res: any) => {
 
       if (res && res['data'] && res['data']) {
@@ -178,6 +196,14 @@ export class MyProfileComponent implements OnInit {
     });
   }
 
+  buildRedeemForm() {
+
+    this.redeemForm = this._formBuilder.group({
+      earnings: ['', [Validators.required]],
+      amount: ['', [Validators.required]],
+
+    });
+  }
   onClickTab(type: any) {
     if (type == 'profile') {
 
@@ -235,6 +261,42 @@ export class MyProfileComponent implements OnInit {
 
 
   }
+
+
+  async onClickRedeem() {
+    this.spinner.show();
+    this.submitted1 = true;
+    if (this.redeemForm.invalid) {
+      this.spinner.hide();
+      return;
+    } else {
+      this.spinner.hide();
+
+      let res = this.redeemForm.value;
+      var NFTinstance = await this.apiService.exportInstance(environment.NFTaddress, environment.NFTabi);
+      if (NFTinstance && NFTinstance != undefined) {
+        this.spinner.show();
+
+        await NFTinstance.methods.redeemPoints(window.web3.utils.toWei(res.amount, 'ether')).send({
+          from: localStorage.getItem('sWalletAddress')
+        }).then((data: any) => {
+          if (data) {
+            this.spinner.hide();
+
+            this.onClickRefresh();
+          }
+        }).catch((err: any) => {
+          if (err) {
+            this.spinner.hide();
+          }
+        });
+
+
+      }
+
+    }
+  }
+
   onClickRefresh() {
     window.location.reload();
   }

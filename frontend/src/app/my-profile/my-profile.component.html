@@ -60,20 +60,25 @@
                     <!-- tabs nav -->
                     <ul class="nav nav-tabs profile__tabs" id="profile__tabs" role="tablist">
                         <li class="nav-item" (click)="onClickSearch('Fixed Sale')">
-                            <a class="nav-link " data-toggle="tab" href="#tab-2"  [ngClass]="{ 'active': tab && tab == 'sale' }" role="tab" aria-controls="tab-2"
+                            <a class="nav-link " data-toggle="tab" href="#tab-2"
+                                [ngClass]="{ 'active': tab && tab == 'sale' }" role="tab" aria-controls="tab-2"
                                 aria-selected="true">On Sale</a>
                         </li>
                         <li class="nav-item" (click)="onClickSearch('')">
-                            <a class="nav-link " [ngClass]="{ 'active': tab && tab == 'created' }" data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-2"
-                                aria-selected="false">Created</a>
+                            <a class="nav-link " [ngClass]="{ 'active': tab && tab == 'created' }" data-toggle="tab"
+                                href="#tab-2" role="tab" aria-controls="tab-2" aria-selected="false">Created</a>
                         </li>
                         <li class="nav-item" (click)="onClickTab('profile')">
-                            <a class="nav-link " [ngClass]="{ 'active': tab && tab == 'profile' }" data-toggle="tab" href="#tab-4" role="tab" aria-controls="tab-4"
-                                aria-selected="false">Profile</a>
+                            <a class="nav-link " [ngClass]="{ 'active': tab && tab == 'profile' }" data-toggle="tab"
+                                href="#tab-4" role="tab" aria-controls="tab-4" aria-selected="false">Profile</a>
                         </li>
                         <li class="nav-item" (click)="onClickTab('')">
-                            <a class="nav-link" data-toggle="tab"  [ngClass]="{ 'active': tab && tab == 'bid' }" href="#tab-5" role="tab" aria-controls="tab-4"
-                                aria-selected="false">Bids</a>
+                            <a class="nav-link" data-toggle="tab" [ngClass]="{ 'active': tab && tab == 'bid' }"
+                                href="#tab-5" role="tab" aria-controls="tab-4" aria-selected="false">Bids</a>
+                        </li>
+                        <li class="nav-item" (click)="onClickTab('')">
+                            <a class="nav-link" data-toggle="tab" [ngClass]="{ 'active': tab && tab == 'redeem' }"
+                                href="#tab-6" role="tab" aria-controls="tab-4" aria-selected="false">My Earnings</a>
                         </li>
                     </ul>
                     <!-- end tabs nav -->
@@ -84,7 +89,8 @@
                     <!-- SALE -->
 
                     <!-- CREATED -->
-                    <div class="tab-pane fade " id="tab-2" role="tabpanel" [ngClass]="{ 'show active':  tab == 'created' || tab == 'sale' }">
+                    <div class="tab-pane fade " id="tab-2" role="tabpanel"
+                        [ngClass]="{ 'show active':  tab == 'created' || tab == 'sale' }">
                         <div class="row row--grid">
                             <div class="col-12 col-sm-6 col-lg-4" *ngFor="let obj of listData;">
                                 <div class="card">
@@ -179,7 +185,8 @@
                         <!-- end paginator -->
                     </div>
 
-                    <div class="tab-pane fade " id="tab-4" role="tabpanel" [ngClass]="{ 'show active': tab && tab == 'profile' }">
+                    <div class="tab-pane fade " id="tab-4" role="tabpanel"
+                        [ngClass]="{ 'show active': tab && tab == 'profile' }">
                         <div class="row row--grid">
 
                             <!-- <div class="col-12 col-lg-2 text-align-center">
@@ -344,7 +351,8 @@
                         </div>
                     </div>
                     <!-- BID HiSTory -->
-                    <div class="tab-pane fade  " id="tab-5" role="tabpanel" [ngClass]="{ 'show active': tab && tab == 'bid' }">
+                    <div class="tab-pane fade  " id="tab-5" role="tabpanel"
+                        [ngClass]="{ 'show active': tab && tab == 'bid' }">
                         <div class="row row--grid" *ngIf="bidHistoryData && bidHistoryData.length">
                             <div class="row row--grid">
                                 <div class="col-12 col-sm-6 col-lg-4" *ngFor="let obj of bidHistoryData;">
@@ -420,6 +428,71 @@
                             </div>
                         </div>
                         <!-- end paginator -->
+                    </div>
+
+
+                    <!-- REDEEM -->
+                    <div class="tab-pane fade " id="tab-6" role="tabpanel"
+                        [ngClass]="{ 'show active': tab && tab == 'redeem' }">
+                        <div class="row row--grid">
+
+                            <!-- <div class="col-12 col-lg-2 text-align-center">
+                             
+                            </div> -->
+
+                            <!-- details form -->
+                            <div class="col-12 col-lg-12 text-align-center">
+                                <form action="#" class="sign__form sign__form--profile" name="redeemForm"
+                                    [formGroup]="redeemForm">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h4 class="sign__title">My Earnings</h4>
+                                        </div>
+
+                                        <!-- <div class="col-12">
+                                        
+                                        </div> -->
+
+                                        <div class="col-12 col-md-12 col-lg-12">
+                                            <div class="sign__group">
+                                                <label class="sign__label" for="email">Earnings</label>
+                                                <input formControlName="earnings" type="text" class="sign__input"
+                                                    placeholder="0000">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-12 col-lg-12">
+                                            <div class="sign__group">
+                                                <label class="sign__label" for="email">Amount (BNB)</label>
+                                                <input
+                                                    [ngClass]="{ 'is-invalid': submitted1 && redeemForm.controls.amount.errors }"
+                                                    formControlName="amount" type="text" class="sign__input"
+                                                    placeholder="Enter Amount to Redeem (BNB)">
+                                                <div class="nft-err"
+                                                    *ngIf="submitted2 && redeemForm.controls.amount.errors">
+                                                    <span *ngIf="redeemForm.controls.amount.errors?.required">This
+                                                        field is required.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <button class="sign__btn"
+                                                [attr.disabled]="!redeemForm.value.earnings || redeemForm.value.earnings == 0 ? true : null"
+                                                type="button" (click)="onClickRedeem()">Redeem</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- <div class="col-12 col-lg-2 text-align-center">
+                             
+                            </div> -->
+                            <!-- end details form -->
+
+                            <!-- password form -->
+
+                            <!-- end password form -->
+                        </div>
                     </div>
 
                 </div>

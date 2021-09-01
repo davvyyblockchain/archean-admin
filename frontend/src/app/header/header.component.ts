@@ -71,6 +71,17 @@ export class HeaderComponent implements OnInit {
       },
     });
   }
+
+  async clicktoEarnings() {
+    await this.router.navigate(['/my-profile'], {
+      relativeTo: this._route,
+      queryParams: {
+        tab: 'redeem'
+      },
+    });
+  }
+
+  
   connectToMetaMask() {
     this.spinner.show();
     this.apiService.connect().then((data: any) => {

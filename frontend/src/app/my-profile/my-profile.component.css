@@ -24,3 +24,6 @@
   width :260px;
   object-fit: cover;
 }
+button:disabled{
+  opacity: 0.5;
+}

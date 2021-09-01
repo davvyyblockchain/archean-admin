@@ -48,8 +48,9 @@
             </div>
 
             <div class="header__action header__action--profile" *ngIf="showObj.show == 'profile'">
-                <a  (click)="clickOP(type)" class="header__profile-btn header__profile-btn--verified" href="javascript:;" role="button" 
-                    id="dropdownMenuProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a (click)="clickOP(type)" class="header__profile-btn header__profile-btn--verified" href="javascript:;"
+                    role="button" id="dropdownMenuProfile" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
                     <img src="assets/img/avatars/avatar5.jpg" alt="">
                     <div>
                         <p>{{showObj.network_name ? showObj.network_name : 'Test net'}}</p>
@@ -64,12 +65,24 @@
 
 
 
-                <ul class="dropdown-menu header__profile-menu"  [ngClass]="{'show': type === 'show'}" aria-labelledby="dropdownMenuProfile">
-                    <li><a href="javascript:;" (click)="clicktoProfile()"><svg xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24">
+                <ul class="dropdown-menu header__profile-menu" [ngClass]="{'show': type === 'show'}"
+                    aria-labelledby="dropdownMenuProfile">
+                    <li><a href="javascript:;" (click)="clicktoProfile()">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                 <path
                                     d="M15.71,12.71a6,6,0,1,0-7.42,0,10,10,0,0,0-6.22,8.18,1,1,0,0,0,2,.22,8,8,0,0,1,15.9,0,1,1,0,0,0,1,.89h.11a1,1,0,0,0,.88-1.1A10,10,0,0,0,15.71,12.71ZM12,12a4,4,0,1,1,4-4A4,4,0,0,1,12,12Z" />
-                            </svg> <span>Profile</span></a></li>
+                            </svg>
+
+                            <span>Profile</span></a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" (click)="clicktoEarnings()">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path
+                                    d="M19,7H18V6a3,3,0,0,0-3-3H5A3,3,0,0,0,2,6H2V18a3,3,0,0,0,3,3H19a3,3,0,0,0,3-3V10A3,3,0,0,0,19,7ZM5,5H15a1,1,0,0,1,1,1V7H5A1,1,0,0,1,5,5ZM20,15H19a1,1,0,0,1,0-2h1Zm0-4H19a3,3,0,0,0,0,6h1v1a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V8.83A3,3,0,0,0,5,9H19a1,1,0,0,1,1,1Z" />
+                            </svg>
+                            <span>My Earnings</span></a>
+                    </li>
                     <li>
                         <a href="javascript:;" routerLink="/marketplace"><svg xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 24 24">
@@ -88,7 +101,8 @@
                     </li>
 
                     <li>
-                        <a href="javascript:;" (click)="onsignout()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <a href="javascript:;" (click)="onsignout()"><svg xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24">
                                 <path
                                     d="M4,12a1,1,0,0,0,1,1h7.59l-2.3,2.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0l4-4a1,1,0,0,0,.21-.33,1,1,0,0,0,0-.76,1,1,0,0,0-.21-.33l-4-4a1,1,0,1,0-1.42,1.42L12.59,11H5A1,1,0,0,0,4,12ZM17,2H7A3,3,0,0,0,4,5V8A1,1,0,0,0,6,8V5A1,1,0,0,1,7,4H17a1,1,0,0,1,1,1V19a1,1,0,0,1-1,1H7a1,1,0,0,1-1-1V16a1,1,0,0,0-2,0v3a3,3,0,0,0,3,3H17a3,3,0,0,0,3-3V5A3,3,0,0,0,17,2Z" />
                             </svg> <span>Sign out</span>
