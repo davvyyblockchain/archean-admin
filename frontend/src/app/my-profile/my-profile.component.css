@@ -17,7 +17,9 @@
     
   height :260px;
   width :260px;
-  background:url('https://image.shutterstock.com/image-vector/minimal-podcast-sound-wave-icon-260nw-1720134202.jpg');
+  background:url('https://decryptnft.mypinata.cloud/ipfs/QmZ2Bty7HzoT9nj4QrxRyFHyUtsUxEXg4RNV6RoyGDAgLu ');
+  background-size: cover;
+  background-position: center;
 }
 .sty{
   height :260px;
@@ -26,4 +28,30 @@
 }
 button:disabled{
   opacity: 0.5;
+}
+
+
+
+.audio__card{
+  position: relative;
+}
+.audio__card audio
+{
+  /* visibility: hidden; */
+}
+.audio__overlay{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: rgba(0,0,0,.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.audio__overlay svg,
+.audio__overlay button{
+  z-index: 2;
+  color: #fff;
 }

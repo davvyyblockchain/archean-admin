@@ -27,7 +27,7 @@
         <div class="row">
             <!-- content -->
             <div class="col-12 col-xl-8">
-                <div class="asset__item">
+                <div class="asset__item audio__card">
                     <a class="asset__img "
                         *ngIf="NFTData.eType && NFTData.eType != undefined && NFTData.eType != 'Audio'"
                         href="assets/img/cover/cover-big.jpg">
@@ -35,10 +35,23 @@
                             src="{{NFTData && NFTData.sHash && NFTData.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+ NFTData.sHash :'assets/img/cover/cover-big.jpg' }}"
                             alt="">
                     </a>
-                    <div class="audioPlayerMain"
+                    <div class="audioPlayerMain single__audio_card"
                         *ngIf="NFTData.eType && NFTData.eType != undefined && NFTData.eType == 'Audio'">
 
-                        <audio id="audio" controls controlsList="nodownload" style="margin: 500px 0px 0px 250px"
+                        <div class="audio__overlay ">
+                            <button value="{{NFTData._id && NFTData._id  != undefined ? NFTData._id : '-'}}"
+                                class="play audio-control-btn">
+                                <span class="iconify" data-icon="akar-icons:play" data-width="45"
+                                    data-height="45"></span>
+                            </button>
+                            <button value="{{NFTData._id && NFTData._id  != undefined ? NFTData._id : '-'}}"
+                                class="pause audio-control-btn d-none">
+                                <span class="iconify" data-icon="akar-icons:pause" data-width="45"
+                                    data-height="45"></span>
+                            </button>
+                        </div>
+
+                        <audio id="{{NFTData._id && NFTData._id  != undefined ? NFTData._id : '-'}}" controls controlsList="nodownload" style="margin: 500px 0px 0px 250px"
                             src="{{NFTData.sHash && NFTData.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+NFTData.sHash :'assets/img/cover/cover-big.jpg' }}"
                             type="audio/mp3" id="src" class="sty ">
                         </audio>

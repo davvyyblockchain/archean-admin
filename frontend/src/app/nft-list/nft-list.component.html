@@ -137,42 +137,47 @@
 
                         <div class="col-12 col-sm-6 col-lg-4" *ngFor="let obj of NFTListData;">
                             <!-- card -->
-                            <div class="card">
-                                <a href="javascript:;" class="card__cover"
-                                    routerLink="/NFT-detail/{{obj._id && obj._id != undefined ? obj._id : '-'}}">
+                            <div class="card audio__card">
+                                <div class="card__cover">
 
                                     <img class="sty img-fluid"
                                         *ngIf="obj.eType && obj.eType != undefined && obj.eType != 'Audio'"
                                         src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }} "
                                         alt="">
+
                                     <div class="audioPlayerMain"
                                         *ngIf="obj.eType && obj.eType != undefined && obj.eType == 'Audio'">
-
-                                        <audio id="audio" controls controlsList="nodownload"
-                                            src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }}"
-                                            type="audio/mp3" id="src" class="sty ">
-                                            <!-- <source /> -->
+                                        <div class="audio__overlay">
+                                            <a href="{{obj._id && obj._id != undefined ? obj._id : '-'}}"
+                                                class="play audio-control">
+                                                <span class="iconify" data-icon="akar-icons:play" data-width="45"
+                                                    data-height="45"></span>
+                                            </a>
+                                            <a href="{{obj._id && obj._id != undefined ? obj._id : '-'}}"
+                                                class="pause audio-control d-none">
+                                                <span class="iconify" data-icon="akar-icons:pause" data-width="45"
+                                                    data-height="45"></span>
+                                            </a>
+                                        </div>
+                                        <audio id="{{obj._id && obj._id != undefined ? obj._id : '-'}}" controls
+                                            class="sty d-none">
+                                            <source
+                                                src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }}"
+                                                type="audio/mp3">
                                         </audio>
                                     </div>
-                                    <!-- 
-                                    <img class="sty img-fluid"
-                                        *ngIf="obj.eType && obj.eType != undefined && obj.eType != 'Audio'"
-                                        src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover5.jpg' }} "
-                                        alt=""> -->
-                                    <!--   -->
-                                    <audio id="audio" controls class="sty "
-                                        *ngIf="obj.eType && obj.eType != undefined && obj.eType == 'Audio'">
-                                        <source
-                                            src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }}"
-                                            type="audio/mp3" id="src" />
-                                    </audio>
+
 
                                     <span class="card__time card__time--clock">
                                         {{obj.eAuctionType && obj.eAuctionType != undefined ? obj.eAuctionType : '-'}}
                                     </span>
 
-                                </a>
-                                <h3 class="card__title"><a href="javascript:;">{{obj.sName && obj.sName != undefined ?
+                                </div>
+
+
+                                <h3 class="card__title"><a href="javascript:;"
+                                        routerLink="/NFT-detail/{{obj._id && obj._id != undefined ? obj._id : '-'}}">{{obj.sName
+                                        && obj.sName != undefined ?
                                         obj.sName : 'UnKnown'}}</a></h3>
                                 <div class="card__author card__author--verified">
 

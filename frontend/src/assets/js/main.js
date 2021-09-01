@@ -400,4 +400,47 @@ $(document).ready(function () {
 		});
 	}
 
+	/*** Audio Player ****/
+	$('.audio-control').click(function(e){
+		e.preventDefault();
+		if($(this).hasClass('play'))
+		{
+			document.getElementById($(this).attr('href')).play();
+			$(this).addClass('d-none');
+			$(this).parent().find('.pause').removeClass('d-none');
+		}
+		else
+		{
+			document.getElementById($(this).attr('href')).pause();
+			$(this).addClass('d-none');
+			$(this).parent().find('.play').removeClass('d-none');
+		}
+		// else if($(this).hasClass('pause')){
+		// 	audo.pause();
+		// }
+		
+	});
+
+	$(document).on('click','.audio-control-btn',function(){
+		console.log("clicked");
+		if($(this).hasClass('play'))
+		{
+			document.getElementById($(this).val()).play();
+			$(this).addClass('d-none');
+			$(this).parent().find('.pause').removeClass('d-none');
+		}
+		else
+		{
+			document.getElementById($(this).val()).pause();
+			$(this).addClass('d-none');
+			$(this).parent().find('.play').removeClass('d-none');
+		}
+		// else if($(this).hasClass('pause')){
+		// 	audo.pause();
+		// }
+		
+	});
+
+	//console.log(audio);
+
 });

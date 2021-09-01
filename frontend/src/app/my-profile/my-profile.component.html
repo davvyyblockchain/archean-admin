@@ -93,22 +93,33 @@
                         [ngClass]="{ 'show active':  tab == 'created' || tab == 'sale' }">
                         <div class="row row--grid">
                             <div class="col-12 col-sm-6 col-lg-4" *ngFor="let obj of listData;">
-                                <div class="card">
-                                    <a href="javascript:;" class="card__cover"
-                                        routerLink="/NFT-detail/{{obj._id && obj._id != undefined ? obj._id : '-'}}">
-
-
+                                <div class="card audio__card">
+                              
+                                    <div class="card__cover">
                                         <img class="sty img-fluid"
                                             *ngIf="obj.eType && obj.eType != undefined && obj.eType != 'Audio'"
                                             src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }} "
                                             alt="">
+
                                         <div class="audioPlayerMain"
                                             *ngIf="obj.eType && obj.eType != undefined && obj.eType == 'Audio'">
-
-                                            <audio id="audio" controls controlsList="nodownload"
-                                                src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }}"
-                                                type="audio/mp3" id="src" class="sty ">
-                                                <!-- <source /> -->
+                                            <div class="audio__overlay ">
+                                                <button value="{{obj._id && obj._id != undefined ? obj._id : '-'}}"
+                                                    class="play audio-control-btn">
+                                                    <span class="iconify" data-icon="akar-icons:play" data-width="45"
+                                                        data-height="45"></span>
+                                                </button>
+                                                <button value="{{obj._id && obj._id != undefined ? obj._id : '-'}}"
+                                                    class="pause audio-control-btn d-none">
+                                                    <span class="iconify" data-icon="akar-icons:pause" data-width="45"
+                                                        data-height="45"></span>
+                                                </button>
+                                            </div>
+                                            <audio id="{{obj._id && obj._id != undefined ? obj._id : '-'}}" controls
+                                                class="sty d-none">
+                                                <source
+                                                    src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }}"
+                                                    type="audio/mp3">
                                             </audio>
                                         </div>
 
@@ -116,15 +127,18 @@
                                             {{obj.eAuctionType && obj.eAuctionType != undefined ? obj.eAuctionType :
                                             '-'}}
                                         </span>
+                                    </div>
 
-                                    </a>
-                                    <h3 class="card__title"><a href="javascript:;">{{obj.sName && obj.sName != undefined
+                                    <h3 class="card__title"><a href="javascript:;"
+                                            routerLink="/NFT-detail/{{obj._id && obj._id != undefined ? obj._id : '-'}}">{{obj.sName
+                                            && obj.sName != undefined
                                             ?
                                             obj.sName : 'UnKnown'}}</a></h3>
                                     <div class="card__author card__author--verified">
                                         <img src="{{obj.oUser && obj.oUser != undefined && obj.oUser['sProfilePicUrl'] != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.oUser['sProfilePicUrl'] :'assets/img/avatars/avatar5.jpg' }}"
                                             alt="">
-                                        <a href="javascript:;">{{obj.oUser && obj.oUser != undefined &&
+                                        <a href="javascript:;">{{obj.oUser
+                                            && obj.oUser != undefined &&
                                             obj.oUser['oName'] && obj.oUser['oName']!=undefined &&
                                             obj.oUser['oName']['sFirstname'] ? obj.oUser['oName']['sFirstname'] : '-'}}
                                             {{obj.oUser && obj.oUser != undefined && obj.oUser['oName'] != undefined ?
@@ -356,15 +370,13 @@
                         <div class="row row--grid" *ngIf="bidHistoryData && bidHistoryData.length">
                             <div class="row row--grid">
                                 <div class="col-12 col-sm-6 col-lg-4" *ngFor="let obj of bidHistoryData;">
-                                    <div class="card">
-                                        <a href="javascript:;" class="card__cover"
+                                    <div class="card audio__card">
+                                        <!-- <a href="javascript:;" class="card__cover"
                                             routerLink="/NFT-detail/{{obj.oNFTId && obj.oNFTId  != undefined ? obj.oNFTId : '-'}}">
-
                                             <img class="sty img-fluid"
                                                 *ngIf="obj.oNFT.eType && obj.oNFT.eType != undefined && obj.oNFT.eType != 'Audio'"
                                                 src="{{obj.oNFT.sHash && obj.oNFT.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.oNFT.sHash :'assets/img/cover/cover8.jpg' }}"
                                                 alt="">
-                                            <!--   -->
                                             <audio id="audio" controls class="sty "
                                                 *ngIf="obj.oNFT.eType && obj.oNFT.eType != undefined && obj.oNFT.eType == 'Audio'">
                                                 <source
@@ -377,9 +389,46 @@
                                                 obj.oNFT.eAuctionType :
                                                 '-'}}
                                             </span>
+                                        </a> -->
 
-                                        </a>
-                                        <h3 class="card__title"><a href="javascript:;">{{obj.oNFT.sName &&
+                                        <div class="card__cover">
+                                            <img class="sty img-fluid"
+                                            *ngIf="obj.oNFT.eType && obj.oNFT.eType != undefined && obj.oNFT.eType != 'Audio'"
+                                            src="{{obj.oNFT.sHash && obj.oNFT.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.oNFT.sHash :'assets/img/cover/cover8.jpg' }}"
+                                            alt="">
+
+
+                                            <div class="audioPlayerMain"
+                                            *ngIf="obj.oNFT.eType && obj.oNFT.eType != undefined && obj.oNFT.eType == 'Audio'">
+                                            <div class="audio__overlay ">
+                                                <button value="{{obj.oNFTId && obj.oNFTId  != undefined ? obj.oNFTId : '-'}}"
+                                                    class="play audio-control-btn">
+                                                    <span class="iconify" data-icon="akar-icons:play" data-width="45"
+                                                        data-height="45"></span>
+                                                </button>
+                                                <button value="{{obj.oNFTId && obj.oNFTId  != undefined ? obj.oNFTId : '-'}}"
+                                                    class="pause audio-control-btn d-none">
+                                                    <span class="iconify" data-icon="akar-icons:pause" data-width="45"
+                                                        data-height="45"></span>
+                                                </button>
+                                            </div>
+                                            <audio id="{{obj.oNFTId && obj.oNFTId  != undefined ? obj.oNFTId : '-'}}" controls
+                                                class="sty d-none">
+                                                <source
+                                                    src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }}"
+                                                    type="audio/mp3">
+                                            </audio>
+                                        </div>
+
+                                            <span class="card__time card__time--clock">
+                                                {{obj.oNFT.eAuctionType && obj.oNFT.eAuctionType != undefined ?
+                                                obj.oNFT.eAuctionType :
+                                                '-'}}
+                                            </span>
+                                        </div>
+
+                                        
+                                        <h3 class="card__title"><a href="javascript:;" routerLink="/NFT-detail/{{obj.oNFTId && obj.oNFTId  != undefined ? obj.oNFTId : '-'}}">{{obj.oNFT.sName &&
                                                 obj.oNFT.sName != undefined
                                                 ?
                                                 obj.oNFT.sName : 'UnKnown'}}</a></h3>
