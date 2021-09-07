@@ -202,7 +202,7 @@ controllers.passwordReset = (req, res, next) => {
                 .catch((err) => {
                 });
             nodemailer.send('forgot_password_mail.html', {
-                SITE_NAME: 'Blockchain Australia Solutions',
+                SITE_NAME: 'Decrypt NFT',
                 USERNAME: user.oName.sFirstname,
                 ACTIVELINK: `${process.env.BASE_URL}:${process.env.PORT}/api/v1/auth/reset/${randomHash}`
             }, {
