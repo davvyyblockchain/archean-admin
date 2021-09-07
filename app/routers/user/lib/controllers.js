@@ -9,7 +9,8 @@ const {
     Category,
     Aboutus,
     Terms,
-    FAQs
+    FAQs,
+    NFT
 } = require('../../../models');
 const _ = require('../../../../globals/lib/helper');
 
@@ -221,34 +222,34 @@ controllers.collaboratorList = async (req, res) => {
         var nOffset = parseInt(req.body.start);
 
         let oAggregation = [{
-                "$match": {
-                    "$and": [{
-                        "_id": {
-                            $eq: mongoose.Types.ObjectId(req.userId)
-                        }
-                    }]
-                }
-            },
-            {
-                "$project": {
-                    "totalCollaborators": {
-                        $cond: [{
-                            $not: ["$aCollaborators"]
-                        }, 0, {
-                            $size: "$aCollaborators"
-                        }]
-                    },
-                    "aCollaborators": {
-                        $cond: [{
-                                $not: ["$aCollaborators"]
-                            },
-                            [], {
-                                $slice: ["$aCollaborators", nOffset, nLimit]
-                            }
-                        ]
+            "$match": {
+                "$and": [{
+                    "_id": {
+                        $eq: mongoose.Types.ObjectId(req.userId)
                     }
+                }]
+            }
+        },
+        {
+            "$project": {
+                "totalCollaborators": {
+                    $cond: [{
+                        $not: ["$aCollaborators"]
+                    }, 0, {
+                        $size: "$aCollaborators"
+                    }]
+                },
+                "aCollaborators": {
+                    $cond: [{
+                        $not: ["$aCollaborators"]
+                    },
+                    [], {
+                        $slice: ["$aCollaborators", nOffset, nLimit]
+                    }
+                    ]
                 }
             }
+        }
         ];
 
         let aUsers = await User.aggregate(oAggregation);
@@ -486,5 +487,128 @@ controllers.getTermsData = async (req, res) => {
         return res.reply(messages.server_error());
     }
 }
+
+
+controllers.getUserProfilewithNfts = async (req, res) => {
+    try {
+
+        if (!req.body.userId) {
+            return res.reply(messages.unauthorized());
+        }
+        User.findOne({
+            _id: req.body.userId
+        }, {
+            oName: 1,
+            sUserName: 1,
+            sCreated: 1,
+            sEmail: 1,
+            sWalletAddress: 1,
+            sProfilePicUrl: 1,
+            sWebsite: 1,
+            sBio: 1
+        }, (err, user) => {
+            if (err) return res.reply(messages.server_error());
+            if (!user) return res.reply(messages.not_found('User'));
+
+            return res.reply(messages.no_prefix('User Details'), user);
+        });
+
+    } catch (error) {
+        log.red(error)
+        return res.reply(messages.server_error());
+    }
+}
+
+
+controllers.getUserWithNfts = async (req, res) => {
+    try {
+
+        if (!req.body.userId) return res.reply(messages.unauthorized());
+
+        var nLimit = parseInt(req.body.length);
+        var nOffset = parseInt(req.body.start);
+        let oSortingOrder = {};
+        log.red(req.body);
+
+        if (req.body.sSortingType == "Recently Added") {
+            oSortingOrder["sCreated"] = -1;
+        } else if (req.body.sSortingType == "Most Viewed") {
+            oSortingOrder["nView"] = -1;
+        } else if (req.body.sSortingType == "Price Low to High") {
+            oSortingOrder["nBasePrice"] = 1;
+        } else if (req.body.sSortingType == "Price High to Low") {
+            oSortingOrder["nBasePrice"] = -1;
+        } else {
+            oSortingOrder["_id"] = -1;
+        }
+        console.log('-----------------------------------------------2')
+
+        let data = await NFT.aggregate([{
+            '$match': {
+                '$and': [{
+                    '$or': [{
+                        'oCurrentOwner': mongoose.Types.ObjectId(req.body.userId)
+                    }]
+                }]
+            }
+        }, {
+            '$sort': oSortingOrder
+        }, {
+            '$project': {
+                '_id': 1,
+                'sName': 1,
+                'eType': 1,
+                'nBasePrice': 1,
+                'sHash': 1,
+                'nQuantity': 1,
+                'nTokenID': 1,
+                'oCurrentOwner': 1,
+                "sTransactionStatus": 1,
+                eAuctionType: 1,
+            }
+        }, {
+            '$lookup': {
+                'from': 'users',
+                'localField': 'oCurrentOwner',
+                'foreignField': '_id',
+                'as': 'oUser'
+            }
+        }, { $unwind: '$oUser' }, {
+            '$facet': {
+                'nfts': [{
+                    "$skip": +nOffset
+                }, {
+                    "$limit": +nLimit
+                }],
+                'totalCount': [{
+                    '$count': 'count'
+                }]
+            }
+        }]);
+
+        console.log('-----------------------------------------------2')
+        let iFiltered = data[0].nfts.length;
+        if (data[0].totalCount[0] == undefined) {
+            return res.reply(messages.success('Data'), {
+                data: 0,
+                "draw": req.body.draw,
+                "recordsTotal": 0,
+                "recordsFiltered": iFiltered,
+            });
+        } else {
+            return res.reply(messages.no_prefix('NFT Details'), {
+                data: data[0].nfts,
+                "draw": req.body.draw,
+                "recordsTotal": data[0].totalCount[0].count,
+                "recordsFiltered": iFiltered,
+            });
+        }
+
+    } catch (error) {
+        log.red(error)
+        return res.reply(messages.server_error());
+    }
+}
+
 
 module.exports = controllers;

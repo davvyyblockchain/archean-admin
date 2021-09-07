@@ -8,14 +8,14 @@
             <div class="col-12 col-xl-3">
                 <div class="author author--page">
                     <div class="author__meta">
-                        <a href="author.html" class="author__avatar author__avatar--verified">
+                        <a href="javascript:;" class="author__avatar author__avatar--verified">
                             <img src="{{profileData && profileData.sProfilePicUrl  ? profileData.sProfilePicUrl:''}}"
                                 alt="">
                         </a>
-                        <h1 class="author__name"><a href="author.html">{{profileData && profileData.sFirstname ?
+                        <h1 class="author__name"><a href="javascript:;">{{profileData && profileData.sFirstname ?
                                 profileData.sFirstname : ''}} {{profileData && profileData.sLastname ?
                                 profileData.sLastname : ''}}</a></h1>
-                        <h2 class="author__nickname"><a href="author.html"> {{profileData && profileData.sUserName ?
+                        <h2 class="author__nickname"><a href="javascript:;"> {{profileData && profileData.sUserName ?
                                 profileData.sUserName : ''}}</a></h2>
                         <p class="author__text">{{profileData && profileData.sBio ? profileData.sBio : ''}}</p>
                         <div class="author__code">
@@ -74,7 +74,7 @@
                         </li>
                         <li class="nav-item" (click)="onClickTab('')">
                             <a class="nav-link" data-toggle="tab" [ngClass]="{ 'active': tab && tab == 'bid' }"
-                                href="#tab-5" role="tab" aria-controls="tab-4" aria-selected="false">Bids</a>
+                                href="#tab-5" role="tab" aria-controls="tab-4" aria-selected="false">My Bids</a>
                         </li>
                         <li class="nav-item" (click)="onClickTab('')">
                             <a class="nav-link" data-toggle="tab" [ngClass]="{ 'active': tab && tab == 'redeem' }"
@@ -94,12 +94,16 @@
                         <div class="row row--grid">
                             <div class="col-12 col-sm-6 col-lg-4" *ngFor="let obj of listData;">
                                 <div class="card audio__card">
-                              
+
                                     <div class="card__cover">
-                                        <img class="sty img-fluid"
-                                            *ngIf="obj.eType && obj.eType != undefined && obj.eType != 'Audio'"
-                                            src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }} "
-                                            alt="">
+
+                                        <a href="javascript:;"
+                                            routerLink="/NFT-detail/{{obj._id && obj._id != undefined ? obj._id : '-'}}">
+                                            <img class="sty img-fluid"
+                                                *ngIf="obj.eType && obj.eType != undefined && obj.eType != 'Audio'"
+                                                src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }} "
+                                                alt="">
+                                        </a>
 
                                         <div class="audioPlayerMain"
                                             *ngIf="obj.eType && obj.eType != undefined && obj.eType == 'Audio'">
@@ -392,33 +396,40 @@
                                         </a> -->
 
                                         <div class="card__cover">
-                                            <img class="sty img-fluid"
-                                            *ngIf="obj.oNFT.eType && obj.oNFT.eType != undefined && obj.oNFT.eType != 'Audio'"
-                                            src="{{obj.oNFT.sHash && obj.oNFT.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.oNFT.sHash :'assets/img/cover/cover8.jpg' }}"
-                                            alt="">
+
+                                            <a href="javascript:;"
+                                                routerLink="/NFT-detail/{{obj.oNFTId && obj.oNFTId  != undefined ? obj.oNFTId : '-'}}">
+                                                <img class="sty img-fluid"
+                                                    *ngIf="obj.oNFT.eType && obj.oNFT.eType != undefined && obj.oNFT.eType != 'Audio'"
+                                                    src="{{obj.oNFT.sHash && obj.oNFT.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.oNFT.sHash :'assets/img/cover/cover8.jpg' }}"
+                                                    alt="">
+                                            </a>
 
 
                                             <div class="audioPlayerMain"
-                                            *ngIf="obj.oNFT.eType && obj.oNFT.eType != undefined && obj.oNFT.eType == 'Audio'">
-                                            <div class="audio__overlay ">
-                                                <button value="{{obj.oNFTId && obj.oNFTId  != undefined ? obj.oNFTId : '-'}}"
-                                                    class="play audio-control-btn">
-                                                    <span class="iconify" data-icon="akar-icons:play" data-width="45"
-                                                        data-height="45"></span>
-                                                </button>
-                                                <button value="{{obj.oNFTId && obj.oNFTId  != undefined ? obj.oNFTId : '-'}}"
-                                                    class="pause audio-control-btn d-none">
-                                                    <span class="iconify" data-icon="akar-icons:pause" data-width="45"
-                                                        data-height="45"></span>
-                                                </button>
+                                                *ngIf="obj.oNFT.eType && obj.oNFT.eType != undefined && obj.oNFT.eType == 'Audio'">
+                                                <div class="audio__overlay ">
+                                                    <button
+                                                        value="{{obj.oNFTId && obj.oNFTId  != undefined ? obj.oNFTId : '-'}}"
+                                                        class="play audio-control-btn">
+                                                        <span class="iconify" data-icon="akar-icons:play"
+                                                            data-width="45" data-height="45"></span>
+                                                    </button>
+                                                    <button
+                                                        value="{{obj.oNFTId && obj.oNFTId  != undefined ? obj.oNFTId : '-'}}"
+                                                        class="pause audio-control-btn d-none">
+                                                        <span class="iconify" data-icon="akar-icons:pause"
+                                                            data-width="45" data-height="45"></span>
+                                                    </button>
+                                                </div>
+                                                <audio
+                                                    id="{{obj.oNFTId && obj.oNFTId  != undefined ? obj.oNFTId : '-'}}"
+                                                    controls class="sty d-none">
+                                                    <source
+                                                        src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }}"
+                                                        type="audio/mp3">
+                                                </audio>
                                             </div>
-                                            <audio id="{{obj.oNFTId && obj.oNFTId  != undefined ? obj.oNFTId : '-'}}" controls
-                                                class="sty d-none">
-                                                <source
-                                                    src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }}"
-                                                    type="audio/mp3">
-                                            </audio>
-                                        </div>
 
                                             <span class="card__time card__time--clock">
                                                 {{obj.oNFT.eAuctionType && obj.oNFT.eAuctionType != undefined ?
@@ -427,8 +438,10 @@
                                             </span>
                                         </div>
 
-                                        
-                                        <h3 class="card__title"><a href="javascript:;" routerLink="/NFT-detail/{{obj.oNFTId && obj.oNFTId  != undefined ? obj.oNFTId : '-'}}">{{obj.oNFT.sName &&
+
+                                        <h3 class="card__title"><a href="javascript:;"
+                                                routerLink="/NFT-detail/{{obj.oNFTId && obj.oNFTId  != undefined ? obj.oNFTId : '-'}}">{{obj.oNFT.sName
+                                                &&
                                                 obj.oNFT.sName != undefined
                                                 ?
                                                 obj.oNFT.sName : 'UnKnown'}}</a></h3>
@@ -505,8 +518,8 @@
                                         <div class="col-12 col-md-12 col-lg-12">
                                             <div class="sign__group">
                                                 <label class="sign__label" for="email">Earnings</label>
-                                                <input formControlName="earnings" type="text" class="sign__input"
-                                                    placeholder="0000">
+                                                <input formControlName="earnings"  type="text" class="sign__input"
+                                                    placeholder="0000" readonly/>
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-12 col-lg-12">

@@ -337,6 +337,14 @@ export class ApiService {
   toggleBidStatus(data: any) {
     return this.http.post(this.URL + '/bid/toggleBidStatus', data, { headers: { 'Authorization': this.getHeaders() } });
   }
+
+  profileDetail(data: any) {
+    return this.http.post(this.URL + '/user/profileDetail', data, { headers: { 'Authorization': this.getHeaders() } });
+  }
+  profileWithNfts(data: any) {
+    return this.http.post(this.URL + '/user/profileWithNfts', data, { headers: { 'Authorization': this.getHeaders() } });
+  }
+
   onClickRefresh() {
     window.location.reload();
   }

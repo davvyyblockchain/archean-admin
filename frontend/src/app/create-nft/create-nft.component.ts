@@ -225,7 +225,7 @@ export class CreateNFTComponent implements OnInit {
   getCategories() {
     this.apiService.getCategories().subscribe((res: any) => {
       if (res && res['data']) {
-        this.categoriesList = res['data'];
+        this.categoriesList = res['data'].aCategories;
       }
     }, (err: any) => {
     });
@@ -501,6 +501,35 @@ export class CreateNFTComponent implements OnInit {
 
   }
 
+  onKeyupFIXNumber(e: any, type: any) {
+    if (type == 'quantity') {
+
+      if (e.target.value) {
+        this.createNFTForm.patchValue({ nQuantity: parseInt(e.target.value) })
+      } else {
+        this.createNFTForm.patchValue({ nQuantity: '' })
+
+      }
+    }
+
+    if (type == 'percentage') {
+
+      if (e.target.value) {
+
+        if (parseInt(e.target.value) < 100) {
+          this.createNFTForm.patchValue({ nCollaboratorPercentage: parseInt(e.target.value) })
+
+        } else {
+          this.toaster.warning('Max value allowed 100.');
+          this.createNFTForm.patchValue({ nCollaboratorPercentage: '' })
+
+        }
+      } else {
+        this.createNFTForm.patchValue({ nCollaboratorPercentage: '' })
+      }
+    }
+
+  }
 
   onClickRefresh() {
     window.location.reload();

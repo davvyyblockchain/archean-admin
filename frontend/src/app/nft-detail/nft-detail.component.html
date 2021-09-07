@@ -318,7 +318,7 @@
     <form name="bidForm" [formGroup]="bidForm">
         <div class="sign__group sign__group--row">
             <label class="sign__label" for="placebid">Quantity</label>
-            <input id="placebid" type="text" class="sign__input" (keyup)="checkBuyQNT($event)"
+            <input id="placebid" type="text" class="sign__input" (keyup)="checkBuyQNT($event)" 
                 [ngClass]="{ 'is-invalid': submitted1 && bidForm.controls.nQuantity.errors }"
                 formControlName="nQuantity">
             <div class="nft-err" *ngIf="submitted1 && bidForm.controls.nQuantity.errors">

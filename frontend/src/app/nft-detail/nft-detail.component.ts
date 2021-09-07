@@ -197,7 +197,8 @@ export class NFTDetailComponent implements OnInit, OnDestroy {
   //   NFTData.nBasePrice['$numberDecimal'] :'-' }} 
   checkBuyQNT(e: any) {
     if (e.target.value) {
-      if (parseFloat(e.target.value) <= (parseInt(this.NFTData.nQuantity))) {
+      if (parseInt(e.target.value) <= (parseInt(this.NFTData.nQuantity))) {
+        this.bidForm.patchValue({ 'nQuantity': parseInt(e.target.value) });
 
       } else {
 
@@ -211,7 +212,8 @@ export class NFTDetailComponent implements OnInit, OnDestroy {
   }
   checkBuyQNTT(e: any) {
     if (e.target.value) {
-      if (parseFloat(e.target.value) <= (parseInt(this.NFTData.nQuantity))) {
+      if (parseInt(e.target.value) <= (parseInt(this.NFTData.nQuantity))) {
+        this.transferForm.patchValue({ 'nQuantity': parseInt(e.target.value)  });
 
       } else {
 

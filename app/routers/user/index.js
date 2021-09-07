@@ -17,4 +17,8 @@ router.get("/categories", userController.getCategories);
 router.get("/getAboutusData", userController.getAboutusData);
 router.get("/getFAQsData", userController.getFAQsData);
 router.get("/getTermsData", userController.getTermsData);
+
+router.post("/profileDetail", userController.getUserProfilewithNfts);
+router.post("/profileWithNfts", userController.getUserWithNfts);
+
 module.exports = router;

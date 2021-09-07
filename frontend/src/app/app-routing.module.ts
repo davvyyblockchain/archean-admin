@@ -6,6 +6,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
 import { NFTDetailComponent } from './nft-detail/nft-detail.component';
 import { NFTListComponent } from './nft-list/nft-list.component';
+import { UserDetailComponent } from './user-detail/user-detail.component';
 import { UsersComponent } from './users/users.component';
 
 const routes: Routes = [
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: "marketplace", component: NFTListComponent },
   { path: "users", component: UsersComponent },
   { path: "collections/:name", component: CollectionsComponent },
+  { path: "user-detail/:id", component: UserDetailComponent },
 
 
 ];

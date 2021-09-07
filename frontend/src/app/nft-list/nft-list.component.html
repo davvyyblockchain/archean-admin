@@ -140,15 +140,20 @@
                             <div class="card audio__card">
                                 <div class="card__cover">
 
-                                    <img class="sty img-fluid"
-                                        *ngIf="obj.eType && obj.eType != undefined && obj.eType != 'Audio'"
-                                        src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }} "
-                                        alt="">
+                                    <a href="javascript:;"
+                                        routerLink="/NFT-detail/{{obj._id && obj._id != undefined ? obj._id : '-'}}">
+
+                                        <img class="sty img-fluid"
+                                            *ngIf="obj.eType && obj.eType != undefined && obj.eType != 'Audio'"
+                                            src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }} "
+                                            alt="">
+                                    </a>
+
 
                                     <div class="audioPlayerMain"
                                         *ngIf="obj.eType && obj.eType != undefined && obj.eType == 'Audio'">
                                         <div class="audio__overlay">
-                                            <a href="{{obj._id && obj._id != undefined ? obj._id : '-'}}"
+                                            <!-- <a href="{{obj._id && obj._id != undefined ? obj._id : '-'}}"
                                                 class="play audio-control">
                                                 <span class="iconify" data-icon="akar-icons:play" data-width="45"
                                                     data-height="45"></span>
@@ -157,7 +162,19 @@
                                                 class="pause audio-control d-none">
                                                 <span class="iconify" data-icon="akar-icons:pause" data-width="45"
                                                     data-height="45"></span>
-                                            </a>
+                                            </a> -->
+
+                                            <button value="{{obj._id && obj._id  != undefined ? obj._id : '-'}}"
+                                                class="play audio-control-btn">
+                                                <span class="iconify" data-icon="akar-icons:play" data-width="45"
+                                                    data-height="45"></span>
+                                            </button>
+                                            <button value="{{obj._id && obj._id  != undefined ? obj._id : '-'}}"
+                                                class="pause audio-control-btn d-none">
+                                                <span class="iconify" data-icon="akar-icons:pause" data-width="45"
+                                                    data-height="45"></span>
+                                            </button>
+
                                         </div>
                                         <audio id="{{obj._id && obj._id != undefined ? obj._id : '-'}}" controls
                                             class="sty d-none">
@@ -183,7 +200,11 @@
 
                                     <img src="{{obj.oUser && obj.oUser != undefined && obj.oUser['sProfilePicUrl']!= undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.oUser['sProfilePicUrl'] :'assets/img/avatars/avatar9.jpg' }}"
                                         alt="">
-                                    <a href="javascript:;">{{obj.oUser && obj.oUser != undefined && obj.oUser['oName']!=
+
+
+                                    <a href="javascript:;"
+                                        routerLink="/user-detail/{{obj.oCurrentOwner && obj.oCurrentOwner != undefined  ? obj.oCurrentOwner : '-'}}">{{obj.oUser
+                                        && obj.oUser != undefined && obj.oUser['oName']!=
                                         undefined ?
                                         obj.oUser['oName']['sFirstname'] : '-'}} {{obj.oUser && obj.oUser != undefined
                                         && obj.oUser['oName'] != undefined ?
