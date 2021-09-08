@@ -610,5 +610,228 @@ controllers.getUserWithNfts = async (req, res) => {
     }
 }
 
+controllers.getAllUserDetails = async (req, res) => {
+    try {
+
+        var nLimit = parseInt(req.body.length);
+        var nOffset = parseInt(req.body.start);
+
+        let aggQuery = [];
+        if (!req.userId) {
+            aggQuery = [{
+                '$sort': {
+                    'sCreated': -1
+                }
+            }, {
+                '$project' : {
+                    sWalletAddress: 1,
+                    sUserName: 1,
+                    sEmail: 1,
+                    oName: 1,
+                    sRole: 1,
+                    sCreated: 1,
+                    sStatus: 1,
+                    sHash: 1,
+                    sBio: 1,
+                    sWebsite: 1,
+                    sProfilePicUrl: 1,
+                    aCollaborators: 1,
+                    sResetPasswordToken: 1,
+                    sResetPasswordExpires: 1,
+                    is_user_following: 'false',
+                    user_followings:1,
+                    user_followings_size: {
+                        $cond: {
+                            if: {
+                                $isArray: "$user_followings"
+                            },
+                            then: {
+                                $size: "$user_followings"
+                            },
+                            else: 0
+                        }
+                    }
+                }
+            }, {
+                '$facet': {
+                    'users': [{
+                        "$skip": nOffset
+                    }, {
+                        "$limit": nLimit
+                    }],
+                    'totalCount': [{
+                        '$count': 'count'
+                    }]
+                }
+            }];
+
+        } else {
+            console.log('-------------------}}}}')
+            aggQuery = [{
+                $match: {
+                    _id: { $ne: mongoose.Types.ObjectId(req.userId) }
+                }
+            }, {
+                '$sort': {
+                    'sCreated': -1
+                }
+            }, {
+                $project: {
+                    sWalletAddress: 1,
+                    sUserName: 1,
+                    sEmail: 1,
+                    oName: 1,
+                    sRole: 1,
+                    sCreated: 1,
+                    sStatus: 1,
+                    sHash: 1,
+                    sBio: 1,
+                    sWebsite: 1,
+                    sProfilePicUrl: 1,
+                    aCollaborators: 1,
+                    sResetPasswordToken: 1,
+                    sResetPasswordExpires: 1,
+                    user_followings: {
+                        "$size": {
+                            "$filter": {
+                                "input": "$user_followings",
+                                "as": "user_followings",
+                                "cond": {
+                                    $eq: ["$$user_followings", mongoose.Types.ObjectId(req.userId)]
+                                }
+                            }
+                        }
+                    },
+                    user_followings_size: {
+                        $cond: {
+                            if: {
+                                $isArray: "$user_followings"
+                            },
+                            then: {
+                                $size: "$user_followings"
+                            },
+                            else: 0
+                        }
+                    }
+                }
+            }, {
+                $project: {
+                    sWalletAddress: 1,
+                    sUserName: 1,
+                    sEmail: 1,
+                    oName: 1,
+                    sRole: 1,
+                    sCreated: 1,
+                    sStatus: 1,
+                    sHash: 1,
+                    sBio: 1,
+                    sWebsite: 1,
+                    sProfilePicUrl: 1,
+                    aCollaborators: 1,
+                    sResetPasswordToken: 1,
+                    sResetPasswordExpires: 1,
+                    is_user_following: {
+                        $cond: {
+                            if: {
+                                $gte: ["$user_followings", 1]
+                            },
+                            then: {
+                                $size: 'true'
+                            },
+                            else: 'false'
+                        }
+                    },
+                    user_followings_size: 1
+                }
+            }, {
+                '$facet': {
+                    'users': [{
+                        "$skip": +nOffset
+                    }, {
+                        "$limit": +nLimit
+                    }],
+                    'totalCount': [{
+                        '$count': 'count'
+                    }]
+                }
+            }];
+        }
+        let data = await User.aggregate(aggQuery)
+
+        let iFiltered = data[0].users.length;
+        if (data[0].totalCount[0] == undefined) {
+            return res.reply(messages.success('Data'), {
+                data: 0,
+                "draw": req.body.draw,
+                "recordsTotal": 0,
+                "recordsFiltered": iFiltered,
+            });
+        } else {
+            return res.reply(messages.no_prefix('User Details'), {
+                data: data[0].users,
+                "draw": req.body.draw,
+                "recordsTotal": data[0].totalCount[0].count,
+                "recordsFiltered": iFiltered,
+            });
+        }
+
+    } catch (error) {
+        log.red(error)
+        return res.reply(messages.server_error());
+    }
+}
+
+
+controllers.followUser = async (req, res) => {
+    try {
+        if (!req.userId) return res.reply(messages.unauthorized());
+
+        let {
+            id
+        } = req.body;
+
+        return User.findOne({ _id: mongoose.Types.ObjectId(id) }).then(async (userData) => {
+            if (userData && userData != null) {
+                let followMAINarray = [];
+                followMAINarray = userData.user_followings;
+
+                let flag = '';
+
+                let followARY = userData.user_followings.filter((v) => v.toString() == req.userId.toString());
+
+                if (followARY && followARY.length) {
+                    flag = 'dislike';
+                    var index = followMAINarray.indexOf(followARY[0]);
+                    if (index != -1) {
+                        followMAINarray.splice(index, 1);
+                    }
+                } else {
+                    flag = 'like';
+                    followMAINarray.push(mongoose.Types.ObjectId(req.userId))
+                }
+
+                await User.findByIdAndUpdate({ _id: mongoose.Types.ObjectId(id) }, { $set: { user_followings: followMAINarray } }).then((user) => {
+
+                    if (err) return res.reply(messages.server_error());
+
+                    if (flag == 'like') {
+                        return res.reply(messages.updated('User followed successfully.'));
+                    } else {
+                        return res.reply(messages.updated('User unfollowed successfully.'));
+                    }
+
+                });
+
+
+            } else {
+                return res.reply(messages.bad_request('User not found.'));
+            }
+        })
+
+    } catch (error) {
+        log.red(error)
+        return res.reply(messages.server_error());
+    }
+}
 
 module.exports = controllers;

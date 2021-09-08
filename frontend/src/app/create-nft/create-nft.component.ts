@@ -78,7 +78,7 @@ export class CreateNFTComponent implements OnInit {
 
     } else {
       this.toaster.success('Please signin first.');
-      this.router.navigate([''])
+      // this.router.navigate([''])
     }
 
   }

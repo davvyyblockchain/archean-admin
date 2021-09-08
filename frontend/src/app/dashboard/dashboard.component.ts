@@ -106,4 +106,9 @@ loadSCR(){
   onClickRefresh() {
     window.location.reload();
   }
+
+  goTOUsers(){
+    this.router.navigate(['/users'])
+  }
+
 }

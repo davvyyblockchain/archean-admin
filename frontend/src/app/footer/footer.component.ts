@@ -32,7 +32,7 @@ export class FooterComponent implements OnInit {
     if (localStorage.getItem('Authorization') && localStorage.getItem('Authorization') != null) {
       await this.getCollectionList();
     } else {
-      this.router.navigate([''])
+      // this.router.navigate([''])
 
     }
   }

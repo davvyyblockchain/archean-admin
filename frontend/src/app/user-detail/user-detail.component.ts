@@ -87,7 +87,7 @@ export class UserDetailComponent implements OnInit {
 
 
     } else {
-      this.router.navigate(['']);
+      // this.router.navigate(['']);
 
     }
 

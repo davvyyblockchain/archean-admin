@@ -345,6 +345,13 @@ export class ApiService {
     return this.http.post(this.URL + '/user/profileWithNfts', data, { headers: { 'Authorization': this.getHeaders() } });
   }
 
+  allUserDetails(data: any) {
+    return this.http.post(this.URL + '/user/allDetails', data, { headers: { 'Authorization': this.getHeaders() } });
+  }
+  
+  follow(data: any) {
+    return this.http.post(this.URL + '/user/follow', data, { headers: { 'Authorization': this.getHeaders() } });
+  }
   onClickRefresh() {
     window.location.reload();
   }

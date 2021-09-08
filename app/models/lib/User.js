@@ -34,6 +34,9 @@ const userSchema = mongoose.Schema({
     aCollaborators: Array,
     sResetPasswordToken: String,
     sResetPasswordExpires: String,
+    user_followings:[{
+        type: mongoose.Schema.ObjectId
+    }]
 });
-
+// userSchema.set( 'toJSON', { getters: true } )
 module.exports = mongoose.model('User', userSchema);

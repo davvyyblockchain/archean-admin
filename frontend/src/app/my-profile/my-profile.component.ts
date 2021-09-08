@@ -125,7 +125,7 @@ export class MyProfileComponent implements OnInit {
         }
       }
     } else {
-      this.router.navigate([''])
+      // this.router.navigate([''])
 
     }
   }
