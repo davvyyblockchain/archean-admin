@@ -15,7 +15,7 @@ const routes: Routes = [
   { path: "my-profile", component: MyProfileComponent },
   { path: "NFT-detail/:id", component: NFTDetailComponent },
   { path: "marketplace", component: NFTListComponent },
-  // { path: "users", component: UsersComponent },
+  { path: "users", component: UsersComponent },
   { path: "collections/:name", component: CollectionsComponent },
   { path: "user-detail/:id", component: UserDetailComponent },
 

@@ -3021,7 +3021,7 @@ body::-webkit-scrollbar-thumb {
 }
 @media (min-width: 1200px) {
   .sellers-list {
-    height: 300px;
+    height: 210px;
   }
   .sellers-list li {
     width: 20%;

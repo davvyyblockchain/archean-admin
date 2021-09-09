@@ -70,21 +70,21 @@ $(document).ready(function () {
 		autoHeight: true,
 		responsive: {
 			0: {
-				items: 2,
+				items: 4,
 			},
 			576: {
-				items: 2,
+				items: 4,
 			},
 			768: {
-				items: 3,
+				items: 4,
 				margin: 30,
 			},
 			992: {
-				items: 3,
+				items: 4,
 				margin: 30,
 			},
 			1200: {
-				items: 3,
+				items: 4,
 				margin: 30,
 				mouseDrag: false,
 				dots: false,
@@ -106,21 +106,21 @@ $(document).ready(function () {
 		autoHeight: true,
 		responsive: {
 			0: {
-				items: 1,
+				items: 4,
 			},
 			576: {
-				items: 2,
+				items: 4,
 			},
 			768: {
-				items: 3,
+				items: 4,
 				margin: 30,
 			},
 			992: {
-				items: 3,
+				items: 4,
 				margin: 30,
 			},
 			1200: {
-				items: 3,
+				items: 4,
 				margin: 30,
 				mouseDrag: false,
 				dots: false,
@@ -141,21 +141,21 @@ $(document).ready(function () {
 		autoHeight: true,
 		responsive: {
 			0: {
-				items: 1,
+				items: 4,
 			},
 			576: {
-				items: 2,
+				items: 4,
 			},
 			768: {
-				items: 3,
+				items: 4,
 				margin: 30,
 			},
 			992: {
-				items: 3,
+				items: 4,
 				margin: 30,
 			},
 			1200: {
-				items: 3,
+				items: 4,
 				margin: 30,
 				mouseDrag: false,
 				dots: false,
@@ -177,13 +177,13 @@ $(document).ready(function () {
 		autoHeight: true,
 		responsive: {
 			0: {
-				items: 1,
+				items: 4,
 			},
 			576: {
-				items: 2,
+				items: 4,
 			},
 			768: {
-				items: 3,
+				items: 4,
 				margin: 30,
 			},
 			992: {
@@ -240,10 +240,10 @@ $(document).ready(function () {
 		margin: 20,
 		responsive: {
 			0: {
-				items: 2,
+				items: 4,
 			},
 			576: {
-				items: 3,
+				items: 4,
 				margin: 20,
 			},
 			768: {
@@ -255,11 +255,11 @@ $(document).ready(function () {
 				margin: 30,
 			},
 			1200: {
-				items: 6,
+				items: 4,
 				margin: 30,
 			},
 			1900: {
-				items: 8,
+				items: 4,
 				margin: 30,
 			},
 		}

@@ -243,7 +243,6 @@ export class MyProfileComponent implements OnInit {
       }
       this.apiService.updateProfile(fd).subscribe((updateData: any) => {
         this.spinner.hide();
-
         if (updateData && updateData['data']) {
           this.toaster.success('Profile updted successfully.')
           this.onClickRefresh();
@@ -253,8 +252,13 @@ export class MyProfileComponent implements OnInit {
 
       }, (err: any) => {
         this.spinner.hide();
-        if (err && err['message']) {
+        if (err && err['error']) {
+           err = err['error'];
 
+           if(err && err['message']){
+            this.toaster.error(err['message'])
+
+           }
         }
       });
     }

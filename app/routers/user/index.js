@@ -21,7 +21,7 @@ router.get("/getTermsData", userController.getTermsData);
 router.post("/profileDetail", userController.getUserProfilewithNfts);
 router.post("/profileWithNfts", userController.getUserWithNfts);
 
-router.post("/allDetails", userMiddleware.verifyToken,userController.getAllUserDetails);
+router.post("/allDetails", userMiddleware.verifyWithoutToken,userController.getAllUserDetails);
 router.post("/follow", userMiddleware.verifyToken, userController.followUser);
 
 module.exports = router;

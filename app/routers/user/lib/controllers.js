@@ -618,12 +618,13 @@ controllers.getAllUserDetails = async (req, res) => {
 
         let aggQuery = [];
         if (!req.userId) {
+
             aggQuery = [{
                 '$sort': {
                     'sCreated': -1
                 }
             }, {
-                '$project' : {
+                '$project': {
                     sWalletAddress: 1,
                     sUserName: 1,
                     sEmail: 1,
@@ -639,7 +640,7 @@ controllers.getAllUserDetails = async (req, res) => {
                     sResetPasswordToken: 1,
                     sResetPasswordExpires: 1,
                     is_user_following: 'false',
-                    user_followings:1,
+                    user_followings: 1,
                     user_followings_size: {
                         $cond: {
                             if: {
@@ -666,7 +667,6 @@ controllers.getAllUserDetails = async (req, res) => {
             }];
 
         } else {
-            console.log('-------------------}}}}')
             aggQuery = [{
                 $match: {
                     _id: { $ne: mongoose.Types.ObjectId(req.userId) }
@@ -735,9 +735,7 @@ controllers.getAllUserDetails = async (req, res) => {
                             if: {
                                 $gte: ["$user_followings", 1]
                             },
-                            then: {
-                                $size: 'true'
-                            },
+                            then: 'true',
                             else: 'false'
                         }
                     },
@@ -756,7 +754,9 @@ controllers.getAllUserDetails = async (req, res) => {
                 }
             }];
         }
-        let data = await User.aggregate(aggQuery)
+        let data = await User.aggregate(aggQuery).catch((er) => {
+            console.log('-----------------------err', er)
+        })
 
         let iFiltered = data[0].users.length;
         if (data[0].totalCount[0] == undefined) {
@@ -797,7 +797,7 @@ controllers.followUser = async (req, res) => {
 
                 let flag = '';
 
-                let followARY = userData.user_followings.filter((v) => v.toString() == req.userId.toString());
+                let followARY = userData.user_followings && userData.user_followings.length ? userData.user_followings.filter((v) => v.toString() == req.userId.toString()) : [];
 
                 if (followARY && followARY.length) {
                     flag = 'dislike';
@@ -812,7 +812,7 @@ controllers.followUser = async (req, res) => {
 
                 await User.findByIdAndUpdate({ _id: mongoose.Types.ObjectId(id) }, { $set: { user_followings: followMAINarray } }).then((user) => {
 
-                    if (err) return res.reply(messages.server_error());
+                    // if (err) return res.reply(messages.server_error());
 
                     if (flag == 'like') {
                         return res.reply(messages.updated('User followed successfully.'));

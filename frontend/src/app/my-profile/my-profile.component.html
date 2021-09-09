@@ -21,7 +21,7 @@
                         <div class="author__code">
                             <input type="text"
                                 value="{{profileData && profileData.sWalletAddress ? profileData.sWalletAddress  : ''}}"
-                                id="author-code">
+                                id="author-code" >
                             <button type="button">
                                 <span>Copied</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -309,7 +309,7 @@
                                                 <input
                                                     [ngClass]="{ 'is-invalid': submitted1 && editProfileform.controls.sWalletAddress.errors }"
                                                     formControlName="sWalletAddress" type="text" class="sign__input"
-                                                    placeholder="Enter your Wallet address">
+                                                    placeholder="Enter your Wallet address" readonly>
                                                 <div class="nft-err"
                                                     *ngIf="submitted1 && editProfileform.controls.sWalletAddress.errors">
                                                     <span

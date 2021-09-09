@@ -48,13 +48,13 @@
         <div class="row row--grid">
             <div class="col-12 col-sm-6 col-lg-4 col-xl-3" *ngFor="let obj of listData;">
                 <div class="author">
-                    <a href="javascript:;" class="author__cover author__cover--bg" data-bg="assets/img/bg/bg-small.png">
+                    <a href="javascript:;" routerLink="/user-detail/{{obj && obj != undefined ? obj._id : '-'}}" class="author__cover author__cover--bg" style="background: url('https://wallpaperaccess.com/full/2040078.jpg');">
                     </a>
                     <div class="author__meta">
-                        <a href="javascript:;" class="author__avatar author__avatar--verified">
-                            <img src="{{obj && obj.sProfilePicUrl  ? obj.sProfilePicUrl:'assets/img/avatars/avatar.jpg '}}" alt="">
+                        <a href="javascript:;" class="author__avatar author__avatar--verified" routerLink="/user-detail/{{obj && obj != undefined ? obj._id : '-'}}">
+                            <img src="{{obj && obj.sProfilePicUrl  ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sProfilePicUrl:'assets/img/avatars/avatar.jpg '}}" alt="">
                         </a>
-                        <h3 class="author__name"><a href="javascript:;">{{obj.oName && obj.oName != undefined
+                        <h3 class="author__name"><a href="javascript:;" routerLink="/user-detail/{{obj && obj != undefined ? obj._id : '-'}}">{{obj.oName && obj.oName != undefined
                             ? obj.oName.sFirstname:'-'}} 
                         
                             {{obj.oName && obj.oName!= undefined
@@ -71,7 +71,7 @@
                                 <span>Followers</span>
                             </div>
                             <button class="author__follow" type="button" (click)="onClickFollow(obj._id)" *ngIf="obj.is_user_following == 'false'">Follow</button>
-                            <button class="author__follow author__follow--true" type="button" click)="onClickFollow(obj._id)" *ngIf="obj.is_user_following == 'true'">Unfollow</button>
+                            <button class="author__follow author__follow--true" type="button" (click)="onClickFollow(obj._id)" *ngIf="obj.is_user_following == 'true'">Unfollow</button>
 
                         </div>
                     </div>
@@ -79,7 +79,7 @@
             </div>
 
 
-
+<!-- 
             <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
                 <div class="author">
                     <a href="author.html" class="author__cover author__cover--bg" data-bg="assets/img/bg/bg-small2.png">
@@ -100,7 +100,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
         </div>
         <!-- end authors -->

@@ -55,7 +55,7 @@ export class UsersComponent implements OnInit {
     })
 
 
-    // await this.getUsersListingData(this.searchData);
+    await this.getUsersListingData(this.searchData);
 
 
     // 
@@ -97,7 +97,7 @@ export class UsersComponent implements OnInit {
   onClickFollow(id:any) {
     if (localStorage.getItem('Authorization') && localStorage.getItem('Authorization') != null) {
 
-      this.apiService.updateProfile({id:id}).subscribe((updateData: any) => {
+      this.apiService.follow({id:id}).subscribe((updateData: any) => {
         this.spinner.hide();
 
         if (updateData && updateData['data']) {
@@ -121,5 +121,11 @@ export class UsersComponent implements OnInit {
   }
   onClickRefresh() {
     window.location.reload();
+  }
+
+  rendomIMG(){
+    console.log('---------------------caLLII---')
+    let n = (Math.random() * 0xfffff * 1000000).toString(16);
+    return '#' + n.slice(0, 6);
   }
 }
