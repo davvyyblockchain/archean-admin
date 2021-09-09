@@ -125,8 +125,8 @@ export class MyProfileComponent implements OnInit {
         }
       }
     } else {
-      // this.router.navigate([''])
-
+      this.toaster.error('Please Signin / Signup first.')
+      this.router.navigate([''])
     }
   }
 
