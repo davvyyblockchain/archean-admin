@@ -61,7 +61,7 @@ export class UserDetailComponent implements OnInit {
     })
 
 
-    if (localStorage.getItem('Authorization') && localStorage.getItem('Authorization') != null) {
+    // if (localStorage.getItem('Authorization') && localStorage.getItem('Authorization') != null) {
 
 
       this.apiService.profileDetail({ userId: id }).subscribe((res: any) => {
@@ -86,10 +86,10 @@ export class UserDetailComponent implements OnInit {
       await this.getNFTListingData(this.searchData);
 
 
-    } else {
+    // } else {
       // this.router.navigate(['']);
 
-    }
+    // }
 
   }
 

@@ -38,37 +38,38 @@ export class NFTListComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    let scripts = [];
-    scripts = [
-      "../../assets/js/jquery-3.5.1.min.js",
-      "../../assets/js/bootstrap.bundle.min.js",
-      "../../assets/js/owl.carousel.min.js",
-      "../../assets/js/jquery.magnific-popup.min.js",
-      "../../assets/js/select2.min.js",
-      "../../assets/js/smooth-scrollbar.js",
-      "../../assets/js/jquery.countdown.min.js",
-      "../../assets/js/main.js",
-    ];
 
-    this._script.loadScripts("app-nft-list", scripts).then(function () {
 
-    })
 
+    const that = this;
+    document.addEventListener("DOMContentLoaded", function () {
+      let scripts = [];
+      scripts = [
+        "../../assets/js/jquery-3.5.1.min.js",
+        "../../assets/js/bootstrap.bundle.min.js",
+        "../../assets/js/owl.carousel.min.js",
+        "../../assets/js/jquery.magnific-popup.min.js",
+        "../../assets/js/select2.min.js",
+        "../../assets/js/smooth-scrollbar.js",
+        "../../assets/js/jquery.countdown.min.js",
+        "../../assets/js/main.js",
+      ];
+      that._script.loadScripts("app-nft-list", scripts).then(function () {
+
+      })
+    });
     // if (localStorage.getItem('Authorization') && localStorage.getItem('Authorization') != null) {
-      await this.getNFTListingData(this.searchData);
+    await this.getNFTListingData(this.searchData);
     // } else {
     //   this.toaster.info('Please login first.')
     //   this.router.navigate([''])
     // }
   }
 
-  // api/v1/nft/nftListing  POST
-  // api/v1/nft/viewnft/61129d701bf84242a9127486    GET
-
   getNFTListingData(obj: any) {
 
     this.apiService.nftListing(obj).subscribe(async (data: any) => {
-      
+
       if (data && data['data']) {
         let res = await data['data'];
         this.filterData = res;
@@ -119,14 +120,14 @@ export class NFTListComponent implements OnInit {
 
   }
 
-  async onSelectCategory(e: any){
-     // if(checked == true){
-      this.searchData['eType'] = [e.target.value];
-      // }
-      await this.getNFTListingData(this.searchData);
+  async onSelectCategory(e: any) {
+    // if(checked == true){
+    this.searchData['eType'] = [e.target.value];
+    // }
+    await this.getNFTListingData(this.searchData);
   }
 
-  async onkeyUp(e:any){
+  async onkeyUp(e: any) {
     this.searchData['sTextsearch'] = e.target.value;
     // }
     await this.getNFTListingData(this.searchData);

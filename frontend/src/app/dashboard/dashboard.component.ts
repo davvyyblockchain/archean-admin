@@ -20,7 +20,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     onAuction: [],
     onSale: [],
     recentlyAdded: [],
-    users:[]
+    users: []
   };
 
   constructor(
@@ -35,23 +35,26 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
 
   }
-loadSCR(){
-  let scripts = [];
-  scripts = [
-    "../../assets/js/jquery-3.5.1.min.js",
-    "../../assets/js/bootstrap.bundle.min.js",
-    "../../assets/js/jquery.magnific-popup.min.js",
-    "../../assets/js/owl.carousel.min.js",
-    "../../assets/js/select2.min.js",
-    "../../assets/js/smooth-scrollbar.js",
-    "../../assets/js/jquery.countdown.min.js",
-    "../../assets/js/main.js",
-  ];
+  loadSCR() {
+    const that = this;
+    document.addEventListener("DOMContentLoaded", function () {
+      let scripts = [];
+      scripts = [
+        "../../assets/js/jquery-3.5.1.min.js",
+        "../../assets/js/bootstrap.bundle.min.js",
+        "../../assets/js/jquery.magnific-popup.min.js",
+        "../../assets/js/owl.carousel.min.js",
+        "../../assets/js/select2.min.js",
+        "../../assets/js/smooth-scrollbar.js",
+        "../../assets/js/jquery.countdown.min.js",
+        "../../assets/js/main.js",
+      ];
 
-  this._script.loadScripts("app-dashboard", scripts).then(function () {
+      that._script.loadScripts("app-dashboard", scripts).then(function () {
 
-  })
-}
+      })
+    });
+  }
   async ngOnInit() {
     this.loadSCR();
     await this.apiService.landingPage().subscribe(async (data: any) => {
@@ -69,9 +72,9 @@ loadSCR(){
           "../../assets/js/jquery.countdown.min.js",
           "../../assets/js/main.js",
         ];
-      
+
         this._script.loadScripts("app-dashboard", scripts).then(function () {
-      
+
         })
       }
 
@@ -85,7 +88,7 @@ loadSCR(){
     this.spinner.show();
     this.apiService.connect().then((data: any) => {
       this.spinner.hide();
-      if(data && data != 'error'){
+      if (data && data != 'error') {
         this.toaster.success('User Connected Successfully');
         this.onClickRefresh();
       }
@@ -104,7 +107,7 @@ loadSCR(){
     window.location.reload();
   }
 
-  goTOUsers(){
+  goTOUsers() {
     this.router.navigate(['/users'])
   }
 
