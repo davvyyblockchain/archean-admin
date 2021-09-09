@@ -266,7 +266,7 @@ async function bidsChecker() {
         console.log(error);
     }
 }
-// setInterval(() => {
-//     mintChecker();
-//     bidsChecker();
-// }, 5000);
+setInterval(() => {
+    mintChecker();
+    bidsChecker();
+}, 5000);
