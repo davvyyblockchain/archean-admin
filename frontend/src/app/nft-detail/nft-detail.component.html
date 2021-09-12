@@ -51,7 +51,8 @@
                             </button>
                         </div>
 
-                        <audio id="{{NFTData._id && NFTData._id  != undefined ? NFTData._id : '-'}}" controls controlsList="nodownload" style="margin: 500px 0px 0px 250px"
+                        <audio id="{{NFTData._id && NFTData._id  != undefined ? NFTData._id : '-'}}" controls
+                            controlsList="nodownload" style="margin: 500px 0px 0px 250px"
                             src="{{NFTData.sHash && NFTData.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+NFTData.sHash :'assets/img/cover/cover-big.jpg' }}"
                             type="audio/mp3" id="src" class="sty ">
                         </audio>
@@ -131,22 +132,19 @@
 
                     <!-- tabs -->
                     <ul class="nav nav-tabs asset__tabs" role="tablist">
-
-                        <li class="nav-item  active">
-                            <a class="nav-link active" data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-2"
+                        <li class="nav-item active">
+                            <a class="nav-link active" data-toggle="tab" href="#tab-3" role="tab" aria-controls="tab-3"
+                                aria-selected="false">History</a>
+                        </li>
+                        <li class="nav-item  ">
+                            <a class="nav-link " data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-2"
                                 aria-selected="false">Bids</a>
                         </li>
-
-                        <!-- 
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#tab-3" role="tab" aria-controls="tab-3"
-                                aria-selected="false">Details</a>
-                        </li> -->
                     </ul>
 
                     <div class="tab-content">
 
-                        <div class="tab-pane fade show active" id="tab-2" role="tabpanel">
+                        <div class="tab-pane fade " id="tab-2" role="tabpanel">
                             <ng-container *ngIf="historyData && historyData.length">
                                 <div class="asset__actions" *ngFor="let obj of historyData;">
                                     <ng-container *ngIf=" obj.eBidStatus == 'Bid'">
@@ -179,21 +177,134 @@
                                 </div>
                             </ng-container>
                         </div>
+                        <!-- // history tab -->
+                        <div class="tab-pane fade show active" id="tab-3" role="tabpanel">
+                            <ng-container *ngIf="historyData && historyData.length">
+                                <div class="asset__actions" *ngFor="let obj of historyData;">
+                                    <ng-container
+                                        *ngIf="obj.eBidStatus != 'Bid' && obj.eBidStatus != 'Canceled' && obj.eBidStatus != 'Rejected'">
 
-                        <div class="tab-pane fade" id="tab-3" role="tabpanel">
-                            <ul class="asset__authors asset__authors--tab">
-                                <li>
-                                    <span>Owner</span>
-                                    <div class="asset__author asset__author--verified">
-                                        <img src="assets/img/avatars/avatar5.jpg" alt="">
-                                        <a href="author.html">@midinh</a>
+                                        <!-- -for BID -->
+                                        <div class="asset__action asset__action--verified"
+                                            *ngIf="obj.eBidStatus == 'Accepted'">
+                                            <img src="{{obj.oBidder && obj.oBidder != undefined && obj.oBidder['sProfilePicUrl']!= undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.oBidder['sProfilePicUrl'] :'assets/img/avatars/avatar10.jpg' }}"
+                                                alt="">
+                                            <p> Bid placed for <b>{{obj && obj.nBidPrice && obj.nBidPrice &&
+                                                    obj.nBidPrice['$numberDecimal'] != undefined ?
+                                                    obj.nBidPrice['$numberDecimal'] :0}} BNB</b> by <br>
+                                                <a href="javascript:;"
+                                                    routerLink="/user-detail/{{obj.oBidder && obj.oBidder != undefined  ? obj.oBidder._id : '-'}}">{{obj.oBidder
+                                                    && obj.oBidder != undefined &&
+                                                    obj.oBidder['sWalletAddress']!= undefined ?
+                                                    (obj.oBidder['sWalletAddress']| slice:0:5) :'0x000'}}...
+                                                    {{obj.oBidder && obj.oBidder != undefined &&
+                                                    obj.oBidder['sWalletAddress']!= undefined ?
+                                                    (obj.oBidder['sWalletAddress']| slice:-4) :'0000'}}</a>
+                                                {{obj && obj.sCreated &&
+                                                obj.sCreated != undefined ?
+                                                (obj.sCreated | date: 'medium'):0}}.
+                                            </p>
+                                        </div>
+                                        <!-- -for Transfer -->
+                                        <div class="asset__action asset__action--verified"
+                                            *ngIf="obj.eBidStatus == 'Transfer'">
+                                            <img src="{{obj.oRecipient && obj.oRecipient != undefined && obj.oRecipient['sProfilePicUrl']!= undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.oRecipient['sProfilePicUrl'] :'assets/img/avatars/avatar10.jpg' }}"
+                                                alt="">
+                                            <p> Transferred to
+                                                <a href="javascript:;"
+                                                    routerLink="/user-detail/{{obj.oRecipient && obj.oRecipient != undefined  ? obj.oRecipient._id : '-'}}">{{obj.oRecipient
+                                                    && obj.oRecipient != undefined
+                                                    && obj.oRecipient['sWalletAddress']!= undefined ?
+                                                    (obj.oRecipient['sWalletAddress']| slice:0:5) :'0x000'}}...
+                                                    {{obj.oRecipient && obj.oRecipient != undefined &&
+                                                    obj.oRecipient['sWalletAddress']!= undefined ?
+                                                    (obj.oRecipient['sWalletAddress']| slice:-4) :'0000'}}</a>
+                                                by <br>
+                                                <a href="javascript:;"
+                                                    routerLink="/user-detail/{{obj.oBidder && obj.oBidder != undefined  ? obj.oBidder._id : '-'}}">{{obj.oBidder
+                                                    && obj.oBidder != undefined &&
+                                                    obj.oBidder['sWalletAddress']!= undefined ?
+                                                    (obj.oBidder['sWalletAddress']| slice:0:5) :'0x000'}}...
+                                                    {{obj.oBidder && obj.oBidder != undefined &&
+                                                    obj.oBidder['sWalletAddress']!= undefined ?
+                                                    (obj.oBidder['sWalletAddress']| slice:-4) :'0000'}} </a>
+                                                {{obj && obj.sCreated &&
+                                                obj.sCreated != undefined ?
+                                                (obj.sCreated | date: 'medium'):0}}.
+                                            </p>
+                                        </div>
+                                        <!-- -for SOLD -->
+                                        <div class="asset__action asset__action--verified"
+                                            *ngIf="obj.eBidStatus == 'Sold'">
+                                            <img src="{{obj.oBidder && obj.oBidder != undefined && obj.oBidder['sProfilePicUrl']!= undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.oBidder['sProfilePicUrl'] :'assets/img/avatars/avatar10.jpg' }}"
+                                                alt="">
+                                            <p> Purchased for <b>{{obj && obj.nBidPrice && obj.nBidPrice &&
+                                                    obj.nBidPrice['$numberDecimal'] != undefined ?
+                                                    obj.nBidPrice['$numberDecimal'] :0}} BNB</b> by <br>
+                                                <a href="javascript:;"
+                                                    routerLink="/user-detail/{{obj.oBidder && obj.oBidder != undefined  ? obj.oBidder._id : '-'}}">{{obj.oBidder
+                                                    && obj.oBidder != undefined &&
+                                                    obj.oBidder['sWalletAddress']!= undefined ?
+                                                    (obj.oBidder['sWalletAddress']| slice:0:5) :'0x000'}}...
+                                                    {{obj.oBidder && obj.oBidder != undefined &&
+                                                    obj.oBidder['sWalletAddress']!= undefined ?
+                                                    (obj.oBidder['sWalletAddress']| slice:-4) :'0000'}} </a>
+                                                {{obj && obj.sCreated &&
+                                                obj.sCreated != undefined ?
+                                                (obj.sCreated | date: 'medium'):0}}.
+                                            </p>
+                                        </div>
+
+                                    </ng-container>
+                                </div>
+
+
+                                <div class="asset__action asset__action--verified">
+                                    <img src="{{NFTData.oPostedBy && NFTData.oPostedBy != undefined && NFTData.oPostedBy['sProfilePicUrl']!= undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+NFTData.oPostedBy['sProfilePicUrl'] :'assets/img/avatars/avatar10.jpg' }}"
+                                        alt="">
+                                    <p>
+                                        Minted by
+                                        <a href="javascript:;"
+                                            routerLink="/user-detail/{{NFTData.oPostedBy && NFTData.oPostedBy != undefined  ? NFTData.oPostedBy._id : '-'}}">{{NFTData.oPostedBy
+                                            && NFTData.oPostedBy != undefined &&
+                                            NFTData.oPostedBy['sWalletAddress']!= undefined ?
+                                            (NFTData.oPostedBy['sWalletAddress']| slice:0:5) :'0x000'}}...
+                                            {{NFTData.oPostedBy && NFTData.oPostedBy != undefined &&
+                                            NFTData.oPostedBy['sWalletAddress']!= undefined ?
+                                            (NFTData.oPostedBy['sWalletAddress']| slice:-4) :'0000'}}
+                                            {{NFTData && NFTData.sCreated &&
+                                            NFTData.sCreated != undefined ?
+                                            (NFTData.sCreated | date: 'medium'):0}}</a>
+
+                                    </p>
+                                </div>
+
+                                
+                            </ng-container>
+                            <ng-container *ngIf="historyData && !historyData.length">
+                                <div class="asset__actions">
+                                    <div class="asset__action ">
+                                        <img src="{{NFTData.oPostedBy && NFTData.oPostedBy != undefined && NFTData.oPostedBy['sProfilePicUrl']!= undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+NFTData.oPostedBy['sProfilePicUrl'] :'assets/img/avatars/avatar10.jpg' }}"
+                                            alt="">
+                                        <p>
+                                            Minted by
+                                            <a href="javascript:;"
+                                                routerLink="/user-detail/{{NFTData.oPostedBy && NFTData.oPostedBy != undefined  ? NFTData.oPostedBy._id : '-'}}">{{NFTData.oPostedBy
+                                                && NFTData.oPostedBy != undefined &&
+                                                NFTData.oPostedBy['sWalletAddress']!= undefined ?
+                                                (NFTData.oPostedBy['sWalletAddress']| slice:0:5) :'0x000'}}...
+                                                {{NFTData.oPostedBy && NFTData.oPostedBy != undefined &&
+                                                NFTData.oPostedBy['sWalletAddress']!= undefined ?
+                                                (NFTData.oPostedBy['sWalletAddress']| slice:-4) :'0000'}}
+                                                {{NFTData && NFTData.sCreated &&
+                                                NFTData.sCreated != undefined ?
+                                                (NFTData.sCreated | date: 'medium'):0}}</a>
+
+                                        </p>
                                     </div>
-                                </li>
-                                <li>
-                                    <span>Year created</span>
-                                    <p>2021</p>
-                                </li>
-                            </ul>
+
+                                </div>
+                            </ng-container>
                         </div>
                     </div>
                     <!-- end tabs -->
@@ -270,7 +381,7 @@
                             obj.oBidder['sUserName'] :0}}</td>
                         <td>{{obj && obj.oRecipient && obj.oRecipient &&
                             obj.oRecipient['sUserName'] != undefined ?
-                            obj.oRecipient['sUserName'] :0}}</td>
+                            obj.oRecipient['sUserName'] : '-'}}</td>
                         <td> {{obj && obj.nQuantity &&
                             obj.nQuantity != undefined ?
                             obj.nQuantity :0}}</td>
@@ -318,7 +429,7 @@
     <form name="bidForm" [formGroup]="bidForm">
         <div class="sign__group sign__group--row">
             <label class="sign__label" for="placebid">Quantity</label>
-            <input id="placebid" type="text" class="sign__input" (keyup)="checkBuyQNT($event)" 
+            <input id="placebid" type="text" class="sign__input" (keyup)="checkBuyQNT($event)"
                 [ngClass]="{ 'is-invalid': submitted1 && bidForm.controls.nQuantity.errors }"
                 formControlName="nQuantity">
             <div class="nft-err" *ngIf="submitted1 && bidForm.controls.nQuantity.errors">
@@ -419,10 +530,9 @@
 
         <div class="sign__group sign__group--row">
             <label class="sign__label" for="placebid">Price</label>
-            <input id="placebid" type="text" class="sign__input" value="{{NFTData.nBasePrice && NFTData.nBasePrice != undefined && NFTData.nBasePrice['$numberDecimal'] != undefined ?
+            <input id="placebid" type="text" formControlName="nBidPrice" class="sign__input" value="{{NFTData.nBasePrice && NFTData.nBasePrice != undefined && NFTData.nBasePrice['$numberDecimal'] != undefined ?
             NFTData.nBasePrice['$numberDecimal'] :'-' }}"
-                [ngClass]="{ 'is-invalid': submitted3 && buyForm.controls.nBidPrice.errors }"
-                formControlName="nBidPrice" />
+                [ngClass]="{ 'is-invalid': submitted3 && buyForm.controls.nBidPrice.errors }" />
             <div class="nft-err" *ngIf="submitted3 && buyForm.controls.nBidPrice.errors">
                 <span *ngIf="buyForm.controls.nBidPrice.errors?.required">This field is
                     required.</span>

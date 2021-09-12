@@ -3,7 +3,7 @@ const bidController = require('./lib/controllers');
 const bidMiddleware = require('./lib/middleware');
 
 router.post('/create', bidMiddleware.verifyToken, bidController.create);
-router.post('/history/:nNFTId', bidMiddleware.verifyToken, bidController.getBidHistoryOfItem);
+router.post('/history/:nNFTId',bidController.getBidHistoryOfItem);
 router.post('/toggleBidStatus', bidMiddleware.verifyToken, bidController.toggleBidStatus);
 router.post('/bidByUser', bidMiddleware.verifyToken, bidController.bidByUser);
 

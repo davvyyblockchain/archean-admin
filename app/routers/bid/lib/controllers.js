@@ -70,16 +70,20 @@ controllers.create = async (req, res) => {
             }, (err, bid) => {
 
                 if (req.body.eBidStatus == "Bid" && req.body.sOwnerEmail != '') {
-                    nodemailer.send('Bid_Place.html', {
-                        SITE_NAME: 'Decrypt NFT',
-                        USERNAME: req.body.sOwnerEmail,
-                        ACTIVELINK: `${process.env.URL}/NFT-detail/${req.body.oNFTId}`, //`${process.env.URL}:${process.env.PORT}/viewNFT/${req.body.oNFTId}`,
-                        TEXT: 'Someone Placed Bid on your NFT.'
-                    }, {
-                        from: process.env.SMTP_USERNAME,
-                        to: req.body.sOwnerEmail,
-                        subject: 'Bid Place'
-                    });
+
+                    if (req.body.sOwnerEmail && req.body.sOwnerEmail != undefined && req.body.sOwnerEmail != '' && req.body.sOwnerEmail != '-') {
+
+                        nodemailer.send('Bid_Place.html', {
+                            SITE_NAME: 'Decrypt NFT',
+                            USERNAME: req.body.sOwnerEmail,
+                            ACTIVELINK: `${process.env.URL}/NFT-detail/${req.body.oNFTId}`, //`${process.env.URL}:${process.env.PORT}/viewNFT/${req.body.oNFTId}`,
+                            TEXT: 'Someone Placed Bid on your NFT.'
+                        }, {
+                            from: process.env.SMTP_USERNAME,
+                            to: req.body.sOwnerEmail,
+                            subject: 'Bid Place'
+                        });
+                    }
                 }
 
                 if (err) return res.reply(messages.server_error());
@@ -180,16 +184,19 @@ controllers.create = async (req, res) => {
                         }
                     }
                     if (req.body.eBidStatus == "Bid") {
-                        nodemailer.send('Bid_Place.html', {
-                            SITE_NAME: 'Decrypt NFT',
-                            USERNAME: req.body.sOwnerEmail,
-                            ACTIVELINK: `${process.env.URL}/NFT-detail/${req.body.oNFTId}`,// `${process.env.URL}:${process.env.PORT}/viewNFT/${req.body.oNFTId}`,
-                            TEXT: 'Someone Placed Bid on your NFT.'
-                        }, {
-                            from: process.env.SMTP_USERNAME,
-                            to: req.body.sOwnerEmail,
-                            subject: 'Bid Place'
-                        })
+                        if (req.body.sOwnerEmail && req.body.sOwnerEmail != undefined && req.body.sOwnerEmail != '' && req.body.sOwnerEmail != '-') {
+
+                            nodemailer.send('Bid_Place.html', {
+                                SITE_NAME: 'Decrypt NFT',
+                                USERNAME: req.body.sOwnerEmail,
+                                ACTIVELINK: `${process.env.URL}/NFT-detail/${req.body.oNFTId}`,// `${process.env.URL}:${process.env.PORT}/viewNFT/${req.body.oNFTId}`,
+                                TEXT: 'Someone Placed Bid on your NFT.'
+                            }, {
+                                from: process.env.SMTP_USERNAME,
+                                to: req.body.sOwnerEmail,
+                                subject: 'Bid Place'
+                            })
+                        }
 
                     }
                     // if (req.body.eBidStatus == "Sold")
@@ -250,7 +257,7 @@ controllers.getBidHistoryOfItem = async (req, res, next) => {
             }
         }, {
             '$sort': {
-                '_id': -1
+                'sCreated': -1
             }
         }, { $unwind: '$oBidder' }, { $unwind: '$oRecipient' }, {
             '$facet': {
@@ -262,7 +269,6 @@ controllers.getBidHistoryOfItem = async (req, res, next) => {
                 }]
             }
         }]);
-        console.log('-------------data', data)
         let iFiltered = data[0].bids.length;
         if (data[0].totalCount[0] == undefined) {
             return res.reply(messages.no_prefix('Bid Details'), {
@@ -316,7 +322,7 @@ controllers.toggleBidStatus = async (req, res, next) => {
             }, (error) => {
                 if (error) throw error;
             });
-            if (req.body.sCurrentUserEmail != 'undefined') {
+            if (req.body.sCurrentUserEmail && req.body.sCurrentUserEmail != undefined && req.body.sCurrentUserEmail != '' && req.body.sCurrentUserEmail != '-') {
                 console.log('----------------------------------send 1')
                 let a = await nodemailer.send('Bid_Place.html', {
                     SITE_NAME: 'Decrypt NFT',
@@ -412,7 +418,7 @@ controllers.toggleBidStatus = async (req, res, next) => {
 
                 if (req.body.eBidStatus == "Rejected") {
 
-                    if (req.body.sCurrentUserEmail != 'undefined') {
+                    if (req.body.sCurrentUserEmail && req.body.sCurrentUserEmail != undefined && req.body.sCurrentUserEmail != '' && req.body.sCurrentUserEmail != '-') {
 
                         nodemailer.send('Bid_Place.html', {
                             SITE_NAME: 'Decrypt NFT',

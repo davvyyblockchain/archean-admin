@@ -2,7 +2,8 @@ const fs = require('fs');
 const {
     NFT,
     Collection,
-    User
+    User,
+    Bid
 } = require('../../../models');
 const pinataSDK = require('@pinata/sdk');
 const multer = require('multer');
@@ -611,6 +612,7 @@ controllers.nftID = async (req, res) => {
         aNFT = aNFT.toObject();
         aNFT.sCollectionDetail = {};
         aNFT.sCollectionDetail = await Collection.findOne({ sName: aNFT.sCollection && aNFT.sCollection != undefined ? aNFT.sCollection : '-' })
+
         var token = req.headers.authorization;
         if (token) {
             token = token.replace('Bearer ', '');

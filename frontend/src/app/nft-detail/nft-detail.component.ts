@@ -78,37 +78,20 @@ export class NFTDetailComponent implements OnInit, OnDestroy {
     this.buildTransferForm();
     this.buildBUYForm();
 
-    if (localStorage.getItem('Authorization') && localStorage.getItem('Authorization') != null) {
-      let id = this._route.snapshot.params['id'];
+    let id = this._route.snapshot.params['id'];
+    if (id && id != null && id != undefined && id != '') {
 
       await this.getNFTViewData(id);
 
       await this.getBidHistory(id);
-      await this.getColoboraterList();
-      // let obj = {
-      //   eBidStatus: "Bid",
-      //   nBidPrice: 1.1,
-      //   nQuantity: "1",
-      //   nTokenID: 27,
-      //   oNFTId: "611e8aaea867e7282e50512e",
-      //   oRecipient: "611417d43185a6468b27adea",
-      //   sOwnerEmail: "davvy@blockchainaustralia.com.au",
-      //   sTransactionHash: "0xf5af14b4bb17bc97de6c493de3c158cdc8b485cfa2a2b67f9b13bb223f057a54",
-      // }
-      // await this.apiService.bidCreate(obj).subscribe(async (transData: any) => {
-      //   if (transData && transData['data']) {
-      //   } else {
-      //     this.toaster.success(transData['message']);
-      //   }
-      // })
-      // this.apiService.getBehaviorView().subscribe((e:any)=>{
-      //     if(e){
-      //       console.log('------------e----------',e.wallet_address);
-
-      //     }
-      // })
+      if (localStorage.getItem('Authorization') && localStorage.getItem('Authorization') != null) {
+        await this.getColoboraterList();
+      }
+      
     } else {
-      // this.router.navigate([''])
+      this.toaster.info('There is some issue with route.')
+      this.router.navigate(['']);
+
     }
   }
 
@@ -408,62 +391,65 @@ export class NFTDetailComponent implements OnInit, OnDestroy {
         return;
       } else {
         let res = this.buyForm.value;
-        if (parseFloat(res.nBidPrice) >= parseFloat(this.NFTData.nBasePrice['$numberDecimal'])) {
+        console.log('----res----------', res);
+        console.log('----this.NFTData.nBasePrice----------', this.NFTData.nBasePrice)
 
-          let nTokenID = await this.NFTData.nTokenID && this.NFTData.nTokenID != undefined ? this.NFTData.nTokenID : 1;
-          let price: any = parseFloat(res.nBidPrice) * parseFloat(res.nQuantity);
-          let obj = {
-            oRecipient: this.NFTData['oCurrentOwner']['_id'],
-            eBidStatus: this.NFTData['eAuctionType'] == "Fixed Sale" ? 'Sold' : 'Bid',
-            nBidPrice: parseFloat(price),
-            nQuantity: res.nQuantity,
-            oNFTId: this.NFTData['_id'],
-            sTransactionHash: '',
-            nTokenID: nTokenID,
-            sOwnerEmail: this.NFTData.oCurrentOwner && this.NFTData.oCurrentOwner.sEmail &&
-              this.NFTData.oCurrentOwner.sEmail != undefined ?
-              this.NFTData.oCurrentOwner.sEmail : '-'
-          };
-          this.spinner.show();
-          var NFTinstance = await this.apiService.exportInstance(environment.NFTaddress, environment.NFTabi);
-          if (NFTinstance && NFTinstance != undefined) {
-            this.spinner.hide();
-
-            this.spinner.show();
-            NFTinstance.methods.buyNow(nTokenID, this.NFTData.oCurrentOwner.sWalletAddress, this.showObj.wallet_address, obj['nQuantity'])
-              .send({
-                from: this.showObj.wallet_address,
-                value: window.web3.utils.toWei(`${obj.nBidPrice}`, 'ether')
-              })
-              .on('transactionHash', async (hash: any) => {
-                obj["sTransactionHash"] = hash;
-
-                await this.apiService.bidCreate(obj).subscribe(async (transData: any) => {
-                  this.spinner.hide();
-                  if (transData && transData['data']) {
-                    this.toaster.success('Bid created successfully');
-                    this.onClickRefresh();
-                  } else {
-                    this.toaster.success(transData['message']);
-                  }
-                })
-              })
-              .catch((error: any) => {
-
-                this.toaster["error"]((error.code == 4001) ? "You Denied MetaMask Transaction Signature" : "Something Went Wrong!");
-              });
-
-          } else {
-            this.spinner.hide();
-            this.toaster.error("There is something issue with NFT address.");
-
-          }
-        } else {
+        // if (parseFloat(res.nBidPrice) >= parseFloat(this.NFTData.nBasePrice['$numberDecimal'])) {
+        res.nBidPrice = parseFloat(this.NFTData.nBasePrice['$numberDecimal'])
+        let nTokenID = await this.NFTData.nTokenID && this.NFTData.nTokenID != undefined ? this.NFTData.nTokenID : 1;
+        let price: any = parseFloat(res.nBidPrice) * parseFloat(res.nQuantity);
+        let obj = {
+          oRecipient: this.NFTData['oCurrentOwner']['_id'],
+          eBidStatus: this.NFTData['eAuctionType'] == "Fixed Sale" ? 'Sold' : 'Bid',
+          nBidPrice: parseFloat(price),
+          nQuantity: res.nQuantity,
+          oNFTId: this.NFTData['_id'],
+          sTransactionHash: '',
+          nTokenID: nTokenID,
+          sOwnerEmail: this.NFTData.oCurrentOwner && this.NFTData.oCurrentOwner.sEmail &&
+            this.NFTData.oCurrentOwner.sEmail != undefined ?
+            this.NFTData.oCurrentOwner.sEmail : '-'
+        };
+        this.spinner.show();
+        var NFTinstance = await this.apiService.exportInstance(environment.NFTaddress, environment.NFTabi);
+        if (NFTinstance && NFTinstance != undefined) {
           this.spinner.hide();
 
-          this.bidForm.patchValue({ 'nBidPrice': '' });
-          this.toaster.info('Please enter minimum & greater then minimum Bid amount.')
+          this.spinner.show();
+          NFTinstance.methods.buyNow(nTokenID, this.NFTData.oCurrentOwner.sWalletAddress, this.showObj.wallet_address, obj['nQuantity'])
+            .send({
+              from: this.showObj.wallet_address,
+              value: window.web3.utils.toWei(`${obj.nBidPrice}`, 'ether')
+            })
+            .on('transactionHash', async (hash: any) => {
+              obj["sTransactionHash"] = hash;
+
+              await this.apiService.bidCreate(obj).subscribe(async (transData: any) => {
+                this.spinner.hide();
+                if (transData && transData['data']) {
+                  this.toaster.success('NFT bought successfully');
+                  this.onClickRefresh();
+                } else {
+                  this.toaster.success(transData['message']);
+                }
+              })
+            })
+            .catch((error: any) => {
+
+              this.toaster["error"]((error.code == 4001) ? "You Denied MetaMask Transaction Signature" : "Something Went Wrong!");
+            });
+
+        } else {
+          this.spinner.hide();
+          this.toaster.error("There is something issue with NFT address.");
+
         }
+        // } else {
+        //   this.spinner.hide();
+
+        //   this.bidForm.patchValue({ 'nBidPrice': '' });
+        //   this.toaster.info('Please enter minimum & greater then minimum Bid amount.')
+        // }
 
       }
     } else {
