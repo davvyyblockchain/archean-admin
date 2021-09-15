@@ -8,16 +8,16 @@
             <div class="col-12 col-xl-3">
                 <div class="author author--page">
                     <div class="author__meta">
-                        <a href="author.html" class="author__avatar author__avatar--verified">
+                        <a href="javascript:;" class="author__avatar author__avatar--verified">
                             <img src="{{profileData && profileData.sProfilePicUrl && profileData.sProfilePicUrl!= undefined ? profileData.sProfilePicUrl:''}}"
                                 alt="">
                         </a>
-                        <h1 class="author__name"><a href="author.html">{{profileData && profileData.sFirstname &&
+                        <h1 class="author__name"><a href="javascript:;">{{profileData && profileData.sFirstname &&
                                 profileData.sFirstname != undefined ?
                                 profileData.sFirstname : ''}} {{profileData && profileData.sLastname &&
                                 profileData.sLastname != undefined ?
                                 profileData.sLastname : ''}}</a></h1>
-                        <h2 class="author__nickname"><a href="author.html"> {{profileData && profileData.sUserName &&
+                        <h2 class="author__nickname"><a href="javascript:;"> {{profileData && profileData.sUserName &&
                                 profileData.sUserName != undefined?
                                 profileData.sUserName : ''}}</a></h2>
                         <p class="author__text">{{profileData && profileData.sBio && profileData.sBio!= undefined ?
@@ -149,7 +149,7 @@
                         </div>
 
                         <div class="col-12">
-                            <table class="table text-white mt-5">
+                            <table class="table text-white">
                                 <thead>
                                     <tr>
                                         <th scope="col">Sr No.</th>

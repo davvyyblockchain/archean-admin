@@ -374,6 +374,8 @@ export class CreateNFTComponent implements OnInit {
 
         if (res.eAuctionType == 'Auction' || res.eAuctionType == 'Fixed Sale') {
           fd.append('nBasePrice', res.nBasePrice ? res.nBasePrice : 0);
+        }else{
+          fd.append('nBasePrice',  '0.000001' );
         }
         // 
         await this.apiService.createNFT(fd).subscribe(async (data: any) => {

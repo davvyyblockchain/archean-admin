@@ -362,6 +362,7 @@ export class NFTDetailComponent implements OnInit, OnDestroy {
               })
             })
             .catch((error: any) => {
+              this.spinner.hide();
 
               this.toaster["error"]((error.code == 4001) ? "You Denied MetaMask Transaction Signature" : "Something Went Wrong!");
             });

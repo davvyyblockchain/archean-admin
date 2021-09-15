@@ -69,7 +69,12 @@ export class MyProfileComponent implements OnInit {
     this._route.queryParams.subscribe(async params => {
       if (params) {
         if (params['tab'] && params['tab'] != undefined) {
-          this.tab = params['tab'];
+          if (params['tab'] && typeof params['tab'] == 'object') {
+            this.tab = params['tab'][0];
+          } else {
+            this.tab = params['tab'];
+
+          }
         }
 
       }
@@ -253,12 +258,12 @@ export class MyProfileComponent implements OnInit {
       }, (err: any) => {
         this.spinner.hide();
         if (err && err['error']) {
-           err = err['error'];
+          err = err['error'];
 
-           if(err && err['message']){
+          if (err && err['message']) {
             this.toaster.error(err['message'])
 
-           }
+          }
         }
       });
     }

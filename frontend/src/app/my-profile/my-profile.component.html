@@ -207,10 +207,6 @@
                         [ngClass]="{ 'show active': tab && tab == 'profile' }">
                         <div class="row row--grid">
 
-                            <!-- <div class="col-12 col-lg-2 text-align-center">
-                             
-                            </div> -->
-
                             <!-- details form -->
                             <div class="col-12 col-lg-12 text-align-center">
                                 <form action="#" class="sign__form sign__form--profile" name="editProfileform"
@@ -358,14 +354,6 @@
                                 </form>
                             </div>
 
-                            <!-- <div class="col-12 col-lg-2 text-align-center">
-                             
-                            </div> -->
-                            <!-- end details form -->
-
-                            <!-- password form -->
-
-                            <!-- end password form -->
                         </div>
                     </div>
                     <!-- BID HiSTory -->
@@ -498,10 +486,6 @@
                         [ngClass]="{ 'show active': tab && tab == 'redeem' }">
                         <div class="row row--grid">
 
-                            <!-- <div class="col-12 col-lg-2 text-align-center">
-                             
-                            </div> -->
-
                             <!-- details form -->
                             <div class="col-12 col-lg-12 text-align-center">
                                 <form action="#" class="sign__form sign__form--profile" name="redeemForm"
@@ -511,21 +495,23 @@
                                             <h4 class="sign__title">My Earnings</h4>
                                         </div>
 
-                                        <!-- <div class="col-12">
-                                        
-                                        </div> -->
-
-                                        <div class="col-12 col-md-12 col-lg-12">
+                                        <div class="col-12 col-md-3">
                                             <div class="sign__group">
                                                 <label class="sign__label" for="email">Earnings</label>
-                                                <input formControlName="earnings"  type="text" class="sign__input"
+                                            
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-9">
+                                            <div class="sign__group">
+                                                <input formControlName="earnings" hidden type="text" style="width: 50%;" class="sign__input"
                                                     placeholder="0000" readonly/>
+                                                    <label class="sign__label" style="font-size: 18px;" for="email"><b>{{redeemForm.value.earnings}}</b></label>
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-12 col-lg-12">
                                             <div class="sign__group">
                                                 <label class="sign__label" for="email">Amount (BNB)</label>
-                                                <input
+                                                <input 
                                                     [ngClass]="{ 'is-invalid': submitted1 && redeemForm.controls.amount.errors }"
                                                     formControlName="amount" type="text" class="sign__input"
                                                     placeholder="Enter Amount to Redeem (BNB)">
@@ -546,14 +532,6 @@
                                 </form>
                             </div>
 
-                            <!-- <div class="col-12 col-lg-2 text-align-center">
-                             
-                            </div> -->
-                            <!-- end details form -->
-
-                            <!-- password form -->
-
-                            <!-- end password form -->
                         </div>
                     </div>
 
