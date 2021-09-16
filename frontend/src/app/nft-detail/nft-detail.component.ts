@@ -93,6 +93,7 @@ export class NFTDetailComponent implements OnInit, OnDestroy {
       this.router.navigate(['']);
 
     }
+
   }
 
   buildBidForm() {
@@ -354,7 +355,7 @@ export class NFTDetailComponent implements OnInit, OnDestroy {
                 this.spinner.hide();
                 if (transData && transData['data']) {
                   this.toaster.success('NFT transfered successfully');
-                  this.router.navigate(['/']);
+                  this.router.navigate(['']);
                   this.onClickRefresh();
                 } else {
                   this.toaster.success(transData['message']);
@@ -429,6 +430,8 @@ export class NFTDetailComponent implements OnInit, OnDestroy {
                 this.spinner.hide();
                 if (transData && transData['data']) {
                   this.toaster.success('NFT bought successfully');
+                  this.router.navigate(['']);
+
                   this.onClickRefresh();
                 } else {
                   this.toaster.success(transData['message']);
@@ -489,6 +492,8 @@ export class NFTDetailComponent implements OnInit, OnDestroy {
             this.spinner.hide();
             oOptions["sTransactionHash"] = hash;
             await this.sendData(oOptions);
+            this.router.navigate(['']);
+
           }).catch((error: any) => {
             this.spinner.hide();
 
@@ -531,6 +536,8 @@ export class NFTDetailComponent implements OnInit, OnDestroy {
             this.spinner.hide();
             oOptions["sTransactionHash"] = hash;
             await this.sendData(oOptions);
+            this.router.navigate(['']);
+
           }).catch((error: any) => {
             this.spinner.hide();
             if (error && error.code == 4001) {
@@ -575,6 +582,8 @@ export class NFTDetailComponent implements OnInit, OnDestroy {
             this.spinner.hide();
             oOptions["sTransactionHash"] = hash;
             await this.sendData(oOptions);
+            this.router.navigate(['']);
+
           }).catch((error: any) => {
             this.spinner.hide();
             if (error && error.code == 4001) {

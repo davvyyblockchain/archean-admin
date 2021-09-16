@@ -606,26 +606,25 @@ controllers.nftID = async (req, res) => {
             return res.reply(messages.not_found("NFT ID"));
 
         if (!validators.isValidObjectID(req.params.nNFTId)) res.reply(messages.invalid("NFT ID"));
-        console.log('---------------------------1')
+     
         let  aNFT = await NFT.findById(req.params.nNFTId).populate('oPostedBy oCurrentOwner');
-        console.log('---------------------------2')
+     
         if (!aNFT) return res.reply(messages.not_found("NFT"));
         aNFT = aNFT.toObject();
         aNFT.sCollectionDetail = {};
-        console.log('---------------------------3')
+      
         aNFT.sCollectionDetail = await Collection.findOne({ sName: aNFT.sCollection && aNFT.sCollection != undefined ? aNFT.sCollection : '-' })
-        console.log('---------------------------4')
+      
         var token = req.headers.authorization;
         if (token) {
-            console.log('---------------------------5')
             token = token.replace('Bearer ', '');
             jwt.verify(token, process.env.JWT_SECRET, function (err, decoded) {
                 if (decoded)
                     req.userId = decoded.id;
             })
-            console.log('--------------------------6-')
+         
             if (aNFT.oCurrentOwner._id != req.userId)
-            console.log('---------------------------7')
+      
                 await NFT.findByIdAndUpdate(req.params.nNFTId, {
                     $inc: {
                         nView: 1

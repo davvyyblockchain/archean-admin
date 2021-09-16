@@ -31,7 +31,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     private _route: ActivatedRoute,
     private toaster: ToastrService,
     private apiService: ApiService,
-  ) { }
+  ) { 
+    this.spinner.show();
+  }
   ngAfterViewInit() {
 
   }
@@ -57,6 +59,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
   async ngOnInit() {
     this.loadSCR();
+ 
+
     await this.apiService.landingPage().subscribe(async (data: any) => {
 
       if (data['message'] == 'success') {

@@ -30,7 +30,7 @@
                 <div class="asset__item audio__card">
                     <a class="asset__img "
                         *ngIf="NFTData.eType && NFTData.eType != undefined && NFTData.eType != 'Audio'"
-                        href="assets/img/cover/cover-big.jpg">
+                        href="{{NFTData && NFTData.sHash && NFTData.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+ NFTData.sHash :'assets/img/cover/cover-big.jpg' }}">
                         <img class="styl image-fluid"
                             src="{{NFTData && NFTData.sHash && NFTData.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+ NFTData.sHash :'assets/img/cover/cover-big.jpg' }}"
                             alt="">
@@ -68,10 +68,13 @@
                     <!-- end share -->
 
                     <!-- likes -->
-                    <button class="asset__likes" type="button">
+                    <div class="asset__likes" style="right: 105px;">
 
-                        <span>Image</span>
-                    </button>
+                        <!-- <span>Image</span> -->                   
+                        <span class="card__time card__time--clock">
+                            {{NFTData.eAuctionType && NFTData.eAuctionType != undefined ? NFTData.eAuctionType : '-'}}
+                        </span>
+                    </div>
                     <!-- end likes -->
                 </div>
             </div>
@@ -91,7 +94,18 @@
                             <p>{{NFTData.sName && NFTData.sName != undefined ? NFTData.sName
                                 :'-' }}</p>
                         </div>
+
                     </div>
+                    <div class="d-flex mb-3">
+
+                        <div class="asset__desc">
+                            <h2>Type</h2>
+                            <p>{{NFTData.eType && NFTData.eType != undefined ? NFTData.eType
+                                :'-' }}</p>
+                        </div>
+
+                    </div>
+
                     <div class="asset__desc">
                         <h2>Descriptions</h2>
                         <p>{{NFTData.sNftdescription && NFTData.sNftdescription != undefined ? NFTData.sNftdescription
@@ -272,14 +286,14 @@
                                             {{NFTData.oPostedBy && NFTData.oPostedBy != undefined &&
                                             NFTData.oPostedBy['sWalletAddress']!= undefined ?
                                             (NFTData.oPostedBy['sWalletAddress']| slice:-4) :'0000'}}
-                                           </a>
-                                           {{NFTData && NFTData.sCreated &&
-                                            NFTData.sCreated != undefined ?
-                                            (NFTData.sCreated | date: 'medium'):0}}.
+                                        </a>
+                                        {{NFTData && NFTData.sCreated &&
+                                        NFTData.sCreated != undefined ?
+                                        (NFTData.sCreated | date: 'medium'):0}}.
                                     </p>
                                 </div>
 
-                                
+
                             </ng-container>
                             <ng-container *ngIf="historyData && !historyData.length">
                                 <div class="asset__actions">
@@ -296,10 +310,10 @@
                                                 {{NFTData.oPostedBy && NFTData.oPostedBy != undefined &&
                                                 NFTData.oPostedBy['sWalletAddress']!= undefined ?
                                                 (NFTData.oPostedBy['sWalletAddress']| slice:-4) :'0000'}}
-                                              </a>
-                                              {{NFTData && NFTData.sCreated &&
-                                                NFTData.sCreated != undefined ?
-                                                (NFTData.sCreated | date: 'medium'):0}}.
+                                            </a>
+                                            {{NFTData && NFTData.sCreated &&
+                                            NFTData.sCreated != undefined ?
+                                            (NFTData.sCreated | date: 'medium'):0}}.
 
                                         </p>
                                     </div>
@@ -336,9 +350,7 @@
                     </div>
                     <div class="asset__btns">
                         <ng-container *ngIf="showObj.showTransferCurrent == 'show'">
-                            <a href="javascript:;" (click)="clickOpen()"
-                                class="asset__btn asset__btn--full asset__btn--clr">Transfer
-                                NFT</a>
+                            <a href="javascript:;" (click)="clickOpen()" class="--clr">Transfer NFT</a>
                         </ng-container>
                     </div>
                     <div class="asset__btns">

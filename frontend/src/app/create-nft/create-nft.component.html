@@ -242,6 +242,54 @@
                             <button type="button" class="sign__btn" (click)="onClickSubmitCollection()">Create
                                 Collection</button>
                         </div>
+
+
+
+                        <div class="col-12">
+                            <table class="table text-white">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Sr No.</th>
+                                        <th scope="col">Image</th>
+                                        <th scope="col">Collection name</th>
+                                        <th scope="col">Description</th>
+
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngIf="collectionList && collectionList.length">
+                                        <tr *ngFor="let obj of collectionList;let i = index;">
+                                            <td>{{i+1}}</td>
+                                            <td>
+                                                <!-- <a href="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }} "
+                                                   >
+     -->
+                                                <img class="" style="height: 50px;width: 50px;"
+                                                    src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }} "
+                                                    alt="">
+                                                <!-- </a> -->
+                                            </td>
+                                            <td>{{obj && obj.sName && obj.sName &&
+                                                obj.sName!= undefined ?
+                                                obj.sName:'-'}}</td>
+                                            <td>{{obj && obj.sDescription && obj.sDescription &&
+                                                obj.sDescription != undefined ?
+                                                obj.sDescription :0}}</td>
+
+                                        </tr>
+                                    </ng-container>
+                                    <ng-container *ngIf="!collectionList || !collectionList.length">
+                                        <tr>
+                                            <th colspan="4">No records found.</th>
+
+
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                            </table>
+                        </div>
+
                     </div>
                 </form>
 
@@ -260,7 +308,8 @@
                                     [ngClass]="{ 'is-invalid': submitted3 && createNFTForm.controls.eType.errors }"
                                     formControlName="eType">
                                     <option value="">Select Category</option>
-                                    <option *ngFor="let obj of categoriesList;" value="{{obj.sName ? obj.sName : ''}}">{{obj.sName ? obj.sName : ''}}</option>
+                                    <option *ngFor="let obj of categoriesList;" value="{{obj.sName ? obj.sName : ''}}">
+                                        {{obj.sName ? obj.sName : ''}}</option>
                                     <!-- <option value="Image">Image</option>
                                     <option value="Audio">Audio</option> -->
 
@@ -321,8 +370,8 @@
                         <div class="col-12 col-md-6">
                             <div class="sign__group">
                                 <label class="sign__label">NFT Quantity</label>
-                                <input type="number" (keyup)="onKeyupFIXNumber($event,'quantity')"
-                                    class="sign__input" placeholder="e. g. 1 , 2 ,5"
+                                <input type="number" (keyup)="onKeyupFIXNumber($event,'quantity')" class="sign__input"
+                                    placeholder="e. g. 1 , 2 ,5"
                                     [ngClass]="{ 'is-invalid': submitted3 && createNFTForm.controls.nQuantity.errors }"
                                     formControlName="nQuantity">
                                 <div class="nft-err" *ngIf="submitted3 && createNFTForm.controls.nQuantity.errors">
@@ -364,7 +413,8 @@
                         <div class="col-12 col-md-4">
                             <div class="sign__group">
                                 <label class="sign__label">Collaborator %</label>
-                                <input type="text" class="sign__input" placeholder="e. g. Size" (keyup)="onKeyupFIXNumber($event,'percentage')"
+                                <input type="text" class="sign__input" placeholder="e. g. Size"
+                                    (keyup)="onKeyupFIXNumber($event,'percentage')"
                                     [ngClass]="{ 'is-invalid': submitted3 && createNFTForm.controls.nCollaboratorPercentage.errors }"
                                     formControlName="nCollaboratorPercentage">
                             </div>
@@ -419,7 +469,7 @@
                         <div class="col-12"
                             *ngIf="createNFTForm.value.eAuctionType == 'Fixed Sale' ||  createNFTForm.value.eAuctionType == 'Auction'">
                             <div class="sign__group">
-                                <label class="sign__label" for="propertie">Base Price</label>
+                                <label class="sign__label" for="propertie">Base Price(per NFT)</label>
                                 <input id="propertie" type="text" name="propertie" class="sign__input"
                                     [ngClass]="{ 'is-invalid': submitted3 && createNFTForm.controls.nBasePrice.errors }"
                                     formControlName="nBasePrice" placeholder="Enter Base Price">
