@@ -87,7 +87,7 @@ export class HeaderComponent implements OnInit {
     this.apiService.connect().then((data: any) => {
       this.spinner.hide();
       if (data && data != 'error') {
-        this.toaster.success('User Connected Successfully');
+        this.toaster.success('User Connected Successfully','Success!');
         this.onClickRefresh();
       }
 
@@ -95,7 +95,7 @@ export class HeaderComponent implements OnInit {
       this.spinner.hide();
 
       if (er && er.code) {
-        this.toaster.error(er.message);
+        this.toaster.error(er.message,'Error!');
       }
     })
   }

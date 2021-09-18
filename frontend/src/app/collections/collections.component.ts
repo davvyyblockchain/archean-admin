@@ -60,7 +60,7 @@ export class CollectionsComponent implements OnInit {
       this.searchData.sCollection = name;
       await this.getCollectionsData();
     } else {
-      this.toaster.error('Please Choose collection first.');
+      this.toaster.error('Please Choose collection first.','Error!');
     }
   }
 

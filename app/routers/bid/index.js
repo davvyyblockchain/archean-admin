@@ -6,5 +6,6 @@ router.post('/create', bidMiddleware.verifyToken, bidController.create);
 router.post('/history/:nNFTId',bidController.getBidHistoryOfItem);
 router.post('/toggleBidStatus', bidMiddleware.verifyToken, bidController.toggleBidStatus);
 router.post('/bidByUser', bidMiddleware.verifyToken, bidController.bidByUser);
+router.post('/tokenHistory/:nTokenID',bidController.getHistoryOfToken);
 
 module.exports = router;

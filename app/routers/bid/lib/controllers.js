@@ -532,4 +532,78 @@ controllers.bidByUser = async (req, res, next) => {
         return res.reply(messages.server_error());
     }
 }
+
+
+controllers.getHistoryOfToken = async (req, res, next) => {
+    try {
+        if (!req.params.nTokenID) return res.reply(messages.not_found("NFT token ID"));
+
+        // var nLimit = parseInt(req.body.length);
+        // var nOffset = parseInt(req.body.start);
+        let data = await Bid.aggregate([{
+            '$match': {
+                'nTokenID': parseInt(req.params.nTokenID),
+                "sTransactionStatus": 1
+            }
+        }, {
+            '$project': {
+                '_id': 1,
+                'eBidStatus': 1,
+                'oRecipient': 1,
+                'oBidder': 1,
+                'oNFTId': 1,
+                'nBidPrice': 1,
+                'sCreated': 1,
+                "nQuantity": 1
+            }
+        }, {
+            '$lookup': {
+                'from': 'users',
+                'localField': 'oRecipient',
+                'foreignField': '_id',
+                'as': 'oRecipient'
+            }
+        }, {
+            '$lookup': {
+                'from': 'users',
+                'localField': 'oBidder',
+                'foreignField': '_id',
+                'as': 'oBidder'
+            }
+        }, {
+            '$sort': {
+                'sCreated': -1
+            }
+        }, { $unwind: '$oBidder' }, { $unwind: '$oRecipient' }, {
+            '$facet': {
+                'bids': [{
+                    "$skip": +0
+                }],
+                'totalCount': [{
+                    '$count': 'count'
+                }]
+            }
+        }]);
+        let iFiltered = data[0].bids.length;
+        if (data[0].totalCount[0] == undefined) {
+            return res.reply(messages.no_prefix('Token history Details'), {
+                data: [],
+                "draw": req.body.draw,
+                "recordsTotal": 0,
+                "recordsFiltered": 0,
+            });
+        } else {
+            return res.reply(messages.no_prefix('Token history Details'), {
+                data: data[0].bids,
+                "draw": req.body.draw,
+                "recordsTotal": data[0].totalCount[0].count,
+                "recordsFiltered": iFiltered,
+            });
+        }
+    } catch (error) {
+        return res.reply(messages.server_error());
+    }
+}
+
+
 module.exports = controllers;

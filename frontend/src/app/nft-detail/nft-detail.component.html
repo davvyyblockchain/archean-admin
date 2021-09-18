@@ -68,9 +68,9 @@
                     <!-- end share -->
 
                     <!-- likes -->
-                    <div class="asset__likes" style="right: 105px;">
+                    <div class="asset__likes" style="    right: 20px; width: 100px;">
 
-                        <!-- <span>Image</span> -->                   
+                        <!-- <span>Image</span> -->
                         <span class="card__time card__time--clock">
                             {{NFTData.eAuctionType && NFTData.eAuctionType != undefined ? NFTData.eAuctionType : '-'}}
                         </span>
@@ -96,15 +96,7 @@
                         </div>
 
                     </div>
-                    <div class="d-flex mb-3">
 
-                        <div class="asset__desc">
-                            <h2>Type</h2>
-                            <p>{{NFTData.eType && NFTData.eType != undefined ? NFTData.eType
-                                :'-' }}</p>
-                        </div>
-
-                    </div>
 
                     <div class="asset__desc">
                         <h2>Descriptions</h2>
@@ -150,7 +142,8 @@
                             <a class="nav-link active" data-toggle="tab" href="#tab-3" role="tab" aria-controls="tab-3"
                                 aria-selected="false">History</a>
                         </li>
-                        <li class="nav-item  ">
+                        <li class="nav-item "
+                            *ngIf="NFTData.eAuctionType && NFTData.eAuctionType != undefined &&  NFTData.eAuctionType == 'Auction' ">
                             <a class="nav-link " data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-2"
                                 aria-selected="false">Bids</a>
                         </li>
@@ -193,8 +186,8 @@
                         </div>
                         <!-- // history tab -->
                         <div class="tab-pane fade show active" id="tab-3" role="tabpanel">
-                            <ng-container *ngIf="historyData && historyData.length">
-                                <div class="asset__actions" *ngFor="let obj of historyData;">
+                            <ng-container *ngIf="tokenHistoryData && tokenHistoryData.length">
+                                <div class="asset__actions" *ngFor="let obj of tokenHistoryData;">
                                     <ng-container
                                         *ngIf="obj.eBidStatus != 'Bid' && obj.eBidStatus != 'Canceled' && obj.eBidStatus != 'Rejected'">
 
@@ -334,28 +327,46 @@
                         </div> -->
 
                         <div class="asset__price">
-                            <span>Minimum bid</span>
+                            <span *ngIf="NFTData.eAuctionType == 'Auction'">Minimum bid</span>
+                            <span *ngIf="NFTData.eAuctionType == 'Fixed Sale'">Fixed price</span>
+
                             <span>{{NFTData.nBasePrice && NFTData.nBasePrice != undefined &&
                                 NFTData.nBasePrice['$numberDecimal'] != undefined ?
                                 NFTData.nBasePrice['$numberDecimal'] :'-' }} BNB</span>
                         </div>
                     </div>
 
+                    <div class="asset__btns d-flex text-align-between"
+                        *ngIf="NFTData && NFTData.oCurrentOwner && NFTData.oCurrentOwner != undefined && showObj.wallet_address == NFTData.oCurrentOwner.sWalletAddress">
+
+                        <a class="author__follow mt-2" (click)="onClickUpdateType('Fixed Sale',NFTData._id)"
+                            style="width: 200px;margin-right: 10px; cursor:pointer;"
+                            *ngIf="NFTData.eAuctionType == 'Auction' || NFTData.eAuctionType == 'Unlockable'">Put on
+                            Sale</a>
+
+
+                        <a class="author__follow author__follow--true mt-2"
+                            (click)="onClickUpdateType('Auction',NFTData._id)" style="width: 200px; cursor:pointer;"
+                            *ngIf="NFTData.eAuctionType == 'Fixed Sale' || NFTData.eAuctionType == 'Unlockable'">Put on
+                            Auction</a>
+
+                    </div>
+
                     <!-- actions -->
-                    <div class="asset__btns">
-                        <a href="#modal-bid" *ngIf="showObj.showBidCurrent == 'show'"
-                            class="asset__btn asset__btn--full asset__btn--clr open-modal">Place
+                    <div class="asset__btns" *ngIf="showObj.showBidCurrent == 'show'">
+                        <a href="#modal-bid" class="asset__btn asset__btn--full asset__btn--clr open-modal">Place
                             a
                             bid</a>
                     </div>
-                    <div class="asset__btns">
-                        <ng-container *ngIf="showObj.showTransferCurrent == 'show'">
-                            <a href="javascript:;" (click)="clickOpen()" class="--clr">Transfer NFT</a>
+                    <div class="asset__btns"
+                        *ngIf="showObj.showTransferCurrent == 'show' && NFTData.eAuctionType == 'Unlockable'">
+                        <ng-container>
+                            <a href="javascript:;" (click)="clickOpen()"
+                                class="asset__btn asset__btn--full asset__btn--clr">Transfer NFT</a>
                         </ng-container>
                     </div>
-                    <div class="asset__btns">
-                        <a href="#modal-buy" *ngIf="showObj.showBuyCurrent == 'show'"
-                            class="asset__btn asset__btn--full asset__btn--clr open-modal">Buy now</a>
+                    <div class="asset__btns" *ngIf="showObj.showBuyCurrent == 'show'">
+                        <a href="#modal-buy" class="asset__btn asset__btn--full asset__btn--clr open-modal">Buy now</a>
                     </div>
                     <!-- end actions -->
                 </div>
@@ -384,42 +395,65 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <ng-container *ngIf="historyData && historyData.length">
+                        <tr *ngFor="let obj of historyData;">
+                            <td
+                                *ngIf="obj.eBidStatus =='Bid' || obj.eBidStatus =='Canceled'|| obj.eBidStatus =='Accepted' || obj.eBidStatus == 'Rejected'">
+                                Auction</td>
+                            <td *ngIf="obj.eBidStatus =='Sold'">
+                                Fixed Sale</td>
+                            <td *ngIf="obj.eBidStatus =='Transfer'">
+                                Transfer</td>
+                            <!-- -->
+                            <td>{{obj && obj.oBidder && obj.oBidder &&
+                                obj.oBidder['sUserName'] != undefined ?
+                                obj.oBidder['sUserName'] :0}}</td>
+                            <td>{{obj && obj.oRecipient && obj.oRecipient &&
+                                obj.oRecipient['sUserName'] != undefined ?
+                                obj.oRecipient['sUserName'] : '-'}}</td>
+                            <td> {{obj && obj.nQuantity &&
+                                obj.nQuantity != undefined ?
+                                obj.nQuantity :0}}</td>
+                            <td>{{obj && obj.nBidPrice && obj.nBidPrice &&
+                                obj.nBidPrice['$numberDecimal'] != undefined ?
+                                obj.nBidPrice['$numberDecimal'] :0}} BNB</td>
+                            <td>{{obj && obj.sCreated &&
+                                obj.sCreated != undefined ?
+                                (obj.sCreated | date: 'medium'):0}} </td>
+                            <td>
+                                <div class="d-flex"
+                                    *ngIf="obj.eBidStatus && obj.eBidStatus == 'Bid' && showObj.wallet_address == obj.oRecipient.sWalletAddress">
+                                    <a href="javascript:;" (click)="clickAccept(obj)"
+                                        class="asset__btn asset__btn--full asset__btn--clr open-modal">Accept</a> <a
+                                        href="javascript:;" (click)="clickReject(obj)"
+                                        style="background: rgba(235,87,87,0.25) ;color: #eb5757 ;"
+                                        class="asset__btn asset__btn--full asset__btn--clr open-modal">Reject</a>
+                                </div>
+                                <div class="d-flex"
+                                    *ngIf="obj.eBidStatus && obj.eBidStatus == 'Bid' && showObj.wallet_address == obj.oBidder.sWalletAddress">
+                                    <a href="javascript:;" (click)="clickCancel(obj)"
+                                        class="asset__btn asset__btn--full asset__btn--clr open-modal">Cancel</a>
+                                </div>
+                                <div *ngIf="obj.eBidStatus && obj.eBidStatus != 'Bid'">
+                                    {{obj && obj.eBidStatus &&
+                                    obj.eBidStatus != undefined && obj.eBidStatus =='Transfer' ?
+                                    'Transfered' :obj.eBidStatus}}
+                                </div>
 
-                    <tr *ngFor="let obj of historyData;">
-                        <td>{{obj && obj.eBidStatus &&
-                            obj.eBidStatus != undefined ?
-                            obj.eBidStatus :0}}</td>
-                        <td>{{obj && obj.oBidder && obj.oBidder &&
-                            obj.oBidder['sUserName'] != undefined ?
-                            obj.oBidder['sUserName'] :0}}</td>
-                        <td>{{obj && obj.oRecipient && obj.oRecipient &&
-                            obj.oRecipient['sUserName'] != undefined ?
-                            obj.oRecipient['sUserName'] : '-'}}</td>
-                        <td> {{obj && obj.nQuantity &&
-                            obj.nQuantity != undefined ?
-                            obj.nQuantity :0}}</td>
-                        <td>{{obj && obj.nBidPrice && obj.nBidPrice &&
-                            obj.nBidPrice['$numberDecimal'] != undefined ?
-                            obj.nBidPrice['$numberDecimal'] :0}} BNB</td>
-                        <td>{{obj && obj.sCreated &&
-                            obj.sCreated != undefined ?
-                            (obj.sCreated | date: 'medium'):0}} </td>
-                        <td>
-                            <div class="d-flex"
-                                *ngIf="obj.eBidStatus && obj.eBidStatus == 'Bid' && showObj.wallet_address == obj.oRecipient.sWalletAddress">
-                                <a href="javascript:;" (click)="clickAccept(obj)"
-                                    class="asset__btn asset__btn--full asset__btn--clr open-modal">Accept</a> <a
-                                    href="javascript:;" (click)="clickReject(obj)"
-                                    style="background: rgba(235,87,87,0.25) ;color: #eb5757 ;"
-                                    class="asset__btn asset__btn--full asset__btn--clr open-modal">Reject</a>
-                            </div>
-                            <div class="d-flex"
-                                *ngIf="obj.eBidStatus && obj.eBidStatus == 'Bid' && showObj.wallet_address == obj.oBidder.sWalletAddress">
-                                <a href="javascript:;" (click)="clickCancel(obj)"
-                                    class="asset__btn asset__btn--full asset__btn--clr open-modal">Cancel</a>
-                            </div>
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
+
+                    </ng-container>
+
+                    <ng-container *ngIf="!historyData || !historyData.length">
+                        <tr>
+                            <td colspan="6">
+                                No records found.
+                            </td>
+                        </tr>
+                    </ng-container>
+
+
 
                 </tbody>
             </table>

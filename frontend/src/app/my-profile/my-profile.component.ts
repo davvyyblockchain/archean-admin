@@ -130,7 +130,7 @@ export class MyProfileComponent implements OnInit {
         }
       }
     } else {
-      this.toaster.error('Please Signin / Signup first.')
+      this.toaster.error('Please Signin / Signup first.','Error!')
       this.router.navigate([''])
     }
   }
@@ -249,7 +249,7 @@ export class MyProfileComponent implements OnInit {
       this.apiService.updateProfile(fd).subscribe((updateData: any) => {
         this.spinner.hide();
         if (updateData && updateData['data']) {
-          this.toaster.success('Profile updted successfully.')
+          this.toaster.success('Profile updted successfully.','Success!')
           this.onClickRefresh();
         } else {
 
@@ -261,7 +261,7 @@ export class MyProfileComponent implements OnInit {
           err = err['error'];
 
           if (err && err['message']) {
-            this.toaster.error(err['message'])
+            this.toaster.error(err['message'],'Error!')
 
           }
         }

@@ -22,6 +22,8 @@ export class NFTDetailComponent implements OnInit, OnDestroy {
 
   NFTData: any = {};
   historyData: any = [];
+  tokenHistoryData: any = [];
+
   collaboratorList: any = [];
 
   bidForm: any;
@@ -87,7 +89,7 @@ export class NFTDetailComponent implements OnInit, OnDestroy {
       if (localStorage.getItem('Authorization') && localStorage.getItem('Authorization') != null) {
         await this.getColoboraterList();
       }
-      
+
     } else {
       this.toaster.info('There is some issue with route.')
       this.router.navigate(['']);
@@ -147,6 +149,29 @@ export class NFTDetailComponent implements OnInit, OnDestroy {
           this.buyForm.patchValue({ 'nBidPrice': this.NFTData.nBasePrice['$numberDecimal'] })
         }
 
+        if (this.NFTData.nTokenID && this.NFTData.nTokenID != undefined) {
+          // tokenHistoryData
+          this.getTokenHistory(this.NFTData.nTokenID);
+        }
+
+        // token
+        // tokenHistory  nTokenID
+      } else {
+
+      }
+    }, (error) => {
+      if (error) {
+
+      }
+    })
+  }
+  getTokenHistory(id: any) {
+    this.apiService.tokenHistory(id, {}).subscribe(async (data: any) => {
+      console.log('---tokenHistoryData-----', data)
+      if (data && data['data']) {
+        let res = await data['data'];
+        this.tokenHistoryData = res['data'];
+
 
 
       } else {
@@ -159,13 +184,14 @@ export class NFTDetailComponent implements OnInit, OnDestroy {
     })
   }
 
-
   getBidHistory(id: any) {
     this.apiService.bidHistory(id, {}).subscribe(async (data: any) => {
       console.log('---history-----', data)
       if (data && data['data']) {
         let res = await data['data'];
         this.historyData = res['data'];
+
+
 
       } else {
 
@@ -269,7 +295,7 @@ export class NFTDetailComponent implements OnInit, OnDestroy {
                 await this.apiService.bidCreate(obj).subscribe(async (transData: any) => {
                   this.spinner.hide();
                   if (transData && transData['data']) {
-                    this.toaster.success('Bid placed successfully');
+                    this.toaster.success('Bid placed successfully', 'Success!');
                     var magnificPopup = $.magnificPopup.instance;
                     // save instance in magnificPopup variable
                     magnificPopup.close();
@@ -283,7 +309,7 @@ export class NFTDetailComponent implements OnInit, OnDestroy {
 
                     // this.onClickRefresh();
                   } else {
-                    this.toaster.success(transData['message']);
+                    this.toaster.success(transData['message'], 'Success!');
                   }
                 })
               })
@@ -295,14 +321,14 @@ export class NFTDetailComponent implements OnInit, OnDestroy {
 
           } else {
             this.spinner.hide();
-            this.toaster.error("There is something issue with NFT address.");
+            this.toaster.error("There is something issue with NFT address.", 'Error!');
 
           }
         } else {
           this.spinner.hide();
 
           this.bidForm.patchValue({ 'nBidPrice': '' });
-          this.toaster.info('Please enter minimum & greater then minimum Bid amount.')
+          this.toaster.info('Please enter minimum & greater then minimum Bid amount.', 'Error!')
         }
 
       }
@@ -354,11 +380,11 @@ export class NFTDetailComponent implements OnInit, OnDestroy {
               await this.apiService.bidCreate(obj).subscribe(async (transData: any) => {
                 this.spinner.hide();
                 if (transData && transData['data']) {
-                  this.toaster.success('NFT transfered successfully');
+                  this.toaster.success('NFT transfered successfully', 'Success!');
                   this.router.navigate(['']);
                   this.onClickRefresh();
                 } else {
-                  this.toaster.success(transData['message']);
+                  this.toaster.success(transData['message'], 'Success!');
                 }
               })
             })
@@ -370,7 +396,7 @@ export class NFTDetailComponent implements OnInit, OnDestroy {
 
         } else {
           this.spinner.hide();
-          this.toaster.error("There is something issue with NFT address.");
+          this.toaster.error("There is something issue with NFT address.", 'Error!');
 
         }
 
@@ -429,12 +455,12 @@ export class NFTDetailComponent implements OnInit, OnDestroy {
               await this.apiService.bidCreate(obj).subscribe(async (transData: any) => {
                 this.spinner.hide();
                 if (transData && transData['data']) {
-                  this.toaster.success('NFT bought successfully');
+                  this.toaster.success('NFT bought successfully', 'Success!');
                   this.router.navigate(['']);
 
                   this.onClickRefresh();
                 } else {
-                  this.toaster.success(transData['message']);
+                  this.toaster.success(transData['message'], 'Success!');
                 }
               })
             })
@@ -445,7 +471,7 @@ export class NFTDetailComponent implements OnInit, OnDestroy {
 
         } else {
           this.spinner.hide();
-          this.toaster.error("There is something issue with NFT address.");
+          this.toaster.error("There is something issue with NFT address.", 'Error!');
 
         }
         // } else {
@@ -458,7 +484,7 @@ export class NFTDetailComponent implements OnInit, OnDestroy {
       }
     } else {
       // this.router.navigate(['']);
-      this.toaster.error('Please sign in first.')
+      this.toaster.error('Please sign in first.', 'Error!')
     }
   }
 
@@ -498,12 +524,12 @@ export class NFTDetailComponent implements OnInit, OnDestroy {
             this.spinner.hide();
 
             if (error && error.code == 4001) {
-              this.toaster.error(error['message'])
+              this.toaster.error(error['message'], 'Error!')
             }
           });
       } else {
         this.spinner.hide();
-        this.toaster.error("There is something issue with NFT address.");
+        this.toaster.error("There is something issue with NFT address.", 'Error!');
 
       }
     } else {
@@ -541,13 +567,13 @@ export class NFTDetailComponent implements OnInit, OnDestroy {
           }).catch((error: any) => {
             this.spinner.hide();
             if (error && error.code == 4001) {
-              this.toaster.error(error['message'])
+              this.toaster.error(error['message'], 'Error!')
             }
 
           });
       } else {
         this.spinner.hide();
-        this.toaster.error("There is something issue with NFT address.");
+        this.toaster.error("There is something issue with NFT address.", 'Error!');
 
       }
 
@@ -587,32 +613,73 @@ export class NFTDetailComponent implements OnInit, OnDestroy {
           }).catch((error: any) => {
             this.spinner.hide();
             if (error && error.code == 4001) {
-              this.toaster.error(error['message'])
+              this.toaster.error(error['message'], 'Error!')
             }
 
           });
       } else {
         this.spinner.hide();
-        this.toaster.error("There is something issue with NFT address.");
+        this.toaster.error("There is something issue with NFT address.", 'Error!');
 
       }
     } else {
       // this.router.navigate(['']);
-      this.toaster.error('Please sign in first.')
+      this.toaster.error('Please sign in first.', 'Error!')
     }
   }
 
+  // nNFTId: 6120eba598b61743cf49a43f
+  // sSellingType: Auction
+  async toggleSellingType(obj: any) {
+    this.spinner.show();
+    await this.apiService.toggleSellingType(obj).subscribe(async (transData: any) => {
+      this.spinner.hide();
+      if (transData && transData['message'] && transData['message'] == 'NFT Details updated') {
+        this.toaster.success('Selling Type updated.', 'Success!');
 
+        this.onClickRefresh();
+      } 
+    }, (err: any) => {
+      this.spinner.hide();
+      if(err){
+        console.log('----------er',err);
+        err = err['error'];
+        if(err){
+          this.toaster.error(err['message'], 'Error!');
+
+        }
+      }
+
+    })
+  }
+
+  onClickUpdateType(type: any, id: any) {
+    console.log('--------type----------', type, id);
+    if (localStorage.getItem('Authorization') && localStorage.getItem('Authorization') != null) {
+      if (type && id) {
+
+        let obj = {
+          nNFTId: id,
+          sSellingType: type
+        };
+
+        this.toggleSellingType(obj);
+      }
+    } else {
+      // this.router.navigate(['']);
+      this.toaster.error('Please sign in first.', 'Error')
+    }
+  }
   async sendData(opt: any) {
     this.spinner.show();
     await this.apiService.toggleBidStatus(opt).subscribe(async (transData: any) => {
       this.spinner.hide();
       if (transData && transData['data']) {
-        this.toaster.success('Bid status updated. it will be Reflected once Transaction is mined.');
+        this.toaster.success('Bid status updated. it will be Reflected once Transaction is mined.', 'Success!');
 
         this.onClickRefresh();
       } else {
-        this.toaster.success(transData['message']);
+        this.toaster.success(transData['message'], 'Success!');
       }
     })
   }

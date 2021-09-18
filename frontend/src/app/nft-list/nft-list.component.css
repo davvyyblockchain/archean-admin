@@ -38,3 +38,11 @@
   z-index: 2;
   color: #fff;
 }
+
+
+.card__cover img {
+    width: 100%;
+    width: 260px !important;
+    height: 300px !important;
+    object-fit: cover !important;
+}

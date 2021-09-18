@@ -201,7 +201,7 @@ export class CreateNFTComponent implements OnInit {
 
         } else {
           this.spinner.hide();
-          this.toaster.error("There is something issue with NFT address.");
+          this.toaster.error("There is something issue with NFT address.",'Error!');
 
         }
 
@@ -278,7 +278,7 @@ export class CreateNFTComponent implements OnInit {
           this.spinner.hide();
 
           if (updateData && updateData['data']) {
-            this.toaster.success(updateData['message'])
+            this.toaster.success(updateData['message'],'Success!')
             this.onClickRefresh();
           } else {
 
@@ -288,13 +288,13 @@ export class CreateNFTComponent implements OnInit {
           this.spinner.hide();
           if (err && err['message']) {
             err = err['error'];
-            this.toaster.error(err['message'])
+            this.toaster.error(err['message'],'Error!')
 
           }
         });
       }
     } else {
-      this.toaster.warning('Please select image.')
+      this.toaster.warning('Please select image.','Error!')
     }
 
 
@@ -318,7 +318,7 @@ export class CreateNFTComponent implements OnInit {
         this.spinner.hide();
 
         if (updateData && updateData['data']) {
-          this.toaster.success(updateData['message'])
+          this.toaster.success(updateData['message'],'Success!')
           this.onClickRefresh();
         } else {
 
@@ -328,7 +328,7 @@ export class CreateNFTComponent implements OnInit {
         this.spinner.hide();
         if (err && err['message']) {
           err = err['error'];
-          this.toaster.error(err['message'])
+          this.toaster.error(err['message'],'Error!')
 
         }
       });
@@ -453,7 +453,7 @@ export class CreateNFTComponent implements OnInit {
                   await this.apiService.setTransactionHash(oDataToPass).subscribe(async (transData: any) => {
                     this.spinner.hide();
                     if (transData && transData['data']) {
-                      that.toaster.success('NFT created successfully. it will be Reflected Once Transaction is mined.');
+                      that.toaster.success('NFT created successfully. it will be Reflected Once Transaction is mined.','Success!');
                       // that.router.navigate(['/marketplace']);
                       await this.router.navigate(['/my-profile'], {
                         relativeTo: this._route,
@@ -463,17 +463,17 @@ export class CreateNFTComponent implements OnInit {
                       });
                       // that.onClickRefresh();
                     } else {
-                      this.toaster.success(transData['message']);
+                      this.toaster.success(transData['message'],'Success!');
                     }
                   })
                 }).catch(function (error: any) {
                   that.spinner.hide();
                   console.log(error);
                   if (error.code == 32603) {
-                    that.toaster.error("You're connected to wrong network!");
+                    that.toaster.error("You're connected to wrong network!",'Error!');
                   }
                   if (error.code == 4001) {
-                    that.toaster.error("You Denied Transaction Signature");
+                    that.toaster.error("You Denied Transaction Signature",'Error!');
                   }
                 });
 
@@ -481,7 +481,7 @@ export class CreateNFTComponent implements OnInit {
               console.log();
             } else {
               this.spinner.hide();
-              this.toaster.error("There is something issue with NFT address.");
+              this.toaster.error("There is something issue with NFT address.",'Error!');
 
             }
           } else {
@@ -491,14 +491,14 @@ export class CreateNFTComponent implements OnInit {
           this.spinner.hide();
           if (error && error['message']) {
             error = error['error'];
-            this.toaster.error(error['message'])
+            this.toaster.error(error['message'],'Error!')
 
           }
         })
 
       }
     } else {
-      this.toaster.warning('Please select image.')
+      this.toaster.warning('Please select image.','Error!')
     }
 
   }

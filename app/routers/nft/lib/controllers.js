@@ -800,15 +800,21 @@ controllers.toggleSellingType = async (req, res) => {
         if (!oNFT) return res.reply(messages.not_found("NFT"));
         if (oNFT.oCurrentOwner != req.userId) return res.reply(message.bad_request("Only NFT Owner Can Set Selling Type"));
 
+        let BIdsExist = await Bid.find({ oNFTId: mongoose.Types.ObjectId(req.body.nNFTId),"sTransactionStatus" : 1,"eBidStatus" : "Bid"});
 
-        NFT.findByIdAndUpdate(req.body.nNFTId, {
-            eAuctionType: req.body.sSellingType
-        }, (err, nft) => {
-            if (err) return res.reply(messages.server_error());
-            if (!nft) return res.reply(messages.not_found('NFT'));
+        if(BIdsExist && BIdsExist!= undefined && BIdsExist.length){
+            return res.reply(messages.bad_request("Please Cancel Active bids on this NFT."));
+        }else{
 
-            return res.reply(messages.updated("NFT Details"));
-        });
+            NFT.findByIdAndUpdate(req.body.nNFTId, {
+                eAuctionType: req.body.sSellingType
+            }, (err, nft) => {
+                if (err) return res.reply(messages.server_error());
+                if (!nft) return res.reply(messages.not_found('NFT'));
+    
+                return res.reply(messages.updated("NFT Details"));
+            });
+        }
     } catch (error) {
         return res.reply(messages.server_error());
     }
@@ -965,6 +971,38 @@ controllers.allCollectionWiselist = async (req, res) => {
     }
 
 
+}
+
+
+controllers.updateBasePrice = async (req, res) => {
+    try {
+        if (!req.userId) return res.reply(messages.unauthorized());
+
+        console.log(req.body);
+        if (!req.body.nNFTId) return res.reply(messages.not_found("NFT ID"));
+        if (!req.body.nBasePrice) return res.reply(messages.not_found("Base Price"));
+
+        if (!validators.isValidObjectID(req.body.nNFTId)) return res.reply(messages.invalid("NFT ID"));
+        if (isNaN(req.body.nBasePrice) || parseFloat(req.body.nBasePrice) <= 0 || parseFloat(req.body.nBasePrice) <= 0.000001) return res.reply(messages.invalid("Base Price"));
+
+        let oNFT = await NFT.findById(req.body.nNFTId);
+
+        if (!oNFT) return res.reply(messages.not_found("NFT"));
+        if (oNFT.oCurrentOwner != req.userId) return res.reply(message.bad_request("Only NFT Owner Can Set Base Price"));
+
+
+        NFT.findByIdAndUpdate(req.body.nNFTId, {
+            nBasePrice: req.body.nBasePrice
+        }, (err, nft) => {
+            if (err) return res.reply(messages.server_error());
+            if (!nft) return res.reply(messages.not_found('NFT'));
+
+            return res.reply(messages.updated("Base Price"));
+        });
+    } catch (error) {
+        console.log(error);
+        return res.reply(messages.server_error());
+    }
 }
 
 module.exports = controllers;

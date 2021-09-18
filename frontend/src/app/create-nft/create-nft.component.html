@@ -262,13 +262,9 @@
                                         <tr *ngFor="let obj of collectionList;let i = index;">
                                             <td>{{i+1}}</td>
                                             <td>
-                                                <!-- <a href="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }} "
-                                                   >
-     -->
                                                 <img class="" style="height: 50px;width: 50px;"
                                                     src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }} "
                                                     alt="">
-                                                <!-- </a> -->
                                             </td>
                                             <td>{{obj && obj.sName && obj.sName &&
                                                 obj.sName!= undefined ?
@@ -282,12 +278,11 @@
                                     <ng-container *ngIf="!collectionList || !collectionList.length">
                                         <tr>
                                             <th colspan="4">No records found.</th>
-
-
                                         </tr>
                                     </ng-container>
                                 </tbody>
                             </table>
+
                         </div>
 
                     </div>

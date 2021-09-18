@@ -122,7 +122,7 @@ export class ApiService {
 
       })
     } else {
-      this.toaster.error('No account found! Make sure the Ethereum client is configured properly. ')
+      this.toaster.error('No account found! Make sure the Ethereum client is configured properly. ', 'Error!')
       return 'error'
     }
   }
@@ -141,38 +141,38 @@ export class ApiService {
   // --dn
   async export() {
 
-      if (window.ethereum) {
-        return new Promise(async (resolve, reject) => {
-          let accounts: any = await window.ethereum.request({ method: 'eth_requestAccounts' }).then((data:any)=>{
-              if(data && data.length){
-                return data;
-              }
-          }).catch((err: any)=>{
-            if(err && err.code  == 4001){
-              this.toaster.error(err['message'])
-            }
-          });
-
-          if (accounts && accounts.length) {
-            window.web3.eth.defaultAccount = accounts[0];
-            let obj: any = {};
-            obj.wallet_address = accounts[0];
-            this.setBehaviorView({ ...this.getBehaviorView(), ...obj });
-
-            resolve(accounts[0])
-          } else {
-            resolve([]);
+    if (window.ethereum) {
+      return new Promise(async (resolve, reject) => {
+        let accounts: any = await window.ethereum.request({ method: 'eth_requestAccounts' }).then((data: any) => {
+          if (data && data.length) {
+            return data;
           }
-        })
-      } else {
-        this.toaster.error('No account found! Make sure the Ethereum client is configured properly. ')
-      }
+        }).catch((err: any) => {
+          if (err && err.code == 4001) {
+            this.toaster.error(err['message'], 'Error!')
+          }
+        });
+
+        if (accounts && accounts.length) {
+          window.web3.eth.defaultAccount = accounts[0];
+          let obj: any = {};
+          obj.wallet_address = accounts[0];
+          this.setBehaviorView({ ...this.getBehaviorView(), ...obj });
+
+          resolve(accounts[0])
+        } else {
+          resolve([]);
+        }
+      })
+    } else {
+      this.toaster.error('No account found! Make sure the Ethereum client is configured properly. ', 'Error!')
+    }
   }
 
   getBalance(contractInstance: any, userWalletAccount: any) {
     return new Promise(async (resolve, reject) => {
       if (!userWalletAccount) {
-        this.toaster.error('Metamask/Wallet connection failed.');
+        this.toaster.error('Metamask/Wallet connection failed.', 'Error!');
         return;
       }
       let result = await contractInstance.methods.balanceOf(userWalletAccount).call({
@@ -193,7 +193,7 @@ export class ApiService {
   // 
   getHeaders() {
     let t: any = localStorage.getItem('Authorization');
-    return t && t!= undefined ? t : '';
+    return t && t != undefined ? t : '';
   }
   checkuseraddress(address: any) {
     return this.http.post(this.URL + '/auth/checkuseraddress', { sWalletAddress: address });
@@ -236,12 +236,12 @@ export class ApiService {
 
                   localStorage.setItem('Authorization', result.data.token);
                   localStorage.setItem('sWalletAddress', result.data.sWalletAddress);
-                  toaster.success('Sign in successfully.');
+                  toaster.success('Sign in successfully.', 'Success!');
                   that.onClickRefresh();
                 }
               }, (err) => {
                 if (err) {
-                  toaster.error('There is some issue with sign in');
+                  toaster.error('There is some issue with sign in', 'Error!');
 
                 }
               });
@@ -253,7 +253,7 @@ export class ApiService {
                 sSignature: signature['result']
               }).subscribe((result: any) => {
                 if (result && result['data']) {
-                  toaster.success('Sign up successfully.');
+                  toaster.success('Sign up successfully.', 'Success!');
 
                   localStorage.setItem('Authorization', result.data.token);
                   localStorage.setItem('sWalletAddress', result.data.sWalletAddress);
@@ -262,14 +262,14 @@ export class ApiService {
                 }
               }, (err) => {
                 if (err) {
-                  toaster.error('There is some issue with sign up');
+                  toaster.error('There is some issue with sign up', 'Error!');
 
                 }
               });
             }
           }
         } else {
-          toaster.error(err['message']);
+          toaster.error(err['message'], 'Error!');
         }
 
         // window.web3.eth.personal.sign(message, from, function (err: any, signature: any) {
@@ -286,9 +286,9 @@ export class ApiService {
     return this.http.get(this.URL + '/nft/collectionlist', { headers: { 'Authorization': this.getHeaders() } });
   }
   allCollectionWiseList(data: any) {
-    return this.http.post(this.URL + '/nft/allCollectionWiseList',data, { headers: { 'Authorization': '' } });
+    return this.http.post(this.URL + '/nft/allCollectionWiseList', data, { headers: { 'Authorization': '' } });
   }
-  
+
   getCategories() {
     return this.http.get(this.URL + '/user/categories', { headers: { 'Authorization': this.getHeaders() } });
   }
@@ -322,8 +322,11 @@ export class ApiService {
   bidHistory(id: any, data: any) {
     return this.http.post(this.URL + '/bid/history/' + id, data, { headers: { 'Authorization': this.getHeaders() } });
   }
+  tokenHistory(id: any, data: any) {
+    return this.http.post(this.URL + '/bid/tokenHistory/' + id, data, { headers: { 'Authorization': this.getHeaders() } });
+  }
   bidByUser(data: any) {
-    return this.http.post(this.URL + '/bid/bidByUser' , data, { headers: { 'Authorization': this.getHeaders() } });
+    return this.http.post(this.URL + '/bid/bidByUser', data, { headers: { 'Authorization': this.getHeaders() } });
   }
   landingPage() {
     return this.http.get(this.URL + '/nft/landing');
@@ -348,9 +351,15 @@ export class ApiService {
   allUserDetails(data: any) {
     return this.http.post(this.URL + '/user/allDetails', data, { headers: { 'Authorization': this.getHeaders() } });
   }
-  
+
   follow(data: any) {
     return this.http.post(this.URL + '/user/follow', data, { headers: { 'Authorization': this.getHeaders() } });
+  }
+
+  // nNFTId: 6120eba598b61743cf49a43f
+  // sSellingType: Auction
+  toggleSellingType(data: any) {
+    return this.http.put(this.URL + '/nft/toggleSellingType', data, { headers: { 'Authorization': this.getHeaders() } });
   }
   onClickRefresh() {
     window.location.reload();
