@@ -492,6 +492,73 @@ controllers.collectionlist = async (req, res) => {
     }
 };
 
+controllers.collectionlistMy = async (req, res) => {
+    try {
+        if (!req.userId)
+            return res.reply(messages.unauthorized());
+
+
+        var nLimit = parseInt(req.body.length);
+        var nOffset = parseInt(req.body.start);
+
+        let query = {
+            'oCreatedBy': mongoose.Types.ObjectId(req.userId)
+        };
+        if (req && req.body.sTextsearch && req.body.sTextsearch != undefined) {
+            query['sName'] = new RegExp(req.body.sTextsearch, 'i');
+        }
+
+        let aCollections = await Collection.aggregate([{
+            '$match': query
+        }, {
+            '$lookup': {
+                'from': 'users',
+                'localField': 'oCreatedBy',
+                'foreignField': '_id',
+                'as': 'oUser'
+            }
+        }, {
+			$unwind: { preserveNullAndEmptyArrays: true, path: "$oUser" }
+		}, {
+            '$sort': {
+                'sCreated': -1
+            }
+        }, {
+            '$facet': {
+                'collections': [{
+                    "$skip": +nOffset
+                }, {
+                    "$limit": +nLimit
+                }],
+                'totalCount': [{
+                    '$count': 'count'
+                }]
+            }
+        }]);
+
+
+        let iFiltered = aCollections[0].collections.length;
+        if (aCollections[0].totalCount[0] == undefined) {
+            return res.reply(messages.success('Data'), {
+                aCollections: 0,
+                "draw": req.body.draw,
+                "recordsTotal": 0,
+                "recordsFiltered": iFiltered,
+            });
+        } else {
+            return res.reply(messages.no_prefix('Collection Details'), {
+                data: aCollections[0].collections,
+                "draw": req.body.draw,
+                "recordsTotal": aCollections[0].totalCount[0].count,
+                "recordsFiltered": iFiltered,
+            });
+        }
+
+    } catch (error) {
+        return res.reply(messages.server_error());
+    }
+};
+
 controllers.nftListing = async (req, res) => {
     try {
 
@@ -606,15 +673,15 @@ controllers.nftID = async (req, res) => {
             return res.reply(messages.not_found("NFT ID"));
 
         if (!validators.isValidObjectID(req.params.nNFTId)) res.reply(messages.invalid("NFT ID"));
-     
-        let  aNFT = await NFT.findById(req.params.nNFTId).populate('oPostedBy oCurrentOwner');
-     
+
+        let aNFT = await NFT.findById(req.params.nNFTId).populate('oPostedBy oCurrentOwner');
+
         if (!aNFT) return res.reply(messages.not_found("NFT"));
         aNFT = aNFT.toObject();
         aNFT.sCollectionDetail = {};
-      
+
         aNFT.sCollectionDetail = await Collection.findOne({ sName: aNFT.sCollection && aNFT.sCollection != undefined ? aNFT.sCollection : '-' })
-      
+
         var token = req.headers.authorization;
         if (token) {
             token = token.replace('Bearer ', '');
@@ -622,9 +689,9 @@ controllers.nftID = async (req, res) => {
                 if (decoded)
                     req.userId = decoded.id;
             })
-         
+
             if (aNFT.oCurrentOwner._id != req.userId)
-      
+
                 await NFT.findByIdAndUpdate(req.params.nNFTId, {
                     $inc: {
                         nView: 1
@@ -749,7 +816,7 @@ controllers.landing = async (req, res) => {
                         '_id': -1
                     }
                 }, {
-                    '$limit':  10
+                    '$limit': 10
                 }, {
                     '$lookup': {
                         'from': 'users',
@@ -800,18 +867,18 @@ controllers.toggleSellingType = async (req, res) => {
         if (!oNFT) return res.reply(messages.not_found("NFT"));
         if (oNFT.oCurrentOwner != req.userId) return res.reply(message.bad_request("Only NFT Owner Can Set Selling Type"));
 
-        let BIdsExist = await Bid.find({ oNFTId: mongoose.Types.ObjectId(req.body.nNFTId),"sTransactionStatus" : 1,"eBidStatus" : "Bid"});
+        let BIdsExist = await Bid.find({ oNFTId: mongoose.Types.ObjectId(req.body.nNFTId), "sTransactionStatus": 1, "eBidStatus": "Bid" });
 
-        if(BIdsExist && BIdsExist!= undefined && BIdsExist.length){
+        if (BIdsExist && BIdsExist != undefined && BIdsExist.length) {
             return res.reply(messages.bad_request("Please Cancel Active bids on this NFT."));
-        }else{
+        } else {
 
             NFT.findByIdAndUpdate(req.body.nNFTId, {
                 eAuctionType: req.body.sSellingType
             }, (err, nft) => {
                 if (err) return res.reply(messages.server_error());
                 if (!nft) return res.reply(messages.not_found('NFT'));
-    
+
                 return res.reply(messages.updated("NFT Details"));
             });
         }

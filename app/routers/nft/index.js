@@ -18,6 +18,7 @@ router.post('/allCollectionWiseList', nftController.allCollectionWiselist);
 router.put('/updateBasePrice', nftMiddleware.verifyToken, nftController.updateBasePrice);
 
 router.put('/toggleSellingType', nftMiddleware.verifyToken, nftController.toggleSellingType);
+router.post('/myCollectionList', nftMiddleware.verifyToken, nftController.collectionlistMy);
 
 // nNFTId: 6120eba598b61743cf49a43f
 // nBasePrice: 1
