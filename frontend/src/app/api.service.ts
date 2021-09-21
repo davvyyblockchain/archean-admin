@@ -316,6 +316,11 @@ export class ApiService {
   nftListing(data: any) {
     return this.http.post(this.URL + '/nft/nftListing', data, { headers: { 'Authorization': this.getHeaders() } });
   }
+  myCollectionList(data: any) {
+    return this.http.post(this.URL + '/nft/myCollectionList', data, { headers: { 'Authorization': this.getHeaders() } });
+  }
+  
+
   viewnft(id: any) {
     return this.http.get(this.URL + '/nft/viewnft/' + id, { headers: { 'Authorization': this.getHeaders() } });
   }

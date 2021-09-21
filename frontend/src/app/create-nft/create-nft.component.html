@@ -243,48 +243,6 @@
                                 Collection</button>
                         </div>
 
-
-
-                        <div class="col-12">
-                            <table class="table text-white">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Sr No.</th>
-                                        <th scope="col">Image</th>
-                                        <th scope="col">Collection name</th>
-                                        <th scope="col">Description</th>
-
-
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <ng-container *ngIf="collectionList && collectionList.length">
-                                        <tr *ngFor="let obj of collectionList;let i = index;">
-                                            <td>{{i+1}}</td>
-                                            <td>
-                                                <img class="" style="height: 50px;width: 50px;"
-                                                    src="{{obj.sHash && obj.sHash != undefined ? 'https://decryptnft.mypinata.cloud/ipfs/'+obj.sHash :'assets/img/cover/cover1.jpg' }} "
-                                                    alt="">
-                                            </td>
-                                            <td>{{obj && obj.sName && obj.sName &&
-                                                obj.sName!= undefined ?
-                                                obj.sName:'-'}}</td>
-                                            <td>{{obj && obj.sDescription && obj.sDescription &&
-                                                obj.sDescription != undefined ?
-                                                obj.sDescription :0}}</td>
-
-                                        </tr>
-                                    </ng-container>
-                                    <ng-container *ngIf="!collectionList || !collectionList.length">
-                                        <tr>
-                                            <th colspan="4">No records found.</th>
-                                        </tr>
-                                    </ng-container>
-                                </tbody>
-                            </table>
-
-                        </div>
-
                     </div>
                 </form>
 

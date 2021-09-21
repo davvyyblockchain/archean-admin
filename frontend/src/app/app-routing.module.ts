@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CollectionListComponent } from './collection-list/collection-list.component';
 import { CollectionsComponent } from './collections/collections.component';
 import { CreateNFTComponent } from './create-nft/create-nft.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: "users", component: UsersComponent },
   { path: "collections/:name", component: CollectionsComponent },
   { path: "user-detail/:id", component: UserDetailComponent },
+  { path: "my-collections", component: CollectionListComponent },
 
 
 ];

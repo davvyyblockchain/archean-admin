@@ -21,6 +21,7 @@ import { ScriptLoaderService } from './script-loader.service';
 import { AutoFocusDirective } from './auto-focus.directive';
 import { CollectionsComponent } from './collections/collections.component';
 import { UserDetailComponent } from './user-detail/user-detail.component';
+import { CollectionListComponent } from './collection-list/collection-list.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { UserDetailComponent } from './user-detail/user-detail.component';
     AutoFocusDirective,
     CollectionsComponent,
     UserDetailComponent,
+    CollectionListComponent,
   ],
   imports: [
     FormsModule,
