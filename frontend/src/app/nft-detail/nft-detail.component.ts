@@ -35,6 +35,11 @@ export class NFTDetailComponent implements OnInit, OnDestroy {
   buyForm: any;
   submitted3: Boolean = false;
 
+  changePriceForm: any;
+  submitted4: Boolean = false;
+
+
+  isLogin: any = false;
 
   showObj: any = {
     wallet_address: localStorage.getItem('sWalletAddress'),
@@ -79,6 +84,7 @@ export class NFTDetailComponent implements OnInit, OnDestroy {
     this.buildBidForm();
     this.buildTransferForm();
     this.buildBUYForm();
+    this.buildCHANGEPRICEForm();
 
     let id = this._route.snapshot.params['id'];
     if (id && id != null && id != undefined && id != '') {
@@ -87,6 +93,7 @@ export class NFTDetailComponent implements OnInit, OnDestroy {
 
       await this.getBidHistory(id);
       if (localStorage.getItem('Authorization') && localStorage.getItem('Authorization') != null) {
+        this.isLogin = true;
         await this.getColoboraterList();
       }
 
@@ -96,6 +103,11 @@ export class NFTDetailComponent implements OnInit, OnDestroy {
 
     }
 
+  }
+  buildCHANGEPRICEForm() {
+    this.changePriceForm = this._formBuilder.group({
+      nBasePrice: ['', [Validators.required]]
+    });
   }
 
   buildBidForm() {
@@ -638,13 +650,13 @@ export class NFTDetailComponent implements OnInit, OnDestroy {
         this.toaster.success('Selling Type updated.', 'Success!');
 
         this.onClickRefresh();
-      } 
+      }
     }, (err: any) => {
       this.spinner.hide();
-      if(err){
-        console.log('----------er',err);
+      if (err) {
+        console.log('----------er', err);
         err = err['error'];
-        if(err){
+        if (err) {
           this.toaster.error(err['message'], 'Error!');
 
         }
@@ -720,4 +732,70 @@ export class NFTDetailComponent implements OnInit, OnDestroy {
 
   }
 
+  // --TODO
+  async onClickSubmitChangePrice() {
+
+    this.spinner.show();
+    this.submitted4 = true;
+    if (this.changePriceForm.invalid) {
+      this.spinner.hide();
+      return;
+    } else {
+      let resp = this.changePriceForm.value;
+      let obj = {
+        nNFTId: this.NFTData._id,
+        nBasePrice: resp.nBasePrice
+      };
+
+      this.spinner.show();
+      await this.apiService.updateBasePrice(obj).subscribe(async (transData: any) => {
+        console.log('-----------transData----------',transData)
+        this.spinner.hide();
+        if (transData && transData['message'] && transData['message'] == 'Price updated') {
+          this.toaster.success('Price updated.', 'Success!');
+
+          this.onClickRefresh();
+        } 
+      }, (err: any) => {
+        this.spinner.hide();
+        if(err){
+          console.log('----------er',err);
+          err = err['error'];
+          if(err){
+            this.toaster.error(err['message'], 'Error!');
+
+          }
+        }
+
+      })
+
+    }
+
+  }
+
+  onClickOPENPRICE(){
+    $.magnificPopup.open({
+      items: {
+        src: '#modal-change-price',
+        type: 'inline',
+        fixedContentPos: true,
+        fixedBgPos: true,
+        overflowY: 'auto',
+        preloader: false,
+        focus: '#username',
+        modal: false,
+        removalDelay: 300,
+        mainClass: 'my-mfp-zoom-in',
+        callbacks: {
+          beforeOpen: function () {
+            if ($(window).width() < 700) {
+              // this.st.focus = false;
+            } else {
+              // this.st.focus = '#name';
+            }
+          }
+        }
+      }
+    });
+  }
 }

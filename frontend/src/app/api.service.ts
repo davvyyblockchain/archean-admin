@@ -366,6 +366,9 @@ export class ApiService {
   toggleSellingType(data: any) {
     return this.http.put(this.URL + '/nft/toggleSellingType', data, { headers: { 'Authorization': this.getHeaders() } });
   }
+  updateBasePrice(data: any) {
+    return this.http.put(this.URL + '/nft/updateBasePrice', data, { headers: { 'Authorization': this.getHeaders() } });
+  }
   onClickRefresh() {
     window.location.reload();
   }

@@ -518,8 +518,8 @@ controllers.collectionlistMy = async (req, res) => {
                 'as': 'oUser'
             }
         }, {
-			$unwind: { preserveNullAndEmptyArrays: true, path: "$oUser" }
-		}, {
+            $unwind: { preserveNullAndEmptyArrays: true, path: "$oUser" }
+        }, {
             '$sort': {
                 'sCreated': -1
             }
@@ -1057,15 +1057,21 @@ controllers.updateBasePrice = async (req, res) => {
         if (!oNFT) return res.reply(messages.not_found("NFT"));
         if (oNFT.oCurrentOwner != req.userId) return res.reply(message.bad_request("Only NFT Owner Can Set Base Price"));
 
+        let BIdsExist = await Bid.find({ oNFTId: mongoose.Types.ObjectId(req.body.nNFTId), "sTransactionStatus": 1, "eBidStatus": "Bid" });
 
-        NFT.findByIdAndUpdate(req.body.nNFTId, {
-            nBasePrice: req.body.nBasePrice
-        }, (err, nft) => {
-            if (err) return res.reply(messages.server_error());
-            if (!nft) return res.reply(messages.not_found('NFT'));
+        if (BIdsExist && BIdsExist != undefined && BIdsExist.length) {
+            return res.reply(messages.bad_request("Please Cancel Active bids on this NFT."));
+        } else {
 
-            return res.reply(messages.updated("Base Price"));
-        });
+            NFT.findByIdAndUpdate(req.body.nNFTId, {
+                nBasePrice: req.body.nBasePrice
+            }, (err, nft) => {
+                if (err) return res.reply(messages.server_error());
+                if (!nft) return res.reply(messages.not_found('NFT'));
+
+                return res.reply(messages.updated("Price"));
+            });
+        }
     } catch (error) {
         console.log(error);
         return res.reply(messages.server_error());

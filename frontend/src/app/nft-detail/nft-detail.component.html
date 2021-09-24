@@ -335,39 +335,69 @@
                                 NFTData.nBasePrice['$numberDecimal'] :'-' }} BNB</span>
                         </div>
                     </div>
+                    <ng-container *ngIf="isLogin && isLogin == true">
+                        <div class="asset__btns"
+                            *ngIf="showObj.showTransferCurrent == 'show' && NFTData.eAuctionType == 'Unlockable'">
 
-                    <div class="asset__btns d-flex text-align-between"
-                        *ngIf="NFTData && NFTData.oCurrentOwner && NFTData.oCurrentOwner != undefined && showObj.wallet_address == NFTData.oCurrentOwner.sWalletAddress">
+                            <a href="javascript:;" (click)="onClickOPENPRICE()"
+                                class="asset__btn asset__btn--full asset__btn--clr">Edit Price</a>
 
-                        <a class="author__follow mt-2" (click)="onClickUpdateType('Fixed Sale',NFTData._id)"
-                            style="width: 200px;margin-right: 10px; cursor:pointer;"
-                            *ngIf="NFTData.eAuctionType == 'Auction' || NFTData.eAuctionType == 'Unlockable'">Put on
-                            Sale</a>
+                        </div>
+
+                        <div class="asset__btns d-flex text-align-between mb-3"
+                            *ngIf="NFTData && NFTData.oCurrentOwner && NFTData.oCurrentOwner != undefined && showObj.wallet_address == NFTData.oCurrentOwner.sWalletAddress">
+
+                            <a class="author__follow mt-2" (click)="onClickUpdateType('Fixed Sale',NFTData._id)"
+                                style="width: 200px;margin-right: 10px; cursor:pointer;"
+                                *ngIf="NFTData.eAuctionType == 'Auction' || NFTData.eAuctionType == 'Unlockable'">Put on
+                                Sale</a>
+
+                            <a class="author__follow author__follow--true mt-2"
+                                (click)="onClickUpdateType('Unlockable',NFTData._id)"
+                                style="width: 200px; cursor:pointer;" *ngIf="NFTData.eAuctionType == 'Auction'">Remove
+                                from
+                                Auction</a>
 
 
-                        <a class="author__follow author__follow--true mt-2"
-                            (click)="onClickUpdateType('Auction',NFTData._id)" style="width: 200px; cursor:pointer;"
-                            *ngIf="NFTData.eAuctionType == 'Fixed Sale' || NFTData.eAuctionType == 'Unlockable'">Put on
-                            Auction</a>
 
-                    </div>
+                        </div>
 
-                    <!-- actions -->
-                    <div class="asset__btns" *ngIf="showObj.showBidCurrent == 'show'">
-                        <a href="#modal-bid" class="asset__btn asset__btn--full asset__btn--clr open-modal">Place
-                            a
-                            bid</a>
-                    </div>
-                    <div class="asset__btns"
-                        *ngIf="showObj.showTransferCurrent == 'show' && NFTData.eAuctionType == 'Unlockable'">
-                        <ng-container>
-                            <a href="javascript:;" (click)="clickOpen()"
-                                class="asset__btn asset__btn--full asset__btn--clr">Transfer NFT</a>
-                        </ng-container>
-                    </div>
-                    <div class="asset__btns" *ngIf="showObj.showBuyCurrent == 'show'">
-                        <a href="#modal-buy" class="asset__btn asset__btn--full asset__btn--clr open-modal">Buy now</a>
-                    </div>
+                        <div class="asset__btns d-flex text-align-between"
+                            *ngIf="NFTData && NFTData.oCurrentOwner && NFTData.oCurrentOwner != undefined && showObj.wallet_address == NFTData.oCurrentOwner.sWalletAddress">
+
+                            <a class="author__follow mt-2" (click)="onClickUpdateType('Unlockable',NFTData._id)"
+                                style="width: 200px;margin-right: 10px; cursor:pointer;"
+                                *ngIf="NFTData.eAuctionType == 'Fixed Sale'">Remove
+                                from
+                                Sale</a>
+
+                            <a class="author__follow author__follow--true mt-2"
+                                (click)="onClickUpdateType('Auction',NFTData._id)" style="width: 200px; cursor:pointer;"
+                                *ngIf="NFTData.eAuctionType == 'Fixed Sale' || NFTData.eAuctionType == 'Unlockable'">Put
+                                on
+                                Auction</a>
+
+
+                        </div>
+
+                        <!-- actions -->
+                        <div class="asset__btns" *ngIf="showObj.showBidCurrent == 'show'">
+                            <a href="#modal-bid" class="asset__btn asset__btn--full asset__btn--clr open-modal">Place
+                                a
+                                bid</a>
+                        </div>
+                        <div class="asset__btns"
+                            *ngIf="showObj.showTransferCurrent == 'show' && NFTData.eAuctionType == 'Unlockable'">
+                            <ng-container>
+                                <a href="javascript:;" (click)="clickOpen()"
+                                    class="asset__btn asset__btn--full asset__btn--clr">Transfer NFT</a>
+                            </ng-container>
+                        </div>
+                        <div class="asset__btns" *ngIf="showObj.showBuyCurrent == 'show'">
+                            <a href="#modal-buy" class="asset__btn asset__btn--full asset__btn--clr open-modal">Buy
+                                now</a>
+                        </div>
+                    </ng-container>
                     <!-- end actions -->
                 </div>
             </div>
@@ -588,5 +618,30 @@
         <!-- <span class="sign__text sign__text--small">This Bid can Finalize by Owner.</span> -->
 
         <button class="sign__btn" type="button" (click)="onClickSubmitBUY()">Buy now</button>
+    </form>
+</div>
+
+
+<div id="modal-change-price" class="zoom-anim-dialog mfp-hide modal modal--form">
+    <button class="modal__close" type="button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path
+                d="M13.41,12l4.3-4.29a1,1,0,1,0-1.42-1.42L12,10.59,7.71,6.29A1,1,0,0,0,6.29,7.71L10.59,12l-4.3,4.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0L12,13.41l4.29,4.3a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42Z" />
+        </svg></button>
+
+    <h4 class="sign__title">Edit price</h4>
+    <form name="changePriceForm" [formGroup]="changePriceForm">
+        <div class="sign__group sign__group--row">
+            <label class="sign__label" for="placebid">Price</label>
+            <input id="placebid" type="text" class="sign__input"
+                [ngClass]="{ 'is-invalid': submitted4 && changePriceForm.controls.nBasePrice.errors }"
+                formControlName="nBasePrice">
+            <div class="nft-err" *ngIf="submitted4 && changePriceForm.controls.nBasePrice.errors">
+                <span *ngIf="changePriceForm.controls.nBasePrice.errors?.required">This field is
+                    required.</span>
+            </div>
+
+        </div>
+
+        <button class="sign__btn" type="button" (click)="onClickSubmitChangePrice()">Update Price</button>
     </form>
 </div>
