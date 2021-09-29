@@ -70,10 +70,10 @@ $(document).ready(function () {
 		autoHeight: true,
 		responsive: {
 			0: {
-				items: 4,
+				items: 1,
 			},
 			576: {
-				items: 4,
+				items: 1,
 			},
 			768: {
 				items: 4,
@@ -106,10 +106,10 @@ $(document).ready(function () {
 		autoHeight: true,
 		responsive: {
 			0: {
-				items: 4,
+				items: 1,
 			},
 			576: {
-				items: 4,
+				items: 1,
 			},
 			768: {
 				items: 4,
@@ -141,10 +141,10 @@ $(document).ready(function () {
 		autoHeight: true,
 		responsive: {
 			0: {
-				items: 4,
+				items: 1,
 			},
 			576: {
-				items: 4,
+				items: 1,
 			},
 			768: {
 				items: 4,
@@ -177,10 +177,10 @@ $(document).ready(function () {
 		autoHeight: true,
 		responsive: {
 			0: {
-				items: 4,
+				items: 1,
 			},
 			576: {
-				items: 4,
+				items: 1,
 			},
 			768: {
 				items: 4,
