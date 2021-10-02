@@ -350,6 +350,52 @@ controllers.mynftlist = async (req, res) => {
                 'oCurrentOwner': 1,
                 "sTransactionStatus": 1,
                 eAuctionType: 1,
+                user_likes: {
+                    "$size": {
+                        "$filter": {
+                            "input": "$user_likes",
+                            "as": "user_likes",
+                            "cond": {
+                                $eq: ["$$user_likes", mongoose.Types.ObjectId(req.userId)]
+                            }
+                        }
+                    }
+                },
+                user_likes_size: {
+                    $cond: {
+                        if: {
+                            $isArray: "$user_likes"
+                        },
+                        then: {
+                            $size: "$user_likes"
+                        },
+                        else: 0
+                    }
+                }
+            }
+        }, {
+            '$project': {
+                '_id': 1,
+                'sName': 1,
+                'eType': 1,
+                'nBasePrice': 1,
+                'sHash': 1,
+                'nQuantity': 1,
+                'nTokenID': 1,
+                'oCurrentOwner': 1,
+                "sTransactionStatus": 1,
+                eAuctionType: 1,
+                is_user_like: {
+                    $cond: {
+                        if: {
+                            $gte: ["$user_likes", 1]
+                        },
+                        then: 'true',
+                        else: 'false'
+                    }
+                },
+                user_likes_size: 1,
+
             }
         }, {
             '$lookup': {
@@ -627,6 +673,50 @@ controllers.nftListing = async (req, res) => {
                 'sHash': 1,
                 'oCurrentOwner': 1,
                 'eAuctionType': 1,
+                user_likes: {
+                    "$size": {
+                        "$filter": {
+                            "input": "$user_likes",
+                            "as": "user_likes",
+                            "cond": {
+                                $eq: ["$$user_likes",req.userId && req.userId != undefined && req.userId != null ? mongoose.Types.ObjectId(req.userId): '']
+                            }
+                        }
+                    }
+                },
+                user_likes_size: {
+                    $cond: {
+                        if: {
+                            $isArray: "$user_likes"
+                        },
+                        then: {
+                            $size: "$user_likes"
+                        },
+                        else: 0
+                    }
+                }
+
+            }
+        }, {
+            '$project': {
+                '_id': 1,
+                'sName': 1,
+                'eType': 1,
+                'nBasePrice': 1,
+                'sHash': 1,
+                'oCurrentOwner': 1,
+                'eAuctionType': 1,
+                is_user_like: {
+                    $cond: {
+                        if: {
+                            $gte: ["$user_likes", 1]
+                        },
+                        then: 'true',
+                        else: 'false'
+                    }
+                },
+                user_likes_size: 1
+
             }
         }, {
             '$lookup': {
@@ -683,6 +773,19 @@ controllers.nftID = async (req, res) => {
         aNFT.sCollectionDetail = await Collection.findOne({ sName: aNFT.sCollection && aNFT.sCollection != undefined ? aNFT.sCollection : '-' })
 
         var token = req.headers.authorization;
+
+        req.userId = req.userId && req.userId != undefined && req.userId != null ? req.userId : '';
+
+        let likeARY = aNFT.user_likes && aNFT.user_likes.length ? aNFT.user_likes.filter((v) => v.toString() == req.userId.toString()) : [];
+
+        if (likeARY && likeARY.length) {
+            aNFT.is_user_like  = 'true';
+        } else {
+            aNFT.is_user_like  = 'false';
+        }
+
+
+        // 
         if (token) {
             token = token.replace('Bearer ', '');
             jwt.verify(token, process.env.JWT_SECRET, function (err, decoded) {
@@ -754,7 +857,12 @@ controllers.setTransactionHash = async (req, res) => {
 
 controllers.landing = async (req, res) => {
     try {
-        const data = await NFT.aggregate([{
+        console.log('---------------------1',);
+
+        req.userId = req.userId && req.userId != undefined && req.userId != null ? req.userId : '';
+        console.log('---------------------2',req.userId);
+
+        let data = await NFT.aggregate([{
             '$facet': {
                 'recentlyAdded': [{
                     '$match': {
@@ -778,7 +886,85 @@ controllers.landing = async (req, res) => {
                         'foreignField': '_id',
                         'as': 'aCurrentOwner'
                     }
-                }, { $unwind: '$aCurrentOwner' }],
+                }, { $unwind: '$aCurrentOwner' }, {
+                    $project: {
+                        sHash: 1,
+                        eType: 1,
+                        sCreated: 1,
+                        oCurrentOwner: 1,
+                        oPostedBy: 1,
+                        sCollection: 1,
+                        sName: 1,
+                        sCollaborator: 1,
+                        sNftdescription: 1,
+                        nCollaboratorPercentage: 1,
+                        sSetRroyalityPercentage: 1,
+                        nQuantity: 1,
+                        nView: 1,
+                        nBasePrice: 1,
+                        eAuctionType: 1,
+                        nTokenID: 1,
+                        sTransactionHash: 1,
+                        sTransactionStatus: 1,
+                        aCurrentOwner: 1,
+                        user_likes: {
+                            "$size": {
+                                "$filter": {
+                                    "input": "$user_likes",
+                                    "as": "user_likes",
+                                    "cond": {
+                                        $eq: ["$$user_likes",req.userId && req.userId != undefined && req.userId != null ? mongoose.Types.ObjectId(req.userId): '' ]
+                                    }
+                                }
+                            }
+                        },
+                        user_likes_size: {
+                            $cond: {
+                                if: {
+                                    $isArray: "$user_likes"
+                                },
+                                then: {
+                                    $size: "$user_likes"
+                                },
+                                else: 0
+                            }
+                        }
+
+                    }
+                }, {
+                    $project: {
+                        sHash: 1,
+                        eType: 1,
+                        sCreated: 1,
+                        oCurrentOwner: 1,
+                        oPostedBy: 1,
+                        sCollection: 1,
+                        sName: 1,
+                        sCollaborator: 1,
+                        sNftdescription: 1,
+                        nCollaboratorPercentage: 1,
+                        sSetRroyalityPercentage: 1,
+                        nQuantity: 1,
+                        nView: 1,
+                        nBasePrice: 1,
+                        eAuctionType: 1,
+                        nTokenID: 1,
+                        sTransactionHash: 1,
+                        sTransactionStatus: 1,
+                        aCurrentOwner: 1,
+                        is_user_like: {
+                            $cond: {
+                                if: {
+                                    $gte: ["$user_likes", 1]
+                                },
+                                then: 'true',
+                                else: 'false'
+                            }
+                        },
+                        user_likes_size: 1
+
+                    }
+                }],
                 'onSale': [{
                     '$match': {
                         'sTransactionStatus': {
@@ -801,7 +987,85 @@ controllers.landing = async (req, res) => {
                         'foreignField': '_id',
                         'as': 'aCurrentOwner'
                     }
-                }, { $unwind: '$aCurrentOwner' }],
+                }, { $unwind: '$aCurrentOwner' }, {
+                    $project: {
+                        sHash: 1,
+                        eType: 1,
+                        sCreated: 1,
+                        oCurrentOwner: 1,
+                        oPostedBy: 1,
+                        sCollection: 1,
+                        sName: 1,
+                        sCollaborator: 1,
+                        sNftdescription: 1,
+                        nCollaboratorPercentage: 1,
+                        sSetRroyalityPercentage: 1,
+                        nQuantity: 1,
+                        nView: 1,
+                        nBasePrice: 1,
+                        eAuctionType: 1,
+                        nTokenID: 1,
+                        sTransactionHash: 1,
+                        sTransactionStatus: 1,
+                        aCurrentOwner: 1,
+                        user_likes: {
+                            "$size": {
+                                "$filter": {
+                                    "input": "$user_likes",
+                                    "as": "user_likes",
+                                    "cond": {
+                                        $eq: ["$$user_likes",req.userId && req.userId != undefined && req.userId != null ? mongoose.Types.ObjectId(req.userId): '']
+                                    }
+                                }
+                            }
+                        },
+                        user_likes_size: {
+                            $cond: {
+                                if: {
+                                    $isArray: "$user_likes"
+                                },
+                                then: {
+                                    $size: "$user_likes"
+                                },
+                                else: 0
+                            }
+                        }
+
+                    }
+                }, {
+                    $project: {
+                        sHash: 1,
+                        eType: 1,
+                        sCreated: 1,
+                        oCurrentOwner: 1,
+                        oPostedBy: 1,
+                        sCollection: 1,
+                        sName: 1,
+                        sCollaborator: 1,
+                        sNftdescription: 1,
+                        nCollaboratorPercentage: 1,
+                        sSetRroyalityPercentage: 1,
+                        nQuantity: 1,
+                        nView: 1,
+                        nBasePrice: 1,
+                        eAuctionType: 1,
+                        nTokenID: 1,
+                        sTransactionHash: 1,
+                        sTransactionStatus: 1,
+                        aCurrentOwner: 1,
+                        is_user_like: {
+                            $cond: {
+                                if: {
+                                    $gte: ["$user_likes", 1]
+                                },
+                                then: 'true',
+                                else: 'false'
+                            }
+                        },
+                        user_likes_size: 1
+
+                    }
+                }],
                 'onAuction': [{
                     '$match': {
                         'sTransactionStatus': {
@@ -824,9 +1088,89 @@ controllers.landing = async (req, res) => {
                         'foreignField': '_id',
                         'as': 'aCurrentOwner'
                     }
-                }, { $unwind: '$aCurrentOwner' }]
+                }, { $unwind: '$aCurrentOwner' }, {
+                    $project: {
+                        sHash: 1,
+                        eType: 1,
+                        sCreated: 1,
+                        oCurrentOwner: 1,
+                        oPostedBy: 1,
+                        sCollection: 1,
+                        sName: 1,
+                        sCollaborator: 1,
+                        sNftdescription: 1,
+                        nCollaboratorPercentage: 1,
+                        sSetRroyalityPercentage: 1,
+                        nQuantity: 1,
+                        nView: 1,
+                        nBasePrice: 1,
+                        eAuctionType: 1,
+                        nTokenID: 1,
+                        sTransactionHash: 1,
+                        sTransactionStatus: 1,
+                        aCurrentOwner: 1,
+                        user_likes: {
+                            "$size": {
+                                "$filter": {
+                                    "input": "$user_likes",
+                                    "as": "user_likes",
+                                    "cond": {
+                                        $eq: ["$$user_likes",req.userId && req.userId != undefined && req.userId != null ? mongoose.Types.ObjectId(req.userId): '']
+                                    }
+                                }
+                            }
+                        },
+                        user_likes_size: {
+                            $cond: {
+                                if: {
+                                    $isArray: "$user_likes"
+                                },
+                                then: {
+                                    $size: "$user_likes"
+                                },
+                                else: 0
+                            }
+                        }
+
+                    }
+                }, {
+                    $project: {
+                        sHash: 1,
+                        eType: 1,
+                        sCreated: 1,
+                        oCurrentOwner: 1,
+                        oPostedBy: 1,
+                        sCollection: 1,
+                        sName: 1,
+                        sCollaborator: 1,
+                        sNftdescription: 1,
+                        nCollaboratorPercentage: 1,
+                        sSetRroyalityPercentage: 1,
+                        nQuantity: 1,
+                        nView: 1,
+                        nBasePrice: 1,
+                        eAuctionType: 1,
+                        nTokenID: 1,
+                        sTransactionHash: 1,
+                        sTransactionStatus: 1,
+                        aCurrentOwner: 1,
+                        is_user_like: {
+                            $cond: {
+                                if: {
+                                    $gte: ["$user_likes", 1]
+                                },
+                                then: 'true',
+                                else: 'false'
+                            }
+                        },
+                        user_likes_size: 1
+
+                    }
+                }]
             }
-        }]);
+        }])
+        console.log('---------------------data',data);
+
         data[0].users = [];
         data[0].users = await User.find({ "sRole": "user" });
 
@@ -997,6 +1341,51 @@ controllers.allCollectionWiselist = async (req, res) => {
                 'oCurrentOwner': 1,
                 'eAuctionType': 1,
                 sCollection: 1,
+                user_likes: {
+                    "$size": {
+                        "$filter": {
+                            "input": "$user_likes",
+                            "as": "user_likes",
+                            "cond": {
+                                $eq: ["$$user_likes", req.userId && req.userId != undefined && req.userId != null ? mongoose.Types.ObjectId(req.userId): '' ]
+                            }
+                        }
+                    }
+                },
+                user_likes_size: {
+                    $cond: {
+                        if: {
+                            $isArray: "$user_likes"
+                        },
+                        then: {
+                            $size: "$user_likes"
+                        },
+                        else: 0
+                    }
+                }
+
+            }
+        },{
+            '$project': {
+                '_id': 1,
+                'sName': 1,
+                'eType': 1,
+                'nBasePrice': 1,
+                'sHash': 1,
+                'oCurrentOwner': 1,
+                'eAuctionType': 1,
+                sCollection: 1,
+                is_user_like: {
+                    $cond: {
+                        if: {
+                            $gte: ["$user_likes", 1]
+                        },
+                        then: 'true',
+                        else: 'false'
+                    }
+                },
+                user_likes_size: 1
+                
             }
         }, {
             '$lookup': {
@@ -1078,4 +1467,55 @@ controllers.updateBasePrice = async (req, res) => {
     }
 }
 
+controllers.likeNFT = async (req, res) => {
+    try {
+        if (!req.userId) return res.reply(messages.unauthorized());
+
+        let {
+            id
+        } = req.body;
+
+        return NFT.findOne({ _id: mongoose.Types.ObjectId(id) }).then(async (NFTData) => {
+            if (NFTData && NFTData != null) {
+                let likeMAINarray = [];
+                likeMAINarray = NFTData.user_likes;
+
+                let flag = '';
+
+                let likeARY = NFTData.user_likes && NFTData.user_likes.length ? NFTData.user_likes.filter((v) => v.toString() == req.userId.toString()) : [];
+
+                if (likeARY && likeARY.length) {
+                    flag = 'dislike';
+                    var index = likeMAINarray.indexOf(likeARY[0]);
+                    if (index != -1) {
+                        likeMAINarray.splice(index, 1);
+                    }
+                } else {
+                    flag = 'like';
+                    likeMAINarray.push(mongoose.Types.ObjectId(req.userId))
+                }
+
+                await NFT.findByIdAndUpdate({ _id: mongoose.Types.ObjectId(id) }, { $set: { user_likes: likeMAINarray } }).then((user) => {
+
+                    // if (err) return res.reply(messages.server_error());
+
+                    if (flag == 'like') {
+                        return res.reply(messages.updated('NFT liked successfully.'));
+                    } else {
+                        return res.reply(messages.updated('NFT unliked successfully.'));
+                    }
+
+                });
+
+
+            } else {
+                return res.reply(messages.bad_request('NFT not found.'));
+            }
+        })
+
+    } catch (error) {
+        log.red(error)
+        return res.reply(messages.server_error());
+    }
+}
 module.exports = controllers;

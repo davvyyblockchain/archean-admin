@@ -476,6 +476,45 @@ controllers.bidByUser = async (req, res, next) => {
                     }
                 }]
             }
+        },{
+            '$lookup': {
+                'from': 'nfts',
+                'localField': 'oNFTId',
+                'foreignField': '_id',
+                'as': 'oNFT'
+            }
+        }, { $unwind: '$oNFT' },  {
+            '$project': {
+                '_id': 1,
+                'eBidStatus': 1,
+                'oRecipient': 1,
+                'oNFTId': 1,
+                "sTransactionStatus": 1,
+                nBidPrice: 1,
+                oNFT:1,
+                user_likes: {
+                    "$size": {
+                        "$filter": {
+                            "input": "$oNFT.user_likes",
+                            "as": "user_likes",
+                            "cond": {
+                                $eq: ["$$user_likes", req.userId && req.userId != undefined && req.userId != null ? mongoose.Types.ObjectId(req.userId): '' ]
+                            }
+                        }
+                    }
+                },
+                user_likes_size: {
+                    $cond: {
+                        if: {
+                            $isArray: "$oNFT.user_likes"
+                        },
+                        then: {
+                            $size: "$oNFT.user_likes"
+                        },
+                        else: 0
+                    }
+                }
+            }
         }, {
             '$project': {
                 '_id': 1,
@@ -483,7 +522,18 @@ controllers.bidByUser = async (req, res, next) => {
                 'oRecipient': 1,
                 'oNFTId': 1,
                 "sTransactionStatus": 1,
-                nBidPrice: 1
+                nBidPrice: 1,
+                oNFT:1,
+                is_user_like: {
+                    $cond: {
+                        if: {
+                            $gte: ["$user_likes", 1]
+                        },
+                        then: 'true',
+                        else: 'false'
+                    }
+                },
+                user_likes_size: 1
             }
         }, {
             '$lookup': {
@@ -492,14 +542,7 @@ controllers.bidByUser = async (req, res, next) => {
                 'foreignField': '_id',
                 'as': 'oRecipient'
             }
-        }, {
-            '$lookup': {
-                'from': 'nfts',
-                'localField': 'oNFTId',
-                'foreignField': '_id',
-                'as': 'oNFT'
-            }
-        }, { $unwind: '$oNFT' }, { $unwind: '$oRecipient' }, {
+        }, { $unwind: '$oRecipient' }, {
             '$sort': {
                 '_id': -1
             }

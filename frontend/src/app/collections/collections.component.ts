@@ -135,4 +135,35 @@ export class CollectionsComponent implements OnInit {
     await this.getCollectionsData();
   }
 
+
+
+  clickLike(id: any) {
+    if (localStorage.getItem('Authorization') && localStorage.getItem('Authorization') != null) {
+
+      this.apiService.like({ id: id }).subscribe((updateData: any) => {
+        this.spinner.hide();
+
+        if (updateData && updateData['data']) {
+          this.toaster.success(updateData['message'], 'Success!')
+          this.onClickRefresh();
+        } else {
+
+        }
+
+      }, (err: any) => {
+        this.spinner.hide();
+        if (err && err['message']) {
+
+        }
+      });
+
+    } else {
+      // this.router.navigate(['']);
+      this.toaster.error('Please sign in first.')
+    }
+
+  }
+  onClickRefresh() {
+    window.location.reload();
+  }
 }

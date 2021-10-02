@@ -286,7 +286,7 @@ export class ApiService {
     return this.http.get(this.URL + '/nft/collectionlist', { headers: { 'Authorization': this.getHeaders() } });
   }
   allCollectionWiseList(data: any) {
-    return this.http.post(this.URL + '/nft/allCollectionWiseList', data, { headers: { 'Authorization': '' } });
+    return this.http.post(this.URL + '/nft/allCollectionWiseList', data, { headers: { 'Authorization':  this.getHeaders() } });
   }
 
   getCategories() {
@@ -334,7 +334,7 @@ export class ApiService {
     return this.http.post(this.URL + '/bid/bidByUser', data, { headers: { 'Authorization': this.getHeaders() } });
   }
   landingPage() {
-    return this.http.get(this.URL + '/nft/landing');
+    return this.http.get(this.URL + '/nft/landing', { headers: { 'Authorization': this.getHeaders() } });
   }
   nftMYListing(data: any) {
     return this.http.post(this.URL + '/nft/mynftlist', data, { headers: { 'Authorization': this.getHeaders() } });
@@ -359,6 +359,9 @@ export class ApiService {
 
   follow(data: any) {
     return this.http.post(this.URL + '/user/follow', data, { headers: { 'Authorization': this.getHeaders() } });
+  }
+  like(data: any) {
+    return this.http.post(this.URL + '/nft/like', data, { headers: { 'Authorization': this.getHeaders() } });
   }
 
   // nNFTId: 6120eba598b61743cf49a43f

@@ -565,6 +565,51 @@ controllers.getUserWithNfts = async (req, res) => {
                 'oCurrentOwner': 1,
                 "sTransactionStatus": 1,
                 eAuctionType: 1,
+                user_likes: {
+                    "$size": {
+                        "$filter": {
+                            "input": "$user_likes",
+                            "as": "user_likes",
+                            "cond": {
+                                $eq: ["$$user_likes", mongoose.Types.ObjectId(req.userId)]
+                            }
+                        }
+                    }
+                },
+                user_likes_size: {
+                    $cond: {
+                        if: {
+                            $isArray: "$user_likes"
+                        },
+                        then: {
+                            $size: "$user_likes"
+                        },
+                        else: 0
+                    }
+                }
+            }
+        },{
+            '$project': {
+                '_id': 1,
+                'sName': 1,
+                'eType': 1,
+                'nBasePrice': 1,
+                'sHash': 1,
+                'nQuantity': 1,
+                'nTokenID': 1,
+                'oCurrentOwner': 1,
+                "sTransactionStatus": 1,
+                eAuctionType: 1,
+                is_user_like: {
+                    $cond: {
+                        if: {
+                            $gte: ["$user_likes", 1]
+                        },
+                        then: 'true',
+                        else: 'false'
+                    }
+                },
+                user_likes_size: 1
             }
         }, {
             '$lookup': {

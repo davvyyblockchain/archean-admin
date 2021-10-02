@@ -19,7 +19,7 @@ router.get("/getFAQsData", userController.getFAQsData);
 router.get("/getTermsData", userController.getTermsData);
 
 router.post("/profileDetail", userController.getUserProfilewithNfts);
-router.post("/profileWithNfts", userController.getUserWithNfts);
+router.post("/profileWithNfts",userMiddleware.verifyWithoutToken, userController.getUserWithNfts);
 
 router.post("/allDetails", userMiddleware.verifyWithoutToken,userController.getAllUserDetails);
 router.post("/follow", userMiddleware.verifyToken, userController.followUser);

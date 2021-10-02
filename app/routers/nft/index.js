@@ -7,18 +7,21 @@ router.post('/create', nftMiddleware.verifyToken, nftController.create);
 router.post('/mynftlist', nftMiddleware.verifyToken, nftController.mynftlist);
 router.post('/createCollection', nftMiddleware.verifyToken, nftController.createCollection);
 router.get('/collectionList', nftMiddleware.verifyToken, nftController.collectionlist);
-router.post('/nftListing', nftController.nftListing);
-router.get('/viewnft/:nNFTId', nftController.nftID);
+router.post('/nftListing',nftMiddleware.verifyWithoutToken, nftController.nftListing);
+router.get('/viewnft/:nNFTId',nftMiddleware.verifyWithoutToken, nftController.nftID);
 router.post('/setTransactionHash', nftMiddleware.verifyToken, nftController.setTransactionHash);
-router.get('/landing', nftController.landing);
+router.get('/landing',nftMiddleware.verifyWithoutToken, nftController.landing);
 
 router.get("/deleteNFT/:nNFTId", nftMiddleware.verifyToken, nftController.deleteNFT);
-router.post('/allCollectionWiseList', nftController.allCollectionWiselist);
+router.post('/allCollectionWiseList',nftMiddleware.verifyWithoutToken, nftController.allCollectionWiselist);
 
 router.put('/updateBasePrice', nftMiddleware.verifyToken, nftController.updateBasePrice);
 
 router.put('/toggleSellingType', nftMiddleware.verifyToken, nftController.toggleSellingType);
 router.post('/myCollectionList', nftMiddleware.verifyToken, nftController.collectionlistMy);
+
+router.post("/like", nftMiddleware.verifyToken, nftController.likeNFT);
+
 
 // nNFTId: 6120eba598b61743cf49a43f
 // nBasePrice: 1

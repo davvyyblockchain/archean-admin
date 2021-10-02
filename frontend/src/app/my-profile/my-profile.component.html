@@ -21,7 +21,7 @@
                         <div class="author__code">
                             <input type="text"
                                 value="{{profileData && profileData.sWalletAddress ? profileData.sWalletAddress  : ''}}"
-                                id="author-code" >
+                                id="author-code">
                             <button type="button">
                                 <span>Copied</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -156,9 +156,20 @@
                                                 obj.nBasePrice['$numberDecimal'] : 0}} BNB</span>
                                         </div>
 
-                                        <button class="card__likes" type="button">
-                                            <span>{{obj.eType && obj.eType != undefined ? obj.eType : '-'}}</span>
+                                        <button class="card__likes" (click)="clickLike(obj._id)"
+                                            [ngClass]="{ 'card__likes--active': obj.is_user_like  == 'true' }"
+                                            type="button">
+
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                <path
+                                                    d="M20.16,5A6.29,6.29,0,0,0,12,4.36a6.27,6.27,0,0,0-8.16,9.48l6.21,6.22a2.78,2.78,0,0,0,3.9,0l6.21-6.22A6.27,6.27,0,0,0,20.16,5Zm-1.41,7.46-6.21,6.21a.76.76,0,0,1-1.08,0L5.25,12.43a4.29,4.29,0,0,1,0-6,4.27,4.27,0,0,1,6,0,1,1,0,0,0,1.42,0,4.27,4.27,0,0,1,6,0A4.29,4.29,0,0,1,18.75,12.43Z" />
+                                            </svg>
+
+                                            <span>{{obj.user_likes_size && obj.user_likes_size != undefined ?
+                                                obj.user_likes_size : '0'}}</span>
+
                                         </button>
+
                                     </div>
                                 </div>
 
@@ -453,6 +464,21 @@
                                                 <span>{{obj.eBidStatus && obj.eBidStatus != undefined && obj.eBidStatus
                                                     == 'Bid' ? 'Pending' : obj.eBidStatus}}</span>
                                             </button>
+
+                                            <button class="card__likes" (click)="clickLike(obj.oNFTId)"
+                                                [ngClass]="{ 'card__likes--active': obj.is_user_like  == 'true' }"
+                                                type="button">
+
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                    <path
+                                                        d="M20.16,5A6.29,6.29,0,0,0,12,4.36a6.27,6.27,0,0,0-8.16,9.48l6.21,6.22a2.78,2.78,0,0,0,3.9,0l6.21-6.22A6.27,6.27,0,0,0,20.16,5Zm-1.41,7.46-6.21,6.21a.76.76,0,0,1-1.08,0L5.25,12.43a4.29,4.29,0,0,1,0-6,4.27,4.27,0,0,1,6,0,1,1,0,0,0,1.42,0,4.27,4.27,0,0,1,6,0A4.29,4.29,0,0,1,18.75,12.43Z" />
+                                                </svg>
+
+                                                <span>{{obj.user_likes_size && obj.user_likes_size != undefined ?
+                                                    obj.user_likes_size : '0'}}</span>
+
+                                            </button>
+
                                         </div>
                                     </div>
 
@@ -498,20 +524,21 @@
                                         <div class="col-12 col-md-3">
                                             <div class="sign__group">
                                                 <label class="sign__label" for="email">Earnings</label>
-                                            
+
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-9">
                                             <div class="sign__group">
-                                                <input formControlName="earnings" hidden type="text" style="width: 50%;" class="sign__input"
-                                                    placeholder="0000" readonly/>
-                                                    <label class="sign__label" style="font-size: 18px;" for="email"><b>{{redeemForm.value.earnings}}</b></label>
+                                                <input formControlName="earnings" hidden type="text" style="width: 50%;"
+                                                    class="sign__input" placeholder="0000" readonly />
+                                                <label class="sign__label" style="font-size: 18px;"
+                                                    for="email"><b>{{redeemForm.value.earnings}}</b></label>
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-12 col-lg-12">
                                             <div class="sign__group">
                                                 <label class="sign__label" for="email">Amount (BNB)</label>
-                                                <input 
+                                                <input
                                                     [ngClass]="{ 'is-invalid': submitted1 && redeemForm.controls.amount.errors }"
                                                     formControlName="amount" type="text" class="sign__input"
                                                     placeholder="Enter Amount to Redeem (BNB)">

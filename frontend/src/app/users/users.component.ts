@@ -101,7 +101,7 @@ export class UsersComponent implements OnInit {
         this.spinner.hide();
 
         if (updateData && updateData['data']) {
-          this.toaster.success('Profile updted successfully.','Success!')
+          this.toaster.success('user followed successfully.','Success!')
           this.onClickRefresh();
         } else {
 

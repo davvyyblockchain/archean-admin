@@ -31,7 +31,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     private _route: ActivatedRoute,
     private toaster: ToastrService,
     private apiService: ApiService,
-  ) { 
+  ) {
     this.spinner.show();
   }
   ngAfterViewInit() {
@@ -59,7 +59,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
   async ngOnInit() {
     this.loadSCR();
- 
+
 
     await this.apiService.landingPage().subscribe(async (data: any) => {
 
@@ -93,7 +93,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.apiService.connect().then((data: any) => {
       this.spinner.hide();
       if (data && data != 'error') {
-        this.toaster.success('User Connected Successfully','Success!');
+        this.toaster.success('User Connected Successfully', 'Success!');
         this.onClickRefresh();
       }
 
@@ -101,7 +101,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       this.spinner.hide();
 
       if (er && er.code) {
-        this.toaster.error(er.message,'Error!');
+        this.toaster.error(er.message, 'Error!');
       }
     })
   }
@@ -113,6 +113,34 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   goTOUsers() {
     this.router.navigate(['/users'])
+  }
+
+
+  clickLike(id: any) {
+    if (localStorage.getItem('Authorization') && localStorage.getItem('Authorization') != null) {
+
+      this.apiService.like({ id: id }).subscribe((updateData: any) => {
+        this.spinner.hide();
+
+        if (updateData && updateData['data']) {
+          this.toaster.success(updateData['message'], 'Success!')
+          this.onClickRefresh();
+        } else {
+
+        }
+
+      }, (err: any) => {
+        this.spinner.hide();
+        if (err && err['message']) {
+
+        }
+      });
+
+    } else {
+      // this.router.navigate(['']);
+      this.toaster.error('Please sign in first.')
+    }
+
   }
 
 }

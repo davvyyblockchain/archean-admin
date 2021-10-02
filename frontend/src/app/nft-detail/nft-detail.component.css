@@ -76,3 +76,12 @@ tr:nth-child(even) {
 {
   display: none;
 }
+.single_nft_card .card__likes{
+  bottom: 20px;
+  right: 20px;
+  position: absolute;
+}
+.single_nft_card .card__time{
+  left: 20px;
+  bottom: 20px;
+}
