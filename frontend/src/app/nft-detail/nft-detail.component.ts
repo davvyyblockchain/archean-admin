@@ -807,7 +807,7 @@ export class NFTDetailComponent implements OnInit, OnDestroy {
         this.spinner.hide();
 
         if (updateData && updateData['data']) {
-          this.toaster.success(updateData['message'], 'Success!')
+          // this.toaster.success(updateData['message'], 'Success!')
           this.onClickRefresh();
         } else {
 

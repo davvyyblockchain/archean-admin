@@ -144,7 +144,7 @@ export class CollectionsComponent implements OnInit {
         this.spinner.hide();
 
         if (updateData && updateData['data']) {
-          this.toaster.success(updateData['message'], 'Success!')
+          // this.toaster.success(updateData['message'], 'Success!')
           this.onClickRefresh();
         } else {
 
