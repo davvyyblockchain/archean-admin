@@ -18,7 +18,8 @@
             <!-- title -->
             <div class="col-12">
                 <div class="main__title main__title--page">
-                    <h1>Exclusive digital asset</h1>
+                    <h1>Exclusive {{NFTData.sName && NFTData.sName != undefined ? NFTData.sName
+                        :'-' }}</h1>
                 </div>
             </div>
             <!-- end title -->
@@ -68,25 +69,25 @@
                     <!-- end share -->
 
                     <!-- likes -->
-              
 
-                        <span class="card__time card__time--clock" style="left: 20px;">
-                            {{NFTData.eAuctionType && NFTData.eAuctionType != undefined ? NFTData.eAuctionType : '-'}}
-                        </span>
-    
-                        <button class="card__likes" (click)="clickLike(NFTData._id)"
-                            [ngClass]="{ 'card__likes--active': NFTData.is_user_like  == 'true' }" type="button">
-    
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                <path
-                                    d="M20.16,5A6.29,6.29,0,0,0,12,4.36a6.27,6.27,0,0,0-8.16,9.48l6.21,6.22a2.78,2.78,0,0,0,3.9,0l6.21-6.22A6.27,6.27,0,0,0,20.16,5Zm-1.41,7.46-6.21,6.21a.76.76,0,0,1-1.08,0L5.25,12.43a4.29,4.29,0,0,1,0-6,4.27,4.27,0,0,1,6,0,1,1,0,0,0,1.42,0,4.27,4.27,0,0,1,6,0A4.29,4.29,0,0,1,18.75,12.43Z" />
-                            </svg>
-    
-                            <span>{{NFTData.user_likes && NFTData.user_likes != undefined ?
-                                NFTData.user_likes.length : '0'}}</span>
-    
-                        </button>
-             
+
+                    <span class="card__time card__time--clock" style="left: 20px;">
+                        {{NFTData.eAuctionType && NFTData.eAuctionType != undefined ? NFTData.eAuctionType : '-'}}
+                    </span>
+
+                    <button class="card__likes" (click)="clickLike(NFTData._id)"
+                        [ngClass]="{ 'card__likes--active': NFTData.is_user_like  == 'true' }" type="button">
+
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path
+                                d="M20.16,5A6.29,6.29,0,0,0,12,4.36a6.27,6.27,0,0,0-8.16,9.48l6.21,6.22a2.78,2.78,0,0,0,3.9,0l6.21-6.22A6.27,6.27,0,0,0,20.16,5Zm-1.41,7.46-6.21,6.21a.76.76,0,0,1-1.08,0L5.25,12.43a4.29,4.29,0,0,1,0-6,4.27,4.27,0,0,1,6,0,1,1,0,0,0,1.42,0,4.27,4.27,0,0,1,6,0A4.29,4.29,0,0,1,18.75,12.43Z" />
+                        </svg>
+
+                        <span>{{NFTData.user_likes && NFTData.user_likes != undefined ?
+                            NFTData.user_likes.length : '0'}}</span>
+
+                    </button>
+
                     <!-- end likes -->
                 </div>
             </div>
@@ -110,10 +111,21 @@
                     </div>
 
 
-                    <div class="asset__desc">
-                        <h2>Descriptions</h2>
+                    <div class="asset__desc mb-2">
+                        <h2>Description</h2>
                         <p>{{NFTData.sNftdescription && NFTData.sNftdescription != undefined ? NFTData.sNftdescription
                             :'-' }}</p>
+                    </div>
+
+                    <div class="asset__desc">
+                        <h2>Time Left</h2>
+                        <p>{{auct_time.hours && auct_time.hours != undefined ? auct_time.hours
+                            :'0' }} HH :
+                            {{auct_time.mins && auct_time.mins != undefined ? auct_time.mins
+                            :'0' }} MM :
+                            {{auct_time.secs && auct_time.secs != undefined ? auct_time.secs
+                            :'0' }} SS 
+                        </p>
                     </div>
 
                     <ul class="asset__authors">
@@ -383,8 +395,9 @@
                                 from
                                 Sale</a>
 
-                            <a class="author__follow author__follow--true mt-2"
-                                (click)="onClickUpdateType('Auction',NFTData._id)" style="width: 200px; cursor:pointer;"
+                            <a class="author__follow author__follow--true mt-2" onClickOPENAUCTION
+                                (click)="onClickOPENAUCTION('Auction',NFTData._id)"
+                                style="width: 200px; cursor:pointer;"
                                 *ngIf="NFTData.eAuctionType == 'Fixed Sale' || NFTData.eAuctionType == 'Unlockable'">Put
                                 on
                                 Auction</a>
@@ -655,5 +668,50 @@
         </div>
 
         <button class="sign__btn" type="button" (click)="onClickSubmitChangePrice()">Update Price</button>
+    </form>
+</div>
+
+
+<div id="modal-auction" class="zoom-anim-dialog mfp-hide modal modal--form">
+    <button class="modal__close" type="button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path
+                d="M13.41,12l4.3-4.29a1,1,0,1,0-1.42-1.42L12,10.59,7.71,6.29A1,1,0,0,0,6.29,7.71L10.59,12l-4.3,4.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0L12,13.41l4.29,4.3a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42Z" />
+        </svg></button>
+
+    <h4 class="sign__title">Put on Auction</h4>
+    <form name="timedAuctionForm" [formGroup]="timedAuctionForm">
+        <div class="sign__group sign__group--row">
+            <label class="sign__label" for="placebid">TYPE</label>
+            <input id="placebid" type="text" class="sign__input" disable
+                [ngClass]="{ 'is-invalid': submitted5 && timedAuctionForm.controls.type.errors }"
+                formControlName="type">
+            <div class="nft-err" *ngIf="submitted5 && timedAuctionForm.controls.type.errors">
+                <span *ngIf="timedAuctionForm.controls.type.errors?.required">This field is
+                    required.</span>
+            </div>
+
+        </div>
+
+        <div class="sign__group sign__group--row">
+            <label class="sign__label" for="placebid">Time</label>
+            <select id="royalties" name="royalties" class="sign__select"
+                [ngClass]="{ 'is-invalid': submitted5 && timedAuctionForm.controls.days.errors }"
+                formControlName="days">
+                <option value="">Select time </option>
+
+                <option value="1">1 day</option>
+                <option value="2">2 day</option>
+                <option value="3">3 day</option>
+                <option value="4">4 day</option>
+                <option value="5">5 day</option>
+            </select>
+            <div class="nft-err" *ngIf="submitted5 && timedAuctionForm.controls.days.errors">
+                <span *ngIf="timedAuctionForm.controls.days.errors?.required">This field is
+                    required.</span>
+            </div>
+
+        </div>
+
+        <button class="sign__btn" type="button" (click)="onClickSubmitPutonTimeAuction()">Put on Auction</button>
     </form>
 </div>

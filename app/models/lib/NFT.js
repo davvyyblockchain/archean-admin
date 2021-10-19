@@ -48,9 +48,10 @@ const nftSchema = mongoose.Schema({
         //  1:  Mined
         enum: [-99, -1, 0, 1]
     },
-    user_likes:[{
+    user_likes: [{
         type: mongoose.Schema.ObjectId
-    }]
+    }],
+    auction_end_date: {type :Date},
 });
 
 module.exports = mongoose.model('NFT', nftSchema);

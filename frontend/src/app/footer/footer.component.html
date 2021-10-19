@@ -9,11 +9,11 @@
                     (NFTs). <br>Buy, sell, and discover exclusive digital assets.</p>
 
                 <div class="footer__lang">
-                    <a class="footer__lang-btn" href="javascript:;" role="button" >
+                    <a class="footer__lang-btn" href="javascript:;" role="button">
                         <img src="assets/img/flags/uk.svg" alt="">
                         <span>English</span>
                     </a>
-<!-- 
+                    <!-- 
                     <ul class="dropdown-menu footer__lang-dropdown" aria-labelledby="dropdownLang">
                         <li><a href="javascript:;"><img src="assets/img/flags/spain.svg" alt=""><span>Spanish</span></a>
                         </li>
@@ -44,14 +44,16 @@
 
                     <div class="col-6">
                         <div class="footer__nav">
-                            <a href="javascript:;" *ngFor="let obj of collectionList;"
-                                routerLink="/collections/{{obj.sName ? obj.sName : ''}}"> {{obj.sName ? obj.sName :
-                                ''}}</a>
+                            <ng-container *ngFor="let obj of collectionList;let i =index;">
+                                <a href="javascript:;" *ngIf="i < 5" routerLink="/collections/{{obj.sName ? obj.sName : ''}}">
+                                    {{obj.sName ? obj.sName :
+                                    ''}}</a>
+                            </ng-container>
                         </div>
                     </div>
 
                     <div class="col-6">
-                        
+
                         <div class="footer__nav">
 
                             <!-- <a href="javascript:;">Domains</a>

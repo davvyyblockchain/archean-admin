@@ -1,3 +1,4 @@
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -23,7 +24,7 @@ export class NFTDetailComponent implements OnInit, OnDestroy {
   NFTData: any = {};
   historyData: any = [];
   tokenHistoryData: any = [];
-
+  interVal: any;
   collaboratorList: any = [];
 
   bidForm: any;
@@ -38,9 +39,18 @@ export class NFTDetailComponent implements OnInit, OnDestroy {
   changePriceForm: any;
   submitted4: Boolean = false;
 
+  timedAuctionForm: any;
+  submitted5: Boolean = false;
 
   isLogin: any = false;
+  sellingType: any = '';
+  id: any;
 
+  auct_time: any = {
+    mins: 0,
+    secs: 0,
+    hours: 0
+  }
   showObj: any = {
     wallet_address: localStorage.getItem('sWalletAddress'),
     showBidCurrent: 'show',
@@ -59,6 +69,7 @@ export class NFTDetailComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnDestroy() {
+    clearInterval(this.interVal);
     var magnificPopup = $.magnificPopup.instance;
     // save instance in magnificPopup variable
     magnificPopup.close();
@@ -85,6 +96,7 @@ export class NFTDetailComponent implements OnInit, OnDestroy {
     this.buildTransferForm();
     this.buildBUYForm();
     this.buildCHANGEPRICEForm();
+    this.buildTIMEDAUCTIONForm();
 
     let id = this._route.snapshot.params['id'];
     if (id && id != null && id != undefined && id != '') {
@@ -107,6 +119,12 @@ export class NFTDetailComponent implements OnInit, OnDestroy {
   buildCHANGEPRICEForm() {
     this.changePriceForm = this._formBuilder.group({
       nBasePrice: ['', [Validators.required]]
+    });
+  }
+  buildTIMEDAUCTIONForm() {
+    this.timedAuctionForm = this._formBuilder.group({
+      type: ['Auction', [Validators.required]],
+      days: ['', []]
     });
   }
 
@@ -153,6 +171,26 @@ export class NFTDetailComponent implements OnInit, OnDestroy {
 
         if (this.NFTData.eAuctionType == 'Auction' || this.NFTData.eAuctionType == '' || (this.NFTData.oCurrentOwner && this.NFTData.oCurrentOwner.sWalletAddress == this.showObj.wallet_address)) {
           this.showObj.showBuyCurrent = 'hide';
+        }
+
+        if (this.NFTData.auction_end_date != undefined && this.NFTData.auction_end_date != null && this.NFTData.auction_end_date && this.NFTData.auction_end_date != '') {
+          this.interVal = setInterval(async () => {
+            let currentStarttime: any = new Date().getTime();
+            let endDate: any = new Date(this.NFTData.auction_end_date).getTime();
+
+            let diff = parseInt(endDate) - parseInt(currentStarttime)
+
+            // if (diff > 0) {
+            //   this.ConvertSectoDay(diff / 1000);
+            // }
+            if (diff && diff != undefined && diff != null && diff > 0) {
+
+              await this.ConvertSectoDay(diff / 1000)
+
+            }
+          }, 2000);
+          // auct_time
+
         }
 
 
@@ -749,19 +787,19 @@ export class NFTDetailComponent implements OnInit, OnDestroy {
 
       this.spinner.show();
       await this.apiService.updateBasePrice(obj).subscribe(async (transData: any) => {
-        console.log('-----------transData----------',transData)
+        console.log('-----------transData----------', transData)
         this.spinner.hide();
         if (transData && transData['message'] && transData['message'] == 'Price updated') {
           this.toaster.success('Price updated.', 'Success!');
 
           this.onClickRefresh();
-        } 
+        }
       }, (err: any) => {
         this.spinner.hide();
-        if(err){
-          console.log('----------er',err);
+        if (err) {
+          console.log('----------er', err);
           err = err['error'];
-          if(err){
+          if (err) {
             this.toaster.error(err['message'], 'Error!');
 
           }
@@ -773,7 +811,7 @@ export class NFTDetailComponent implements OnInit, OnDestroy {
 
   }
 
-  onClickOPENPRICE(){
+  onClickOPENPRICE() {
     $.magnificPopup.open({
       items: {
         src: '#modal-change-price',
@@ -826,5 +864,96 @@ export class NFTDetailComponent implements OnInit, OnDestroy {
     }
 
   }
-  
+
+
+
+  //-------------------------- auction_end_date
+
+
+  onClickOPENAUCTION(type: any, id: any) {
+
+    this.sellingType = type;
+    this.id = id;
+
+    $.magnificPopup.open({
+      items: {
+        src: '#modal-auction',
+        type: 'inline',
+        fixedContentPos: true,
+        fixedBgPos: true,
+        overflowY: 'auto',
+        preloader: false,
+        focus: '#username',
+        modal: false,
+        removalDelay: 300,
+        mainClass: 'my-mfp-zoom-in',
+        callbacks: {
+          beforeOpen: function () {
+            if ($(window).width() < 700) {
+              // this.st.focus = false;
+            } else {
+              // this.st.focus = '#name';
+            }
+          }
+        }
+      }
+    });
+  }
+
+  onClickSubmitPutonTimeAuction() {
+    if (localStorage.getItem('Authorization') && localStorage.getItem('Authorization') != null) {
+
+      let obj: any = {
+        nNFTId: this.id,
+        sSellingType: this.sellingType
+      };
+
+      let fd = this.timedAuctionForm.value;
+
+      if (fd && fd.days && fd.days != undefined && fd.days != null && fd.days != '') {
+        var dt = new Date();
+        dt.setDate(dt.getDate() + parseInt(fd.days));
+
+        obj.auction_end_date = dt
+      }
+
+      this.toggleSellingType(obj);
+    } else {
+      // this.router.navigate(['']);
+      this.toaster.error('Please sign in first.', 'Error')
+    }
+  }
+
+
+  ConvertSectoDay(n: any) {
+    let day: any = n / (24 * 3600);
+
+    n = n % (24 * 3600);
+    let hour: any = n / 3600;
+
+    n %= 3600;
+    let minutes: any = n / 60;
+
+    n %= 60;
+    let seconds: any = n;
+
+    let a = '';
+
+    if (parseInt(day) != 0) {
+      this.auct_time.days = parseInt(day)
+    }
+    if (parseInt(hour) != 0) {
+      this.auct_time.hours = parseInt(hour)
+    }
+    if (parseInt(minutes) != 0) {
+      this.auct_time.mins = parseInt(minutes)
+    }
+    if (parseInt(seconds) != 0) {
+      this.auct_time.secs = parseInt(seconds)
+    }
+    console.log('------------------------a', this.auct_time)
+
+  }
+
+
 }

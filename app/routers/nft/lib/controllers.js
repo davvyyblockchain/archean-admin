@@ -679,7 +679,7 @@ controllers.nftListing = async (req, res) => {
                             "input": "$user_likes",
                             "as": "user_likes",
                             "cond": {
-                                $eq: ["$$user_likes",req.userId && req.userId != undefined && req.userId != null ? mongoose.Types.ObjectId(req.userId): '']
+                                $eq: ["$$user_likes", req.userId && req.userId != undefined && req.userId != null ? mongoose.Types.ObjectId(req.userId) : '']
                             }
                         }
                     }
@@ -779,9 +779,9 @@ controllers.nftID = async (req, res) => {
         let likeARY = aNFT.user_likes && aNFT.user_likes.length ? aNFT.user_likes.filter((v) => v.toString() == req.userId.toString()) : [];
 
         if (likeARY && likeARY.length) {
-            aNFT.is_user_like  = 'true';
+            aNFT.is_user_like = 'true';
         } else {
-            aNFT.is_user_like  = 'false';
+            aNFT.is_user_like = 'false';
         }
 
 
@@ -860,7 +860,7 @@ controllers.landing = async (req, res) => {
         console.log('---------------------1',);
 
         req.userId = req.userId && req.userId != undefined && req.userId != null ? req.userId : '';
-        console.log('---------------------2',req.userId);
+        console.log('---------------------2', req.userId);
 
         let data = await NFT.aggregate([{
             '$facet': {
@@ -913,7 +913,7 @@ controllers.landing = async (req, res) => {
                                     "input": "$user_likes",
                                     "as": "user_likes",
                                     "cond": {
-                                        $eq: ["$$user_likes",req.userId && req.userId != undefined && req.userId != null ? mongoose.Types.ObjectId(req.userId): '' ]
+                                        $eq: ["$$user_likes", req.userId && req.userId != undefined && req.userId != null ? mongoose.Types.ObjectId(req.userId) : '']
                                     }
                                 }
                             }
@@ -1014,7 +1014,7 @@ controllers.landing = async (req, res) => {
                                     "input": "$user_likes",
                                     "as": "user_likes",
                                     "cond": {
-                                        $eq: ["$$user_likes",req.userId && req.userId != undefined && req.userId != null ? mongoose.Types.ObjectId(req.userId): '']
+                                        $eq: ["$$user_likes", req.userId && req.userId != undefined && req.userId != null ? mongoose.Types.ObjectId(req.userId) : '']
                                     }
                                 }
                             }
@@ -1115,7 +1115,7 @@ controllers.landing = async (req, res) => {
                                     "input": "$user_likes",
                                     "as": "user_likes",
                                     "cond": {
-                                        $eq: ["$$user_likes",req.userId && req.userId != undefined && req.userId != null ? mongoose.Types.ObjectId(req.userId): '']
+                                        $eq: ["$$user_likes", req.userId && req.userId != undefined && req.userId != null ? mongoose.Types.ObjectId(req.userId) : '']
                                     }
                                 }
                             }
@@ -1169,7 +1169,7 @@ controllers.landing = async (req, res) => {
                 }]
             }
         }])
-        console.log('---------------------data',data);
+        console.log('---------------------data', data);
 
         data[0].users = [];
         data[0].users = await User.find({ "sRole": "user" });
@@ -1216,10 +1216,14 @@ controllers.toggleSellingType = async (req, res) => {
         if (BIdsExist && BIdsExist != undefined && BIdsExist.length) {
             return res.reply(messages.bad_request("Please Cancel Active bids on this NFT."));
         } else {
-
-            NFT.findByIdAndUpdate(req.body.nNFTId, {
+            let updObj = {
                 eAuctionType: req.body.sSellingType
-            }, (err, nft) => {
+            };
+
+            if(req.body.auction_end_date && req.body.auction_end_date!= undefined){
+                updObj.auction_end_date = req.body.auction_end_date;
+            }
+            NFT.findByIdAndUpdate(req.body.nNFTId, updObj, (err, nft) => {
                 if (err) return res.reply(messages.server_error());
                 if (!nft) return res.reply(messages.not_found('NFT'));
 
@@ -1347,7 +1351,7 @@ controllers.allCollectionWiselist = async (req, res) => {
                             "input": "$user_likes",
                             "as": "user_likes",
                             "cond": {
-                                $eq: ["$$user_likes", req.userId && req.userId != undefined && req.userId != null ? mongoose.Types.ObjectId(req.userId): '' ]
+                                $eq: ["$$user_likes", req.userId && req.userId != undefined && req.userId != null ? mongoose.Types.ObjectId(req.userId) : '']
                             }
                         }
                     }
@@ -1365,7 +1369,7 @@ controllers.allCollectionWiselist = async (req, res) => {
                 }
 
             }
-        },{
+        }, {
             '$project': {
                 '_id': 1,
                 'sName': 1,
@@ -1385,7 +1389,7 @@ controllers.allCollectionWiselist = async (req, res) => {
                     }
                 },
                 user_likes_size: 1
-                
+
             }
         }, {
             '$lookup': {
