@@ -955,5 +955,32 @@ export class NFTDetailComponent implements OnInit, OnDestroy {
 
   }
 
+  // 
 
+  onClickAdd() {
+
+    $.magnificPopup.open({
+      items: {
+        src: '#modal-add-funds',
+        type: 'inline',
+        fixedContentPos: true,
+        fixedBgPos: true,
+        overflowY: 'auto',
+        preloader: false,
+        focus: '#username',
+        modal: false,
+        removalDelay: 300,
+        mainClass: 'my-mfp-zoom-in',
+        callbacks: {
+          beforeOpen: function () {
+            if ($(window).width() < 700) {
+              // this.st.focus = false;
+            } else {
+              // this.st.focus = '#name';
+            }
+          }
+        }
+      }
+    });
+  }
 }

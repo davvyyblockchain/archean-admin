@@ -124,7 +124,7 @@
                             {{auct_time.mins && auct_time.mins != undefined ? auct_time.mins
                             :'0' }} MM :
                             {{auct_time.secs && auct_time.secs != undefined ? auct_time.secs
-                            :'0' }} SS 
+                            :'0' }} SS
                         </p>
                     </div>
 
@@ -422,6 +422,11 @@
                             <a href="#modal-buy" class="asset__btn asset__btn--full asset__btn--clr open-modal">Buy
                                 now</a>
                         </div>
+                        <div class="asset__btns">
+                            <a href="#modal-add-funds" (click)="onClickAdd()"
+                                class="asset__btn asset__btn--full asset__btn--clr open-modal">Add funds</a>
+                        </div>
+
                     </ng-container>
                     <!-- end actions -->
                 </div>
@@ -714,4 +719,19 @@
 
         <button class="sign__btn" type="button" (click)="onClickSubmitPutonTimeAuction()">Put on Auction</button>
     </form>
+</div>
+
+<div id="modal-add-funds" class="zoom-anim-dialog mfp-hide modal modal--form">
+    <button class="modal__close" type="button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path
+                d="M13.41,12l4.3-4.29a1,1,0,1,0-1.42-1.42L12,10.59,7.71,6.29A1,1,0,0,0,6.29,7.71L10.59,12l-4.3,4.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0L12,13.41l4.29,4.3a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42Z" />
+        </svg></button>
+
+    <h4 class="sign__title">Add funds</h4>
+    <p></p>
+    <iframe
+        src="https://buy.moonpay.com/?apiKey=sk_test_UsZNUjejK7PBBJrZ7xvoxZY2ShAKI2t9&defaultCurrencyCode=bnb"
+        allow="accelerometer; autoplay; camera; gyroscope; payment" width="350px" height="510px" frameborder="0">
+    </iframe>
+
 </div>
