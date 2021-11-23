@@ -11,7 +11,7 @@
 	<title>Home | Decrypt NFT</title>
 
 	<!-- Favicon icon -->
-    <link rel="icon" type="image/x-icon" sizes="16x16" href="/assets/images/favicon/favicon.ico">
+    <link rel="icon" type="image/x-icon" sizes="16x16" href="/assets/images/archean-favicon.png">
 
 	<link rel="stylesheet" href="../assets/vendor/chartist/css/chartist.min.css">
 
@@ -54,59 +54,133 @@
 			<!-- row -->
 			<div class="container-fluid">
 				<div class="row">
-					<div class="col-xl-6 col-xxl-6 col-lg-6 col-sm-6">
+					<div class="col-xl-12 col-xxl-12 col-lg-12 col-sm-12">
 						<div class="card overflow-hidden">
 							<div class="card-header border-0 pb-0">
 								<div class="mr-auto">
-									<h2>Number of NFTs on Sale</h2>
-									<h3 id="numberOfNFTsOnSale" class="text-black mb-2 font-w600">0</h3>
+									<h2>Welcome to Archean!!</h2>
+								</div>
+							</div>
+						</div>
+					</div><!-- welcome -->
+					<div class="col-xl-12 col-xxl-12 col-lg-12 col-sm-12">
+						<div class="card overflow-hidden">
+							<div class="card-header border-0 pb-0">
+								<div class="mr-auto">
+									<h2>Total Supply: <span id="totalSupply"></span></h2>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="col-xl-6 col-xxl-6 col-lg-6 col-sm-6">
-						<div class="card overflow-hidden">
-							<div class="card-header border-0 pb-0">
-								<div class="mr-auto">
-									<h2>Number of NFTs on Auction</h2>
-									<h3 id="numberOfNFTsOnAuction" class="text-black mb-2 font-w600">0</h3>
+					<div class="col-xl-6 col-xxl-6 col-lg-6 col-sm-12">
+						<div class="card overflow-hidden p-4">
+							<h2>Burn</h2>
+							<div class="form-validation">
+								<div class="row">
+									<div class="col-xl-12">
+										<div class="form-group row">
+											<label class="col-lg-4 col-form-label"
+												for="edit_walletaddress">Serial (Byte32)
+											</label>
+											<div class="col-lg-6">
+												<input type="text" class="form-control"
+													id="serial" name="serial"
+													placeholder="Serial (Byte32)">
+												<small>Please click <a target="_blank" href="https://web3-type-converter.onbrn.com/">here</a> to obtain byte32 hex for your message.</small>
+											</div>
+										</div>
+										<div class="form-group row">
+											<div class="col-lg-8 ml-auto">
+												<button type="button" id="burnTokens"
+													class="btn btn-primary">Burn</button>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="col-xl-6 col-xxl-6 col-lg-6 col-sm-6">
-						<div class="card overflow-hidden">
-							<div class="card-header border-0 pb-0">
-								<div class="mr-auto">
-									<h2>Number of Users</h2>
-									<h3 id="numberOfUsers" class="text-black mb-2 font-w600">0</h3>
+					<div class="col-xl-6 col-xxl-6 col-lg-6 col-sm-12">
+						<div class="card overflow-hidden p-4">
+							<h2>Mint</h2>
+							<div class="form-validation">
+								<div class="row">
+									<div class="col-xl-12">
+										<div class="form-group row">
+											<label class="col-lg-4 col-form-label"
+												for="edit_walletaddress">To 
+											</label>
+											<div class="col-lg-6">
+												<input type="text" class="form-control"
+													id="to_wallet_Addresss" name="to_wallet_Addresss"
+													placeholder="Wallet Address">
+											</div>
+										</div>
+										<div class="form-group row">
+											<label class="col-lg-4 col-form-label"
+												for="edit_walletaddress">Serial (Byte32)
+											</label>
+											<div class="col-lg-6">
+												<input type="text" class="form-control"
+													id="serial2" name="serial"
+													placeholder="Serial (Byte32)">
+												<small>Please click <a target="_blank" href="https://web3-type-converter.onbrn.com/">here</a> to obtain byte32 hex for your message.</small>
+											</div>
+										</div>
+										<div class="form-group row">
+											<label class="col-lg-4 col-form-label"
+												for="edit_walletaddress">Number Of Tokens
+											</label>
+											<div class="col-lg-6">
+												<input type="number" class="form-control"
+													id="number_of_tokens" name="number_of_tokens">
+											</div>
+										</div>
+										<div class="form-group row">
+											<div class="col-lg-8 ml-auto">
+												<button type="button" id="mintTokens"
+													class="btn btn-primary">Mint</button>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="col-xl-6 col-xxl-6 col-lg-6 col-sm-6">
-						<div class="card overflow-hidden">
-							<div class="card-header border-0 pb-0">
-								<div class="mr-auto">
-									<h2>Number of NFTs Sold</h2>
-									<h3 id="numberOfNFTsSold" class="text-black mb-2 font-w600">0</h3>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-xl-12 col-xxl-12 col-lg-12">
-						<div class="card">
-							<div class="card-header d-sm-flex d-block pb-0 border-0">
-								<div>
-									<h4 class="text-black fs-20">Total User</h4>
-								</div>
-							</div>
-							<div class="card-body" id="user-activity">
-
-								<div class="tab-content" id="myTabContent">
-									<div class="tab-pane fade show active" id="user" role="tabpanel">
-										<canvas id="activityLine" height="350"></canvas>
+				</div>
+				<div class="row">
+					<div class="col">
+						<div class="card overflow-hidden p-4">
+							<h2>Transfer</h2>
+							<div class="form-validation">
+								<div class="row">
+									<div class="col-xl-12">
+										<div class="form-group row">
+											<label class="col-lg-4 col-form-label"
+												for="edit_walletaddress">To 
+											</label>
+											<div class="col-lg-6">
+												<input type="text" class="form-control"
+													id="to_wallet_Addresss" name="to_wallet_Addresss"
+													placeholder="Wallet Address" max="{{userBalance}}">
+													<small id="balancetotransfer"></small>
+											</div>
+										</div>
+										<div class="form-group row">
+											<label class="col-lg-4 col-form-label"
+												for="edit_walletaddress">Number Of Tokens
+											</label>
+											<div class="col-lg-6">
+												<input type="number" class="form-control"
+													id="number_of_tokens" name="number_of_tokens">
+											</div>
+										</div>
+										<div class="form-group row">
+											<div class="col-lg-8 ml-auto">
+												<button type="button" id="transferTokens"
+													class="btn btn-primary">Transfer</button>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
