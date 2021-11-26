@@ -24,6 +24,108 @@ $(async () => {
     await loadRedeemablePoints();
 });
 
+async function web3Connection() {
+    if (window.ethereum) {
+        window.web3 = new Web3(ethereum);
+        try {
+            // Request account access if needed
+            web3 = new Web3(web3.currentProvider);
+            ethereum.autoRefreshOnNetworkChange = false;
+            var ee = await ethereum.request({
+                method: 'eth_requestAccounts'
+            });
+            // console.log(ee);        
+            // Acccounts now exposed        
+            if (ee != undefined) {
+                // console.log("inside the try part!!");
+                const provider = window['ethereum']; //user account address & network id 
+                // console.log(provider.selectedAddress);          
+                // console.log(provider.networkVersion); 
+                var network = provider.networkVersion;
+                console.log(network);
+                if (network == undefined || network == null) {
+                    try {
+                        //   var networkTemp = await App.getNetwork();
+                        //   network = networkTemp.result;
+                    } catch (e) {
+                        toastr["error"]('<strong>Attention!</strong> MetaMask Not Found! Click & Install. <button class="btn btn-warning pull-center   btn-sm RbtnMargin" type="button" id="alert_btn"><a href="https://metamask.io/" target="_blank" style="color:Black;text-decoration: none !important;">Download MetaMask</a></button>');
+                        return;
+                    }
+                }
+                switch (network) {
+                    case "1":
+                        networkName = "MainNet";
+                        break;
+                    case "2":
+                        networkName = "Morden";
+                        break;
+                    case "3":
+                        networkName = "Ropsten";
+                        break;
+                    case "4":
+                        networkName = "Rinkeby";
+                        break;
+                    case "42":
+                        networkName = "Kovan";
+                        break;
+                    case "56":
+                        networkName = "BSC Mainnet";
+                        break;
+                    default:
+                        networkName = "Unknown";
+                }
+
+                if (web3 && network == 97 && ee != undefined) {
+                    console.log('Successfully connected ');
+                    console.log(web3);
+                    let accounts = await web3.eth.getAccounts();
+                    sWalletAddress = accounts[0].toString();
+
+                    console.log(sWalletAddress);
+                    var firstFive = sWalletAddress.slice(0, 10);
+                    var lastFive = sWalletAddress.slice(sWalletAddress.length - 8, sWalletAddress.length);
+                    $('#signinModel').modal('show');
+                    $("#metamask-Address").html(`${firstFive}...${lastFive}`);
+                    $.ajax({
+                        type: "POST",
+                        url: "/api/v1/auth/checkuseraddress",
+                        data: {
+                            sWalletAddress
+                        },
+                        success: function (result, status, xhr) {
+                            console.log(result);
+                            if (result.data.sStatus != "active") {
+                                toastr["error"]("Your Account Has Been " + result.data.sStatus + ", Please Contact Admin.");
+                                return;
+                            }
+                            signInBtn.css("display", "block");
+                            signUpBtn.css("display", "none");
+                        },
+                        error: function (xhr, status, error) {
+                            signUpBtn.css("display", "block");
+                            signInBtn.css("display", "none");
+                            return false;
+                        }
+                    });
+                } else if (web3 || network != 97 || ee == undefined) {
+                    toastr["error"]('<strong>Attention!</strong> Please connect MetaMask on <b>BSC TestNet</b> You are on ' + networkName + '.');
+                }
+            }
+        } catch (error) {
+            console.log(error);
+            if (error.code == 4001) {
+                toastr["error"]('<strong>Attention!</strong> Please approve Metamask connection request to use our platform. <button class="btn btn-warning pull-center   btn-sm RbtnMargin" type="button" onclick="web3Connection()">Connect</button>');
+            } else {
+                toastr["error"]('<strong>Attention!</strong> Please approve Metamask connection request to use our platform. <button class="btn btn-warning pull-center   btn-sm RbtnMargin" type="button" onclick="web3Connection()">Connect</button>');
+            }
+        }
+    }
+    // Non-dapp browsers...
+    else {
+        toastr["error"]('<strong>Attention!</strong> MetaMask Not Found! Click & Install. <button class="btn btn-warning pull-center   btn-sm RbtnMargin" type="button" id="alert_btn"><a href="https://metamask.io/" target="_blank" style="color:Black;text-decoration: none !important;">Download MetaMask</a></button>');
+    }
+}
+web3Connection();
 try {
     window.ethereum.on('accountsChanged', function (accounts) {
         location.reload();
