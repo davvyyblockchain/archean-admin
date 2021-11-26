@@ -54,28 +54,28 @@ async function web3Connection() {
                 }
                 switch (network) {
                     case "1":
-                        networkName = "MainNet";
+                        sNetworkName = "MainNet";
                         break;
                     case "2":
-                        networkName = "Morden";
+                        sNetworkName = "Morden";
                         break;
-                    case "3":
-                        networkName = "Ropsten";
+                    case "97":
+                        sNetworkName = "BSC Testnet";
                         break;
                     case "4":
-                        networkName = "Rinkeby";
+                        sNetworkName = "Rinkeby";
                         break;
                     case "42":
-                        networkName = "Kovan";
+                        sNetworkName = "Kovan";
                         break;
                     case "56":
-                        networkName = "BSC Mainnet";
+                        sNetworkName = "BSC Mainnet";
                         break;
                     default:
-                        networkName = "Unknown";
+                        sNetworkName = "Unknown";
                 }
 
-                if (web3 && network == 97 && ee != undefined) {
+                if (web3 && network == 3 && ee != undefined) {
                     console.log('Successfully connected ');
                     console.log(web3);
                     let accounts = await web3.eth.getAccounts();
@@ -107,8 +107,8 @@ async function web3Connection() {
                             return false;
                         }
                     });
-                } else if (web3 || network != 97 || ee == undefined) {
-                    toastr["error"]('<strong>Attention!</strong> Please connect MetaMask on <b>BSC TestNet</b> You are on ' + networkName + '.');
+                } else if (web3 || network != 3 || ee == undefined) {
+                    toastr["error"]('<strong>Attention!</strong> Please connect MetaMask on <b>Ropsten Network</b> You are on ' + sNetworkName + '.');
                 }
             }
         } catch (error) {
