@@ -68,7 +68,7 @@ controllers.updateProfile = async (req, res, next) => {
             // if (req.file != undefined) {
 
             //     await cloudinary.uploader.upload(req.file.path, {
-            //         folder: "Decrypt NFT/User_Profile"
+            //         folder: "Archean/User_Profile"
             //     })
             //         .then(image => {
             //             oProfileDetails["sProfilePicUrl"] = image.url;
@@ -408,7 +408,7 @@ controllers.sendNewsLetterEmail = async (req, res, next) => {
         if (emailsArray.length > 0) {
 
             await nodemailer.sendMail({
-                from: 'Decrypt NFT ' + process.env.SMTP_USERNAME,
+                from: 'Archean ' + process.env.SMTP_USERNAME,
                 bcc: emailsArray,
                 subject: req.body.sSubject,
                 html: req.body.sHTMLContent

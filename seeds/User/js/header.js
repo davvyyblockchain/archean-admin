@@ -273,7 +273,7 @@ async function signMessage(methodName) {
             // Request account access if needed
             web3 = new Web3(web3.currentProvider);
             const timestamp = new Date().getTime();
-            const message = `Decrypt NFT uses this cryptographic signature in place of a password, verifying that you are the owner of this Ethereum address - ${timestamp}`;
+            const message = `Archean uses this cryptographic signature in place of a password, verifying that you are the owner of this Ethereum address - ${timestamp}`;
 
             var from;
             let accounts = await web3.eth.getAccounts();

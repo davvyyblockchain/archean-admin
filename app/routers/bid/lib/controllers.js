@@ -74,7 +74,7 @@ controllers.create = async (req, res) => {
                     if (req.body.sOwnerEmail && req.body.sOwnerEmail != undefined && req.body.sOwnerEmail != '' && req.body.sOwnerEmail != '-') {
 
                         nodemailer.send('Bid_Place.html', {
-                            SITE_NAME: 'Decrypt NFT',
+                            SITE_NAME: 'Archean',
                             USERNAME: req.body.sOwnerEmail,
                             ACTIVELINK: `${process.env.URL}/NFT-detail/${req.body.oNFTId}`, //`${process.env.URL}:${process.env.PORT}/viewNFT/${req.body.oNFTId}`,
                             TEXT: 'Someone Placed Bid on your NFT.'
@@ -187,7 +187,7 @@ controllers.create = async (req, res) => {
                         if (req.body.sOwnerEmail && req.body.sOwnerEmail != undefined && req.body.sOwnerEmail != '' && req.body.sOwnerEmail != '-') {
 
                             nodemailer.send('Bid_Place.html', {
-                                SITE_NAME: 'Decrypt NFT',
+                                SITE_NAME: 'Archean',
                                 USERNAME: req.body.sOwnerEmail,
                                 ACTIVELINK: `${process.env.URL}/NFT-detail/${req.body.oNFTId}`,// `${process.env.URL}:${process.env.PORT}/viewNFT/${req.body.oNFTId}`,
                                 TEXT: 'Someone Placed Bid on your NFT.'
@@ -325,7 +325,7 @@ controllers.toggleBidStatus = async (req, res, next) => {
             if (req.body.sCurrentUserEmail && req.body.sCurrentUserEmail != undefined && req.body.sCurrentUserEmail != '' && req.body.sCurrentUserEmail != '-') {
                 console.log('----------------------------------send 1')
                 let a = await nodemailer.send('Bid_Place.html', {
-                    SITE_NAME: 'Decrypt NFT',
+                    SITE_NAME: 'Archean',
                     USERNAME: req.body.sCurrentUserEmail,
                     ACTIVELINK: `${process.env.URL}/NFT-detail/${req.body.oNFTId}`, // `${process.env.URL}:${process.env.PORT}/viewNFT/${req.body.oNFTId}`,
                     TEXT: 'Your Bid Has Been Accepted on NFT.'
@@ -421,7 +421,7 @@ controllers.toggleBidStatus = async (req, res, next) => {
                     if (req.body.sCurrentUserEmail && req.body.sCurrentUserEmail != undefined && req.body.sCurrentUserEmail != '' && req.body.sCurrentUserEmail != '-') {
 
                         nodemailer.send('Bid_Place.html', {
-                            SITE_NAME: 'Decrypt NFT',
+                            SITE_NAME: 'Archean',
                             USERNAME: req.body.sCurrentUserEmail,
                             ACTIVELINK: `${process.env.URL}/NFT-detail/${req.body.oNFTId}`,// `${process.env.URL}:${process.env.PORT}/viewNFT/${req.body.oNFTId}`,
                             TEXT: 'Your Bid Has Been Rejected on NFT.'
