@@ -133,11 +133,11 @@ $("#burnTokens").on("click", async () => {
             console.log(receipt);
             if(receipt.status)
             {
-                toastr["success"]("Minted Successfully.");
+                toastr["success"]("Burned Successfully.");
             }
             else
             {
-                toastr["error"]("Minted Successfully.");
+                toastr["error"]("Burned Successfully.");
             }
             $("#burnTokens").html("Burn").prop("disabled", false);
         }).catch((err) => {
