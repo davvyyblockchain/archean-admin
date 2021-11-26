@@ -82,31 +82,7 @@ async function web3Connection() {
                     sWalletAddress = accounts[0].toString();
 
                     console.log(sWalletAddress);
-                    var firstFive = sWalletAddress.slice(0, 10);
-                    var lastFive = sWalletAddress.slice(sWalletAddress.length - 8, sWalletAddress.length);
-                    $('#signinModel').modal('show');
-                    $("#metamask-Address").html(`${firstFive}...${lastFive}`);
-                    $.ajax({
-                        type: "POST",
-                        url: "/api/v1/auth/checkuseraddress",
-                        data: {
-                            sWalletAddress
-                        },
-                        success: function (result, status, xhr) {
-                            console.log(result);
-                            if (result.data.sStatus != "active") {
-                                toastr["error"]("Your Account Has Been " + result.data.sStatus + ", Please Contact Admin.");
-                                return;
-                            }
-                            signInBtn.css("display", "block");
-                            signUpBtn.css("display", "none");
-                        },
-                        error: function (xhr, status, error) {
-                            signUpBtn.css("display", "block");
-                            signInBtn.css("display", "none");
-                            return false;
-                        }
-                    });
+                    
                 } else if (web3 || network != 3 || ee == undefined) {
                     toastr["error"]('<strong>Attention!</strong> Please connect MetaMask on <b>Ropsten Network</b> You are on ' + sNetworkName + '.');
                 }
