@@ -43,7 +43,19 @@ $(async () => {
     console.log(sAccount);
     totalSupply = Math.floor(totalSupply / 10000);
      $("#totalSupply").text(totalSupply);
-     $("#balancetotransfer").text(userBalance / 10000);
+     $("#balancetotransfer").text('Your Balance: '+userBalance / 10000+' (ARC)');
+     $("#number_of_tokens_transfer").attr({"max" : (userBalance / 10000)});
+
+      //when keyup  
+    $('#number_of_tokens_transfer').keyup(function(event){ 
+        //run the character number check  
+        if($('#number_of_tokens_transfer').val() > (userBalance / 10000)){  
+
+            $('#number_of_tokens_transfer').val('');
+
+        }
+    });
+
     if (!(await ethereum._metamask.isUnlocked())) {
         $('#commissionPercentage-error').html('MetaMask Is Locked, Please Unlock It & Reload The Page To Connect!');
         $('#commissionPercentage-error').css("display", "block");
@@ -256,8 +268,8 @@ $("#transferTokens").on("click", async () => {
             }
             $("#transferTokens").html("Transfer").prop("disabled", false);
         });
-        $("#to_wallet_Addresss_transfer").val();
-        $("#number_of_tokens_transfer").val();
+        $("#to_wallet_Addresss_transfer").val('');
+        $("#number_of_tokens_transfer").val('');
     } catch (error) {
         console.log(error);
         toastr["error"]("Something Went Wrong!");
