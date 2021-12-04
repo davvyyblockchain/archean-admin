@@ -139,8 +139,16 @@ $("#burnTokens").on("click", async () => {
     console.log(sAccount);
 
     try {
+        const currentGasPrice = await web3.eth.getGasPrice();
+        const txEstimateGas = await oContract.methods.burn($("#serial__burn").val().trim())
+                                .estimateGas({
+                                    from: sAccount
+                                });
+        console.log("Estimated gas:"+txEstimateGas);
         await oContract.methods.burn($("#serial__burn").val().trim()).send({
-            from: sAccount
+            from: sAccount,
+            gas: txEstimateGas + parseInt(txEstimateGas * 0.1),
+            gasPrice: currentGasPrice
         }).then((receipt) => {
             console.log(receipt);
             if(receipt.status)
@@ -245,8 +253,19 @@ $("#transferTokens").on("click", async () => {
         toWalletAddress = $("#to_wallet_Addresss_transfer").val().trim();
         console.log(toWalletAddress);
         amount = $("#number_of_tokens_transfer").val().trim();
+
+        const currentGasPrice = await web3.eth.getGasPrice();
+        const txEstimateGas = await oContract.methods.transfer(toWalletAddress,amount*10000)
+                                .estimateGas({
+                                    from: sAccount
+                                });
+        console.log("Estimated gas:"+txEstimateGas);
+        
+
         await oContract.methods.transfer(toWalletAddress,amount*10000).send({
-            from: sAccount
+            from: sAccount,
+            gas: txEstimateGas + parseInt(txEstimateGas * 0.1),
+            gasPrice: currentGasPrice
         }).then((receipt) => {
             console.log(receipt);
             if(receipt.status)
@@ -354,8 +373,17 @@ $("#mintTokens").on("click", async () => {
         const to = $("#to_wallet_Addresss").val().trim();
         const serial = $("#serial2").val().trim();
         let tokens = $("#number_of_tokens").val().trim();
+
+        const currentGasPrice = await web3.eth.getGasPrice();
+        const txEstimateGas = await oContract.methods.mint(to,serial,tokens*1000)
+                                .estimateGas({
+                                    from: sAccount
+                                });
+        console.log("Estimated gas:"+txEstimateGas);
         await oContract.methods.mint(to,serial,tokens*10000).send({
-            from: sAccount
+            from: sAccount,
+            gas: txEstimateGas + parseInt(txEstimateGas * 0.1),
+            gasPrice: currentGasPrice
         }).then((receipt) => {
             console.log(receipt);
             if(receipt.status)
