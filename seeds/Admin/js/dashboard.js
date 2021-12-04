@@ -71,7 +71,7 @@ async function refreshDashboardData()
     const userBalance = await oContract.methods.balanceOf(sAccount).call();
     totalSupply = Math.floor(totalSupply / 10000);
      $("#totalSupply").text(totalSupply);
-     $("#balancetotransfer").text(userBalance / 10000);
+     $("#balancetotransfer").text('Your Balance: '+userBalance / 10000+' (ARC)');
 }
 
 $("#burnTokens").on("click", async () => {
