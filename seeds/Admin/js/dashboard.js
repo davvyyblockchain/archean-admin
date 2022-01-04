@@ -1,4 +1,3 @@
-
 $(async () => {
     web3 = new Web3(web3.currentProvider);
     // console.log(web3.eth);
@@ -7,7 +6,7 @@ $(async () => {
     if (!window.ethereum || !window.ethereum.networkVersion) {
         toastr["error"]('<strong>Attention!</strong> MetaMask Not Found! Click & Install. <button class="btn btn-warning pull-center   btn-sm RbtnMargin" type="button" id="alert_btn"><a href="https://metamask.io/" target="_blank" style="color:Black;text-decoration: none !important;">Download MetaMask</a></button>');
         return;
-    } else if (window.ethereum.networkVersion != 3) {
+    } else if (window.ethereum.networkVersion != 4) {
         let sNetworkName;
         switch (window.ethereum.networkVersion) {
             case "1":
@@ -31,7 +30,7 @@ $(async () => {
             default:
                 sNetworkName = "Unknown";
         }
-        toastr["error"]('<strong>Attention!</strong> Please connect MetaMask on <b>Ropsten</b> You are on ' + sNetworkName + '.');
+        toastr["error"]('<strong>Attention!</strong> Please connect MetaMask on <b>Rinkeby</b> You are on ' + sNetworkName + '.');
         return;
     }
     
@@ -41,20 +40,29 @@ $(async () => {
     sAccount = aAccounts[0];
     const userBalance = await oContract.methods.balanceOf(sAccount).call();
     console.log(sAccount);
-    totalSupply = Math.floor(totalSupply / 10000);
+    totalSupply = Math.floor(totalSupply / 10 ** 12);
      $("#totalSupply").text(totalSupply);
-     $("#balancetotransfer").text('Your Balance: '+userBalance / 10000+' (ARC)');
-     $("#number_of_tokens_transfer").attr({"max" : (userBalance / 10000)});
+     $("#balancetotransfer").text('Your Balance: '+userBalance / 10 ** 12+' (AE3)');
+     $("#number_of_tokens_transfer").attr({"max" : (userBalance / 10 ** 12)});
 
       //when keyup  
     $('#number_of_tokens_transfer').keyup(function(event){ 
         //run the character number check  
-        if($('#number_of_tokens_transfer').val() > (userBalance / 10000)){  
+        if($('#number_of_tokens_transfer').val() > (userBalance / 10 ** 12)){  
 
             $('#number_of_tokens_transfer').val('');
 
         }
     });
+
+    $('#number_of_tokens_burn').keyup(function(event){ 
+        //run the character number check  
+        if($('#number_of_tokens_burn').val() > (userBalance / 10 ** 12)) { 
+            $('#number_of_tokens_burn').val('');
+        }
+    });
+
+    
 
     if (!(await ethereum._metamask.isUnlocked())) {
         $('#commissionPercentage-error').html('MetaMask Is Locked, Please Unlock It & Reload The Page To Connect!');
@@ -69,9 +77,9 @@ async function refreshDashboardData()
     let aAccounts = await web3.eth.getAccounts();
     sAccount = aAccounts[0];
     const userBalance = await oContract.methods.balanceOf(sAccount).call();
-    totalSupply = Math.floor(totalSupply / 10000);
+    totalSupply = Math.floor(totalSupply / 10 ** 12);
      $("#totalSupply").text(totalSupply);
-     $("#balancetotransfer").text('Your Balance: '+userBalance / 10000+' (ARC)');
+     $("#balancetotransfer").text('Your Balance: '+userBalance / 10 ** 12 +' (AE3)');
 }
 
 $("#burnTokens").on("click", async () => {
@@ -79,8 +87,8 @@ $("#burnTokens").on("click", async () => {
         toastr["success"]('MetaMask Is Locked, Please Unlock It & Reload The Page To Connect!');
         return;
     }
-    if ($("#serial__burn").val() == '') {
-        toastr["success"]('Please enter a serial number.');
+    if ($("#number_of_tokens_burn").val() == '') {
+        toastr["success"]('Please enter number of tokens to burn.');
         return;
     } 
     if (!window.ethereum || !window.ethereum.networkVersion) {
@@ -102,6 +110,7 @@ $("#burnTokens").on("click", async () => {
             break;
         case "4":
             sNetworkName = "Rinkeby";
+            bIsValidNetworkSelected = true;
             break;
         case "42":
             sNetworkName = "Kovan";
@@ -111,14 +120,14 @@ $("#burnTokens").on("click", async () => {
             break;
         case "3":
             sNetworkName = "Ropsten";
-            bIsValidNetworkSelected = true;
+            
             break;
         default:
             sNetworkName = "Unknown";
     }
     
     if (!bIsValidNetworkSelected) {
-        toastr["error"]('<strong>Attention!</strong> Please connect MetaMask on <b>Ropsten TestNet</b> You are on ' + sNetworkName + '.');
+        toastr["error"]('<strong>Attention!</strong> Please connect MetaMask on <b>Rinkeby TestNet</b> You are on ' + sNetworkName + '.');
         return;
     }
 
@@ -140,12 +149,12 @@ $("#burnTokens").on("click", async () => {
 
     try {
         const currentGasPrice = await web3.eth.getGasPrice();
-        const txEstimateGas = await oContract.methods.burn($("#serial__burn").val().trim())
+        const txEstimateGas = await oContract.methods.burn($("#number_of_tokens_burn").val().trim() * 10 ** 12)
                                 .estimateGas({
                                     from: sAccount
                                 });
         console.log("Estimated gas:"+txEstimateGas);
-        await oContract.methods.burn($("#serial__burn").val().trim()).send({
+        await oContract.methods.burn($("#number_of_tokens_burn").val().trim() * 10 ** 12).send({
             from: sAccount,
             gas: txEstimateGas + parseInt(txEstimateGas * 0.1),
             gasPrice: currentGasPrice
@@ -170,11 +179,11 @@ $("#burnTokens").on("click", async () => {
             }
             $("#burnTokens").html("Burn").prop("disabled", false);
         });
-        $("#serial__burn").val('');
+        $("#number_of_tokens_burn").val('');
     } catch (error) {
         console.log(error);
         toastr["error"]("Something Went Wrong!");
-        $("#serial").val('');
+        $("#number_of_tokens_burn").val('');
         $("#burnTokens").html("Burn").prop("disabled", false);
     }
 });
@@ -213,6 +222,7 @@ $("#transferTokens").on("click", async () => {
             break;
         case "4":
             sNetworkName = "Rinkeby";
+            bIsValidNetworkSelected = true;
             break;
         case "42":
             sNetworkName = "Kovan";
@@ -222,14 +232,14 @@ $("#transferTokens").on("click", async () => {
             break;
         case "3":
             sNetworkName = "Ropsten";
-            bIsValidNetworkSelected = true;
+            
             break;
         default:
             sNetworkName = "Unknown";
     }
     
     if (!bIsValidNetworkSelected) {
-        toastr["error"]('<strong>Attention!</strong> Please connect MetaMask on <b>Ropsten TestNet</b> You are on ' + sNetworkName + '.');
+        toastr["error"]('<strong>Attention!</strong> Please connect MetaMask on <b>Rinkeby TestNet</b> You are on ' + sNetworkName + '.');
         return;
     }
 
@@ -255,14 +265,14 @@ $("#transferTokens").on("click", async () => {
         amount = $("#number_of_tokens_transfer").val().trim();
 
         const currentGasPrice = await web3.eth.getGasPrice();
-        const txEstimateGas = await oContract.methods.transfer(toWalletAddress,amount*10000)
+        const txEstimateGas = await oContract.methods.transfer(toWalletAddress,amount * 10 ** 12)
                                 .estimateGas({
                                     from: sAccount
                                 });
         console.log("Estimated gas:"+txEstimateGas);
         
 
-        await oContract.methods.transfer(toWalletAddress,amount*10000).send({
+        await oContract.methods.transfer(toWalletAddress,amount * 10 ** 12).send({
             from: sAccount,
             gas: txEstimateGas + parseInt(txEstimateGas * 0.1),
             gasPrice: currentGasPrice
@@ -303,16 +313,7 @@ $("#mintTokens").on("click", async () => {
         $('#commissionPercentage-error').css("display", "block");
         return;
     }
-    if ($("#serial2").val() == '') {
-        $('#commissionPercentage-error').closest(".form-group").removeClass("is-invalid").addClass("is-invalid")
-        $('#commissionPercentage-error').html('Please Enter Serial');
-        $('#commissionPercentage-error').css("display", "block");
-        return;
-    } else {
-        $('#commissionPercentage-error').closest(".form-group").removeClass("is-invalid").addClass("is-valid")
-        $('#commissionPercentage-error').html('');
-        $('#commissionPercentage-error').css("display", "none");
-    }
+    
     if (!window.ethereum || !window.ethereum.networkVersion) {
         toastr["error"]('<strong>Attention!</strong> MetaMask Not Found! Click & Install. <button class="btn btn-warning pull-center   btn-sm RbtnMargin" type="button" id="alert_btn"><a href="https://metamask.io/" target="_blank" style="color:Black;text-decoration: none !important;">Download MetaMask</a></button>');
         return;
@@ -332,6 +333,7 @@ $("#mintTokens").on("click", async () => {
             break;
         case "4":
             sNetworkName = "Rinkeby";
+            bIsValidNetworkSelected = true;
             break;
         case "42":
             sNetworkName = "Kovan";
@@ -341,14 +343,14 @@ $("#mintTokens").on("click", async () => {
             break;
         case "3":
             sNetworkName = "Ropsten";
-            bIsValidNetworkSelected = true;
+            
             break;
         default:
             sNetworkName = "Unknown";
     }
     
     if (!bIsValidNetworkSelected) {
-        toastr["error"]('<strong>Attention!</strong> Please connect MetaMask on <b>Ropsten TestNet</b> You are on ' + sNetworkName + '.');
+        toastr["error"]('<strong>Attention!</strong> Please connect MetaMask on <b>Rinkeby TestNet</b> You are on ' + sNetworkName + '.');
         return;
     }
 
@@ -371,16 +373,16 @@ $("#mintTokens").on("click", async () => {
 
     try {
         const to = $("#to_wallet_Addresss").val().trim();
-        const serial = $("#serial2").val().trim();
+        
         let tokens = $("#number_of_tokens").val().trim();
 
         const currentGasPrice = await web3.eth.getGasPrice();
-        const txEstimateGas = await oContract.methods.mint(to,serial,tokens*1000)
+        const txEstimateGas = await oContract.methods.mint(to,tokens * 10 ** 12)
                                 .estimateGas({
                                     from: sAccount
                                 });
         console.log("Estimated gas:"+txEstimateGas);
-        await oContract.methods.mint(to,serial,tokens*10000).send({
+        await oContract.methods.mint(to,tokens * 10 ** 12).send({
             from: sAccount,
             gas: txEstimateGas + parseInt(txEstimateGas * 0.1),
             gasPrice: currentGasPrice

@@ -11,7 +11,7 @@
 	<title>Home | Archean</title>
 
 	<!-- Favicon icon -->
-    <link rel="icon" type="image/x-icon" sizes="16x16" href="/assets/images/archean-favicon.png">
+    <link rel="icon" type="image/x-icon" sizes="16x16" href="/assets/images/AE3hean-favicon.png">
 
 	<link rel="stylesheet" href="../assets/vendor/chartist/css/chartist.min.css">
 
@@ -80,13 +80,11 @@
 									<div class="col-xl-12">
 										<div class="form-group row">
 											<label class="col-lg-4 col-form-label"
-												for="edit_walletaddress">Serial (Byte32)
+												for="edit_walletaddress">Number Of Tokens
 											</label>
 											<div class="col-lg-6">
-												<input type="text" class="form-control"
-													id="serial__burn" name="serial__burn"
-													placeholder="Serial (Byte32)">
-												<small>Please click <a target="_blank" href="https://web3-type-converter.onbrn.com/">here</a> to obtain byte32 hex for your message.</small>
+												<input type="number" class="form-control"
+													id="number_of_tokens_burn" name="number_of_tokens_burn" min="1" step="1" >
 											</div>
 										</div>
 										<div class="form-group row">
@@ -118,22 +116,11 @@
 										</div>
 										<div class="form-group row">
 											<label class="col-lg-4 col-form-label"
-												for="edit_walletaddress">Serial (Byte32)
-											</label>
-											<div class="col-lg-6">
-												<input type="text" class="form-control"
-													id="serial2" name="serial"
-													placeholder="Serial (Byte32)">
-												<small>Please click <a target="_blank" href="https://web3-type-converter.onbrn.com/">here</a> to obtain byte32 hex for your message.</small>
-											</div>
-										</div>
-										<div class="form-group row">
-											<label class="col-lg-4 col-form-label"
 												for="edit_walletaddress">Number Of Tokens
 											</label>
 											<div class="col-lg-6">
 												<input type="number" class="form-control"
-													id="number_of_tokens" name="number_of_tokens">
+													id="number_of_tokens" name="number_of_tokens" min="1" step="1">
 											</div>
 										</div>
 										<div class="form-group row">
