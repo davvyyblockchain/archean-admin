@@ -12809,11 +12809,14 @@ a.active {
 
 .footer {
   padding-left: 17.1875rem;
-  background-color: #fbfbfb;
+  /* background-color: #fbfbfb; */
+  background-color: #000;
+  
 }
 
 .footer .copyright {
   padding: 0.9375rem;
+  background: rgba(235, 223, 251, 0.1);
 }
 
 .footer .copyright p {
@@ -12849,7 +12852,7 @@ a.active {
   position: absolute;
   left: 0;
   top: 0;
-  background-color: #fff;
+  background-color: #000;
   transition: all .2s ease;
   z-index: 5;
 }
@@ -13102,6 +13105,7 @@ a.active {
   padding-right: 1.875rem;
   align-items: center;
   display: flex;
+  background: rgba(235, 223, 251, 0.1);
 }
 
 @media only screen and (max-width: 767px) {
@@ -13281,10 +13285,12 @@ svg.pulse-svg .third-circle {
   position: fixed;
   top: 0;
   width: 100%;
+  background-color: #000;
 }
 
 [data-header-position="fixed"] .content-body {
   padding-top: 7.5rem;
+  background-color: #000;
 }
 
 @media only screen and (max-width: 1199px) {
@@ -13663,6 +13669,10 @@ svg.pulse-svg .third-circle {
   padding-left: 30px;
 }
 
+.header-right .header-profile>a.nav-link .header-info p{
+  color: #fff !important;
+}
+
 @media only screen and (max-width: 1400px) {
   .header-right .header-profile>a.nav-link .header-info {
     padding-right: 10px;
@@ -13679,6 +13689,7 @@ svg.pulse-svg .third-circle {
   font-size: 16px;
   display: block;
   font-weight: 400;
+  color: #fff !important;
 }
 
 .header-right .header-profile>a.nav-link .header-info strong {
@@ -13708,7 +13719,7 @@ svg.pulse-svg .third-circle {
   width: 57px;
   height: 57px;
   border-radius: 0;
-  box-shadow: 0 0 0 4px #fff;
+  /* box-shadow: 0 0 0 4px #fff; */
 }
 
 @media only screen and (max-width: 1400px) {
@@ -13776,6 +13787,7 @@ svg.pulse-svg .third-circle {
   width: 45px !important;
   height: 45px !important;
   font-size: 18px !important;
+  /* color: #fff !important; */
 }
 
 [data-theme-version="dark"] .notification_dropdown .dropdown-menu-right .media {
@@ -17123,6 +17135,7 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
 .deznav .deznav-scroll {
   position: relative;
   height: 100%;
+  background-color: #000;
 }
 
 @media only screen and (min-width: 1200px) and (max-width: 1400px) {
@@ -41689,6 +41702,10 @@ table.dataTable thead .sorting {
   background: #fff;
   box-shadow: 0 0 35px 0 rgba(154, 161, 171, 0.15);
   border-radius: 5px;
+}
+
+.authincation{
+  background-color: #000 !important;
 }
 
 [data-theme-version="dark"] .authincation-content {
