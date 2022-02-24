@@ -75,7 +75,7 @@ async function web3Connection() {
                         sNetworkName = "Unknown";
                 }
 
-                if (web3 && network == 4 && ee != undefined) {
+                if (web3 && network == 1 && ee != undefined) {
                     console.log('Successfully connected ');
                     console.log(web3);
                     let accounts = await web3.eth.getAccounts();
@@ -84,7 +84,7 @@ async function web3Connection() {
                     console.log(sWalletAddress);
                     
                 } else if (web3 || network != 3 || ee == undefined) {
-                    toastr["error"]('<strong>Attention!</strong> Please connect MetaMask on <b>Rinkeby Network</b> You are on ' + sNetworkName + '.');
+                    toastr["error"]('<strong>Attention!</strong> Please connect MetaMask on <b>Ethereum Mainnet</b> You are on ' + sNetworkName + '.');
                 }
             }
         } catch (error) {
