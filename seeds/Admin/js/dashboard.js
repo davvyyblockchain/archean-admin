@@ -6,7 +6,7 @@ $(async () => {
     if (!window.ethereum || !window.ethereum.networkVersion) {
         toastr["error"]('<strong>Attention!</strong> MetaMask Not Found! Click & Install. <button class="btn btn-warning pull-center   btn-sm RbtnMargin" type="button" id="alert_btn"><a href="https://metamask.io/" target="_blank" style="color:Black;text-decoration: none !important;">Download MetaMask</a></button>');
         return;
-    } else if (window.ethereum.networkVersion != 4) {
+    } else if (window.ethereum.networkVersion != 1) {
         let sNetworkName;
         switch (window.ethereum.networkVersion) {
             case "1":
@@ -30,7 +30,7 @@ $(async () => {
             default:
                 sNetworkName = "Unknown";
         }
-        toastr["error"]('<strong>Attention!</strong> Please connect MetaMask on <b>Rinkeby</b> You are on ' + sNetworkName + '.');
+        toastr["error"]('<strong>Attention!</strong> Please connect MetaMask on <b>Ethereum Mainnet</b> You are on ' + sNetworkName + '.');
         return;
     }
     
@@ -101,6 +101,7 @@ $("#burnTokens").on("click", async () => {
     switch (window.ethereum.networkVersion) {
         case "1":
             sNetworkName = "MainNet";
+            bIsValidNetworkSelected = true;
             break;
         case "2":
             sNetworkName = "Morden";
@@ -110,7 +111,6 @@ $("#burnTokens").on("click", async () => {
             break;
         case "4":
             sNetworkName = "Rinkeby";
-            bIsValidNetworkSelected = true;
             break;
         case "42":
             sNetworkName = "Kovan";
@@ -127,7 +127,7 @@ $("#burnTokens").on("click", async () => {
     }
     
     if (!bIsValidNetworkSelected) {
-        toastr["error"]('<strong>Attention!</strong> Please connect MetaMask on <b>Rinkeby TestNet</b> You are on ' + sNetworkName + '.');
+        toastr["error"]('<strong>Attention!</strong> Please connect MetaMask on <b>Ethereum Mainnet</b> You are on ' + sNetworkName + '.');
         return;
     }
 
@@ -213,6 +213,7 @@ $("#transferTokens").on("click", async () => {
     switch (window.ethereum.networkVersion) {
         case "1":
             sNetworkName = "MainNet";
+            bIsValidNetworkSelected = true;
             break;
         case "2":
             sNetworkName = "Morden";
@@ -222,7 +223,6 @@ $("#transferTokens").on("click", async () => {
             break;
         case "4":
             sNetworkName = "Rinkeby";
-            bIsValidNetworkSelected = true;
             break;
         case "42":
             sNetworkName = "Kovan";
@@ -239,7 +239,7 @@ $("#transferTokens").on("click", async () => {
     }
     
     if (!bIsValidNetworkSelected) {
-        toastr["error"]('<strong>Attention!</strong> Please connect MetaMask on <b>Rinkeby TestNet</b> You are on ' + sNetworkName + '.');
+        toastr["error"]('<strong>Attention!</strong> Please connect MetaMask on <b>Ethereum Mainnet</b> You are on ' + sNetworkName + '.');
         return;
     }
 
@@ -324,6 +324,7 @@ $("#mintTokens").on("click", async () => {
     switch (window.ethereum.networkVersion) {
         case "1":
             sNetworkName = "MainNet";
+            bIsValidNetworkSelected = true;
             break;
         case "2":
             sNetworkName = "Morden";
@@ -333,7 +334,6 @@ $("#mintTokens").on("click", async () => {
             break;
         case "4":
             sNetworkName = "Rinkeby";
-            bIsValidNetworkSelected = true;
             break;
         case "42":
             sNetworkName = "Kovan";
@@ -350,7 +350,7 @@ $("#mintTokens").on("click", async () => {
     }
     
     if (!bIsValidNetworkSelected) {
-        toastr["error"]('<strong>Attention!</strong> Please connect MetaMask on <b>Rinkeby TestNet</b> You are on ' + sNetworkName + '.');
+        toastr["error"]('<strong>Attention!</strong> Please connect MetaMask on <b>Ethereum Mainnet</b> You are on ' + sNetworkName + '.');
         return;
     }
 
