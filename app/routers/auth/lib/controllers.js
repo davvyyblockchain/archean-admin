@@ -204,7 +204,7 @@ controllers.passwordReset = (req, res, next) => {
             nodemailer.send('forgot_password_mail.html', {
                 SITE_NAME: 'Archean',
                 USERNAME: user.oName.sFirstname,
-                ACTIVELINK: `${process.env.BASE_URL}:${process.env.PORT}/api/v1/auth/reset/${randomHash}`
+                ACTIVELINK: `${process.env.BASE_URL}/api/v1/auth/reset/${randomHash}`
             }, {
                 from: process.env.SMTP_USERNAME,
                 to: user.sEmail,
